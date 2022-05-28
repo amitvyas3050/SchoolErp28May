@@ -1,0 +1,430 @@
+﻿@using appSchool.ViewModels
+@*@model myModel*@
+@using appSchool.Repositories
+
+
+<div class="row">
+
+    @Html.DevExpress().TextBox(
+    settingsclass =>
+    {
+        settingsclass.Name = "ClassSetupName";
+        settingsclass.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settingsclass.ControlStyle.VerticalAlign = System.Web.UI.WebControls.VerticalAlign.Top;
+        settingsclass.Properties.MaxLength = 180;
+        settingsclass.ControlStyle.Font.Bold = true;
+        settingsclass.ClientVisible = false;
+        settingsclass.ReadOnly = true;
+        settingsclass.Properties.NullText = "No Selected Class......";
+        settingsclass.Properties.Size = 300;
+        settingsclass.Width = System.Web.UI.WebControls.Unit.Pixel(350);
+
+    }).GetHtml()
+
+    <div class="col-sm-2">
+        @Html.DevExpress().Label(settingslbl =>
+            {
+                settingslbl.Name = "lblclass";
+                settingslbl.Width = Unit.Percentage(100);
+                settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+                settingslbl.Text = "Select Class";
+
+            }).GetHtml()
+
+        @*@Html.Partial("ListClassGridLookupPartial", new ClassRepository().GetClassSetupNavigationBar(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString())));*@
+
+        @Html.Partial("ListClassGridLookupPartial", (new UnitOfWork().classSetupService.GetClassSetupList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))))
+
+
+        @Html.DevExpress().TextBox(
+        settingstxt =>
+        {
+            settingstxt.Name = "txtclassSetup";
+            settingstxt.ClientVisible = false;
+        }).GetHtml()
+
+        @Html.DevExpress().Button(
+           settingsBttn =>
+           {
+               settingsBttn.Name = "Getstudentlist";
+               settingsBttn.ControlStyle.CssClass = "btnpaddingrow";
+               //settingsBttn.Width = 80;
+               settingsBttn.Text = "Get Student";
+               settingsBttn.ClientVisible = false;
+               settingsBttn.ClientSideEvents.Click = "attendanceDailyController.ClickLoadGrid";
+           }).GetHtml()
+
+    </div>
+    <div class="col-sm-2">
+
+        @Html.DevExpress().Label(settingslbl =>
+           {
+               settingslbl.Name = "lbldate";
+               settingslbl.Width = Unit.Percentage(100);
+               settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+               settingslbl.Text = "Select Date";
+
+           }).GetHtml()
+        @Html.DevExpress().DateEdit(
+        settingsdate =>
+        {
+            settingsdate.Name = "AttendanceDate";
+            settingsdate.ControlStyle.CssClass = "editor";
+            settingsdate.Properties.NullText = "dd MMM yyyy";
+            settingsdate.Properties.EditFormat = EditFormat.Custom;
+            settingsdate.Properties.EditFormatString = "dd MMM yyyy";
+            settingsdate.ShowModelErrors = true;
+            settingsdate.Date = DateTime.Now.Date;
+            settingsdate.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+         }).GetHtml()
+
+    </div>
+
+    <div class="col-sm-2">
+        @Html.DevExpress().Button(
+        settingsbtn =>
+        {
+            settingsbtn.Name = "btnAttendanceDaily";
+            settingsbtn.ControlStyle.CssClass = "btnpaddingrow15px";
+            settingsbtn.Text = "Attendance List";
+            settingsbtn.Width = 150;
+            settingsbtn.Images.Image.IconID = IconID.EditPaste16x16;
+            settingsbtn.ImagePosition = ImagePosition.Left;
+            // settings.ClientSideEvents.Click = "function(s, e) { CallbackPanel.PerformCallback(); }";
+            settingsbtn.ClientSideEvents.Click = "attendanceDailyController.ClickAttendanceButton";
+        }).GetHtml()
+    </div>
+
+
+
+    <div class="col-sm-4">
+        @Html.DevExpress().RadioButtonList(
+                       settingsrbtn =>
+                       {
+                           settingsrbtn.Name = "rbtnStudleave";
+                  //settingsrbtn.ControlStyle.CssClass = "form-control";
+                  settingsrbtn.ControlStyle.CssClass = "btnpaddingrow20px";
+                           settingsrbtn.Properties.RepeatLayout = System.Web.UI.WebControls.RepeatLayout.Flow;
+                           settingsrbtn.Properties.RepeatDirection = System.Web.UI.WebControls.RepeatDirection.Horizontal;
+                  //settingsrbtn.Properties.RepeatColumns = options.RepeatColumns;
+
+                  settingsrbtn.Properties.TextField = "Value";
+                           settingsrbtn.Properties.ValueField = "Key";
+
+                           settingsrbtn.Properties.ClientSideEvents.SelectedIndexChanged = "attendanceDailyController.SelectedIndexChangedForRbtnleave";
+                       }).BindList(cCommon.GetAttendanceTypeList()).GetHtml()
+    </div>
+
+    <div class="col-sm-2">
+        @Html.DevExpress().Button(
+        settingsbtn =>
+        {
+            settingsbtn.Name = "btnUpdate";
+            settingsbtn.ControlStyle.CssClass = "btnpaddingrow15px";
+            settingsbtn.Text = "Apply Setting";
+            settingsbtn.Width = 150;
+            settingsbtn.Images.Image.IconID = IconID.EditPaste16x16;
+
+
+            settingsbtn.ClientSideEvents.Click = "attendanceDailyController.ClickAttendanceUpdate";
+
+        }).GetHtml()
+    </div>
+</div>
+
+@Html.DevExpress().TextBox(
+                 settingsclassID =>
+                 {
+                     settingsclassID.Name = "ClassSetupID";
+                     settingsclassID.ControlStyle.CssClass = "editor";
+                     settingsclassID.ClientVisible = false;
+                 }
+             ).GetHtml()
+
+@Html.DevExpress().TextBox(
+    settingsclassID =>
+    {
+        settingsclassID.Name = "StudentIDs";
+        settingsclassID.ControlStyle.CssClass = "editor";
+        settingsclassID.ClientVisible = false;
+
+    }
+).GetHtml()
+
+
+@Html.DevExpress().TextBox(
+              settingsclassID =>
+              {
+                  settingsclassID.Name = "AttendanceTypeID";
+                  settingsclassID.ControlStyle.CssClass = "editor";
+                  settingsclassID.ClientVisible = false;
+
+              }
+          ).GetHtml()
+
+@*@Html.DevExpress().Splitter(settings =>
+    {
+        settings.Name = "AttendanceDaily1Splitter";
+        settings.Orientation = System.Web.UI.WebControls.Orientation.Vertical;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Styles.Pane.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(0);
+        settings.Styles.Pane.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+
+        settings.ClientSideEvents.PaneResized = "attendanceDailyController.splitterResized";
+
+        settings.Panes.Add(subpane =>
+        {
+            subpane.Name = "TopPane";
+            subpane.PaneStyle.CssClass = "leftPane";
+            subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+            subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+            subpane.Size = System.Web.UI.WebControls.Unit.Pixel(50);
+            subpane.PaneStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(1);
+            subpane.SetContent(() =>
+            {
+               // Html.RenderPartial("AttendanceTopBottomPartial");
+
+                ViewContext.Writer.Write("<table><tr><td Style=\"padding-right:15px;\">");
+
+
+          ViewContext.Writer.Write("</td><td Style=\"padding-right:10px;\">");
+                Html.DevExpress().HyperLink(
+                    settingsHLink =>
+                    {
+                        settingsHLink.Name = "hyperLinkName";
+                        settingsHLink.ControlStyle.CssClass = "button";
+                        settingsHLink.NavigateUrl = DevExpressHelper.GetUrl(new { Controller = "AttendanceManager", Action = "Index" });
+                        settingsHLink.Properties.Text = "Back to Attendance";
+
+
+
+                    }).GetHtml();
+                ViewContext.Writer.Write("</td><td Style=\"padding-right:10px;\">");
+                Html.DevExpress().TextBox(
+                         settingsclass =>
+                         {
+                             settingsclass.Name = "ClassSetupName";
+
+                             settingsclass.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                             settingsclass.ControlStyle.VerticalAlign = System.Web.UI.WebControls.VerticalAlign.Top;
+                             settingsclass.Properties.MaxLength = 180;
+                             settingsclass.ControlStyle.Font.Bold = true;
+
+                             settingsclass.ReadOnly = true;
+                             settingsclass.Properties.NullText = "No Selected Class......";
+                             settingsclass.Properties.Size = 300;
+                             settingsclass.Width = System.Web.UI.WebControls.Unit.Pixel(350);
+
+                         }
+                 ).GetHtml();
+                ViewContext.Writer.Write("</td><td>");
+
+
+                Html.DevExpress().DateEdit(
+                        settingsdate =>
+                        {
+                            settingsdate.Name = "AttendanceDate";
+                            settingsdate.ControlStyle.CssClass = "editor";
+                            settingsdate.Properties.NullText = "dd MMM yyyy";
+                            settingsdate.Properties.EditFormat = EditFormat.Custom;
+                            settingsdate.Properties.EditFormatString = "dd MMM yyyy";
+                            settingsdate.ShowModelErrors = true;
+                            settingsdate.Date = DateTime.Now.Date;
+                            settingsdate.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                        }).GetHtml();
+                ViewContext.Writer.Write("</td><td>");
+
+                  if (PermissionFlag._AddFlag == true)
+                     {
+                          Html.DevExpress().Button(
+                            settingsbtn =>
+                      {
+                            settingsbtn.Name = "btnAttendanceDaily";
+                            settingsbtn.ControlStyle.CssClass = "button";
+                            settingsbtn.Text = "Attendance List";
+                            settingsbtn.Width = 150;
+                            settingsbtn.Images.Image.IconID = IconID.EditPaste32x32;
+                            settingsbtn.ImagePosition = ImagePosition.Left;
+                           // settings.ClientSideEvents.Click = "function(s, e) { CallbackPanel.PerformCallback(); }";
+                            settingsbtn.ClientSideEvents.Click = "attendanceDailyController.ClickAttendanceButton";
+                        }).GetHtml();
+                     }
+
+                ViewContext.Writer.Write("</td><td>");
+
+                Html.DevExpress().TextBox(
+                       settingsclassID =>
+                       {
+                           settingsclassID.Name = "ClassSetupID";
+                           settingsclassID.ControlStyle.CssClass = "editor";
+                           settingsclassID.ClientVisible = false;
+                       }
+                   ).GetHtml();
+
+
+
+                ViewContext.Writer.Write("</td></tr></table>");
+
+
+            });
+        });
+
+        settings.Panes.Add(subpane =>
+        {
+            subpane.Name = "BottomPane";
+            subpane.PaneStyle.CssClass = "contentPane";
+            //subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+            subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+            subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+            subpane.Separator.Visible = DefaultBoolean.True;
+            subpane.Size = System.Web.UI.WebControls.Unit.Percentage(80);
+            subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.PaneStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(5);
+            subpane.SetContent(() =>
+            {
+                Html.RenderPartial("ListStudentAttendance", ViewData["AttendanceStudent"]);
+            });
+        });
+
+        settings.Panes.Add(subpane =>
+        {
+            subpane.Name = "FooterPane";
+            subpane.PaneStyle.CssClass = "contentPane";
+            subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+            subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+            subpane.Separator.Visible = DefaultBoolean.True;
+            subpane.Size = System.Web.UI.WebControls.Unit.Pixel(60);
+            subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.PaneStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(1);
+            subpane.SetContent(() =>
+            {
+
+
+                 ViewContext.Writer.Write("<table Style=\"margin-top:10px;\"  ><tr><td>");
+
+                 Html.DevExpress().CheckBox(settingchk =>
+                 {
+                     settingchk.Name = "cbSelectAllAttendance";
+                     settingchk.Text = "Select All";
+                     settingchk.ControlStyle.ForeColor = System.Drawing.Color.Red;
+                     settingchk.ControlStyle.Font.Size = 12;
+                     settingchk.Properties.ClientSideEvents.CheckedChanged = "attendanceDailyController.SelectAllStudent";
+                     // settingchk.Checked = c.Grid.VisibleRowCount == c.Grid.Selection.Count;
+                 }).GetHtml();
+
+                 ViewContext.Writer.Write("</td><td Style=\"padding-right:10px;\">");
+
+
+
+
+                Html.DevExpress().TextBox(
+                    settingsclassID =>
+                    {
+                        settingsclassID.Name = "StudentIDs";
+                        settingsclassID.ControlStyle.CssClass = "editor";
+                        settingsclassID.ClientVisible = false;
+
+                    }
+                ).GetHtml();
+                ViewContext.Writer.Write("</td><td Style=\"padding-right:10px;\">");
+                  Html.DevExpress().Label(
+                settingslbl =>
+                {
+                    settingslbl.Name = "lbl1";
+                   // settingslbl.ControlStyle.CssClass = "label";
+                    settingslbl.Text = "Attendance Type";
+                    settingslbl.ControlStyle.ForeColor = System.Drawing.Color.Black;
+                    settingslbl.ControlStyle.Font.Bold = true;
+
+                }
+            ).GetHtml();
+               ViewContext.Writer.Write("</td><td Style=\"padding-right:10px;\">");
+                 @Html.DevExpress().ComboBox(
+                  settingscbo =>
+                  {
+                      settingscbo.Name = "AttendanceTypeID";
+                      settingscbo.ControlStyle.CssClass = "editor";
+                      //settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                      settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                      settingscbo.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+                      settingscbo.Properties.TextField = "Value";
+                      settingscbo.Properties.ValueField = "Key";
+                      settingscbo.SelectedIndex = 0;
+                     // settingscbo.Properties.DataSource = cCommon.GetAttendanceTypeList();
+
+                  }
+              ).BindList(cCommon.GetAttendanceTypeList()).GetHtml();
+
+            ViewContext.Writer.Write("</td><td Style=\"padding-right:10px;\">");
+                  Html.DevExpress().Label(
+                settingslbl =>
+                {
+                    settingslbl.Name = "lbl2";
+                    settingslbl.ControlStyle.CssClass = "label";
+                    settingslbl.Text = "Description";
+                    settingslbl.ControlStyle.ForeColor = System.Drawing.Color.Black;
+                    settingslbl.ControlStyle.Font.Bold = true;
+                }
+            ).GetHtml();
+               ViewContext.Writer.Write("</td><td Style=\"padding-right:10px;\">");
+                 Html.DevExpress().TextBox(
+                    settingsclassID =>
+                    {
+                        settingsclassID.Name = "Description";
+                        settingsclassID.ControlStyle.CssClass = "editor";
+
+                        settingsclassID.ClientVisible = true;
+                    }
+                ).GetHtml();
+            ViewContext.Writer.Write("</td><td  Style=\"padding-right:10px; padding-left:10px; \">");
+
+            if (PermissionFlag._AddFlag == true)
+            {
+                Html.DevExpress().Button(
+                  settingsbtn =>
+                  {
+                      settingsbtn.Name = "btnUpdate";
+                      settingsbtn.ControlStyle.CssClass = "button";
+                      settingsbtn.Text = "Apply Setting";
+                      settingsbtn.Width = 150;
+                      settingsbtn.Images.Image.IconID = IconID.EditPaste32x32;
+
+
+                        settingsbtn.ClientSideEvents.Click = "attendanceDailyController.ClickAttendanceUpdate";
+
+                  }).GetHtml();
+            }
+
+
+                ViewContext.Writer.Write("</td></tr></table>");
+
+
+            });
+        });
+
+
+
+
+    }).GetHtml()*@
+
+
+
+
+
+
+
+
+
+
+
+@*@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "loadingPanelAttendanceDaily";
+        settings.Modal = true;
+        settings.ContainerElementID = "";
+        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+    }).GetHtml()*@

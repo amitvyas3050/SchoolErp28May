@@ -1,0 +1,139 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@{
+    var gridView = Html.DevExpress().GridView(gridViewSettings =>
+    {
+        gridViewSettings.Name = "gridView";
+        gridViewSettings.KeyFieldName = "FeeTermID";
+
+        gridViewSettings.CallbackRouteValues = new { Controller = "FeesTermMaster", Action = "PartialFeesTermView" };
+        gridViewSettings.CustomActionRouteValues = new { Controller = "FeesTermMaster", Action = "GridViewCustomActionPartial" };
+        gridViewSettings.SettingsEditing.AddNewRowRouteValues = new { Controller = "FeesTermMaster", Action = "AddNewFeeTerm" };
+        gridViewSettings.SettingsEditing.UpdateRowRouteValues = new { Controller = "FeesTermMaster", Action = "UpdateFeeTerm" };
+
+        gridViewSettings.EnablePagingGestures = AutoBoolean.False;
+
+        gridViewSettings.ControlStyle.CssClass = "grid-view";
+        gridViewSettings.Width = Unit.Percentage(100);
+
+        gridViewSettings.Styles.Cell.Wrap = DefaultBoolean.False;
+        gridViewSettings.Styles.PagerBottomPanel.CssClass = "pager";
+        gridViewSettings.Styles.FocusedRow.CssClass = "focused";
+
+        gridViewSettings.SettingsBehavior.AllowFocusedRow = true;
+        gridViewSettings.SettingsBehavior.AllowSelectByRowClick = true;
+        gridViewSettings.SettingsBehavior.AllowEllipsisInText = true;
+        gridViewSettings.SettingsBehavior.AllowDragDrop = false;
+
+        gridViewSettings.SettingsSearchPanel.CustomEditorName = "searchButtonEdit";
+
+        gridViewSettings.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
+        gridViewSettings.SettingsEditing.EditFormColumnCount = 2;
+
+        gridViewSettings.SettingsSearchPanel.CustomEditorName = "searchButtonEdit";
+
+        gridViewSettings.Settings.VerticalScrollBarMode = ScrollBarMode.Hidden;
+        gridViewSettings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+        gridViewSettings.Settings.ShowHeaderFilterButton = true;
+
+        gridViewSettings.SettingsPager.PageSize = 15;
+        gridViewSettings.SettingsPager.EnableAdaptivity = true;
+        gridViewSettings.SettingsPager.PageSizeItemSettings.Visible = true;
+
+        gridViewSettings.SettingsExport.EnableClientSideExportAPI = true;
+        gridViewSettings.SettingsExport.ExportSelectedRowsOnly = true;
+
+        gridViewSettings.SettingsPopup.EditForm.SettingsAdaptivity.MaxWidth = 800;
+        gridViewSettings.SettingsPopup.EditForm.SettingsAdaptivity.Mode = PopupControlAdaptivityMode.Always;
+        gridViewSettings.SettingsPopup.EditForm.SettingsAdaptivity.VerticalAlign = PopupAdaptiveVerticalAlign.WindowCenter;
+
+        gridViewSettings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        gridViewSettings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        gridViewSettings.EditFormLayoutProperties.ColCount = 2;
+        gridViewSettings.EditFormLayoutProperties.Items.Add("FeeTermName").RequiredMarkDisplayMode = FieldRequiredMarkMode.Required;
+        gridViewSettings.EditFormLayoutProperties.Items.Add("FeeTermType").RequiredMarkDisplayMode = FieldRequiredMarkMode.Required;
+        gridViewSettings.EditFormLayoutProperties.Items.Add("FineAmount").RequiredMarkDisplayMode = FieldRequiredMarkMode.Required;
+        gridViewSettings.EditFormLayoutProperties.Items.Add("FeeTermFromDate").RequiredMarkDisplayMode = FieldRequiredMarkMode.Required;
+        gridViewSettings.EditFormLayoutProperties.Items.Add("FeeTermToDate").RequiredMarkDisplayMode = FieldRequiredMarkMode.Required;
+
+        gridViewSettings.EditFormLayoutProperties.Items.AddCommandItem(itemSettings =>
+        {
+            itemSettings.ColumnSpan = 2;
+            itemSettings.HorizontalAlign = FormLayoutHorizontalAlign.Right;
+        });
+
+        gridViewSettings.CommandColumn.Visible = true;
+        gridViewSettings.CommandColumn.ShowSelectCheckbox = true;
+        gridViewSettings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+        gridViewSettings.CommandColumn.VisibleIndex = 0;
+        gridViewSettings.CommandColumn.Width = Unit.Pixel(52);
+
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "FeeTermName";
+            column.Caption = "FeeTerm Name";
+            column.ToolTip = "Click to Sort";
+            column.Width = Unit.Pixel(300);
+        });
+
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "FeeTermType";
+            column.Caption = "FeeTerm Type";
+            column.ToolTip = "Click to Sort";
+            column.Width = Unit.Pixel(200);
+        });
+
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "FineAmount";
+            column.Caption = "Fine Amount";
+            column.ToolTip = "Click to Sort";
+            column.Width = Unit.Pixel(100);
+        });
+
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "FeeTermFromDate";
+            column.Caption = "From Date";
+            column.ToolTip = "Click to Sort";
+            column.PropertiesEdit.DisplayFormatString = "M/d/yyyy";
+            column.Width = Unit.Pixel(150);
+        });
+
+
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "FeeTermToDate";
+            column.Caption = "To Date";
+            column.ToolTip = "Click to Sort";
+            column.PropertiesEdit.DisplayFormatString = "M/d/yyyy";
+            column.Width = Unit.Pixel(150);
+
+
+        });
+        gridViewSettings.ClientSideEvents.Init = "onGridViewInit";
+        gridViewSettings.ClientSideEvents.SelectionChanged = "onGridViewSelectionChanged";
+        gridViewSettings.ClientSideEvents.BeginCallback = "onGridViewBeginCallback";
+
+        gridViewSettings.InitNewRow += (s, e) =>
+        {
+            //e.NewValues["ClassDescription"] = 1;
+            //e.NewValues["DisplayOrder"] = 2;
+            //e.NewValues["Status"] = 1;
+            //e.NewValues["IsDraft"] = true;
+            //e.NewValues["IsArchived"] = false;
+        };
+        gridViewSettings.CellEditorInitialize = (s, e) =>
+        {
+            ((ASPxEdit)e.Editor).ValidationSettings.Display = Display.Dynamic;
+        };
+    });
+    if (ViewBag.GeneralError != null)
+    {
+        gridView.SetEditErrorText(ViewBag.GeneralError);
+    }
+}
+
+@gridView.Bind(Model).GetHtml()

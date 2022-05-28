@@ -1,0 +1,172 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@model StudentPreviousDetail
+
+@Html.Hidden("ID")
+@Html.Hidden("StudentID")
+
+<div id="form_edit_controls" style="width:100%;height:auto;">
+   
+     
+   <div class="mainbox">
+
+       <div class="box90">
+
+            @Html.DevExpress().LabelFor(
+            model=> model.PreviousSchoolName,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "PreviousSchoolName";
+                settings.AssociatedControlName = "PreviousSchoolName";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model=> model.PreviousSchoolName,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                
+            }).GetHtml()
+
+       </div>
+
+   </div>
+
+     <div class="mainbox">
+        <div class="box30">
+             @Html.DevExpress().LabelFor(
+            model=> model.ExamResult,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "ExamResult";
+                settings.AssociatedControlName = "ExamResult";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.ExamResult,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(90);
+            }).GetHtml()
+
+        </div>
+        <div class="box20">
+              @Html.DevExpress().LabelFor(
+            model=> model.DateOfLeaving,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "DateOfLeaving";
+                settings.AssociatedControlName = "DateOfLeaving";
+            }
+        ).GetHtml()
+    @Html.DevExpress().DateEditFor(
+            model => model.DateOfLeaving,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.Properties.EditFormatString = "dd MMM yyyy";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(90);
+            }).GetHtml()
+
+        </div>
+        <div class="box30">
+             @Html.DevExpress().LabelFor(
+            model=> model.PreviousClass,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "PreviousClass";
+                settings.AssociatedControlName = "PreviousClass";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.PreviousClass,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(90);
+            }).GetHtml()
+
+        </div>
+
+    </div>
+
+  <div class="mainbox">
+ 
+ 
+<div class="box90" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.PreviousDetailRemark,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Remark";
+                settings.AssociatedControlName = "Remark";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.PreviousDetailRemark,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(90);
+            }).GetHtml()
+</div>
+
+    
+
+
+
+
+
+   </div>
+
+  </div>
+    
+
+
+
+<div style="clear:both"></div>
+<div class="lineFooter" >
+<div class="divSubmit">
+     @Html.DevExpress().Label(
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "";
+                //settings.AssociatedControlName = "LastName";
+            }
+        ).GetHtml()
+     @*@if(PermissionFlag._ModFlag==true)
+       {
+         
+
+    @Html.DevExpress().Button(
+        settings => {
+            settings.Name = "btnUpdatePreviousDetail";
+            settings.ControlStyle.CssClass = "button";
+            settings.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+            settings.Text = "Update";
+            settings.UseSubmitBehavior = true;
+            settings.Images.Image.IconID = IconID.SaveSave16x16;
+            
+        }).GetHtml()
+     }*@
+</div>
+
+     <div class="divError" >
+
+   
+    </div>
+   <br />
+    <br /><br /><br />
+    <br /><br />
+    </div>
+
+    

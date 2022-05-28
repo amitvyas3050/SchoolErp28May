@@ -1,0 +1,307 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridStudentAttendance";
+            settings.KeyFieldName = "StudentAttendanceID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.ShowSelectCheckbox = true;
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Pixel(30);
+            settings.CommandColumn.SetHeaderTemplateContent(c =>
+            {
+                Html.DevExpress().CheckBox(settingsCheckBox =>
+                {
+                    settingsCheckBox.Name = "cbSelectAll";
+                    settingsCheckBox.Text = "";
+                    settingsCheckBox.Properties.ClientSideEvents.CheckedChanged = string.Format("function(s, e) {{ if(s.GetChecked()) {0}.SelectRows(); else {0}.UnselectRows(); }}", settings.Name);
+                    settingsCheckBox.Checked = c.Grid.VisibleRowCount == c.Grid.Selection.Count;
+                }).Render();
+            });
+
+            settings.ClientSideEvents.SelectionChanged = "attendanceDailyController.SelectionChanged";
+
+            settings.CallbackRouteValues = new { Controller = "AttendanceDaily", Action = "PartialStudentAttendanceView", mClassAttendenceID = ViewData["ClassAttendanceID"] };
+
+            settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "AttendanceDaily", Action = "updateStudentAttendanceAll", mClassAttendenceID1 = ViewData["ClassAttendanceID"] };
+
+            if (PermissionFlag._ModFlag == true)
+            {
+                settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+                settings.SettingsEditing.BatchEditSettings.EditMode = appSchool.Controllers.GridViewEditingDemosHelper.BatchEditMode;
+                settings.SettingsEditing.BatchEditSettings.StartEditAction = appSchool.Controllers.GridViewEditingDemosHelper.BatchStartEditAction;
+            }
+            settings.SettingsBehavior.ConfirmDelete = true;
+
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+            settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+
+            settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(2);
+            //settings.CommandColumn.ButtonType = GridViewCommandButtonType.Default;
+            //settings.CommandColumn.ShowEditButton = true;
+            //settings.CommandColumn.ShowNewButtonInHeader = true;
+            //settings.CommandColumn.ShowDeleteButton = true;
+
+            settings.Columns.Add("StudentAttendanceID").Visible = false;
+
+            settings.Columns.Add("StudentID").Visible = false;
+            settings.Columns.Add("ClassAttendanceID").Visible = false;
+
+            settings.Columns.Add(column =>
+                {
+                    column.FieldName = "RollNo";
+                    column.Caption = "RollNo";
+                    column.ReadOnly = true;
+                    column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+
+                });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "EnrollmentNo";
+                column.Caption = "EnrollmentNo";
+                column.ReadOnly = true;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(130);
+
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "FullName";
+                column.Caption = "Student Name";
+                column.ReadOnly = true;
+
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "FatherName";
+                column.Caption = "Father Name";
+                column.ReadOnly = true;
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "DateOfBirth";
+                column.Caption = "Date Of Birth";
+                column.ReadOnly = true;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(140);
+                //column.ColumnType = MVCxGridViewColumnType.DateEdit;
+                //var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                //comboBoxProperties.DataSource = (new appSchool.Repositories.StudentRegistrationRepository()).GetRegistrationGridData();
+                //comboBoxProperties.TextField = "DateOfBirth";
+                //comboBoxProperties.ValueField = "StudentID";
+                //comboBoxProperties.DisplayFormatString = "dd/MM/yyyy";
+                //comboBoxProperties.ValueType = typeof(int);
+
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "SMSMobileNo";
+                column.Caption = "Mobile No";
+                column.ReadOnly = true;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(110);
+
+            });
+
+            settings.Columns.Add(column =>
+            {
+
+                column.FieldName = "Attendance";
+                column.Caption = "Attendance";
+
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = cCommon.GetAttendanceTypeList();
+                comboBoxProperties.TextField = "Value";
+                comboBoxProperties.ValueField = "Key";
+                //  comboBoxProperties.ValueType = typeof(int);
+          });
+
+            //settings.Columns.Add(column =>
+            //{
+            //    column.FieldName = "TCGiven";
+            //    column.Caption = "TCGiven";
+            //    //column.Visible = SchoolSetupStaticClass._BusFacility;
+            //    column.ColumnType = MVCxGridViewColumnType.CheckBox;
+            //    column.Visible = true;
+            //    column.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+            //});
+            
+            
+            
+            
+            
+            //settings.Columns.Add(column =>
+            //{
+
+            //    column.FieldName = "Attendance";
+            //    column.Caption = "Attendance";
+            //    column.ColumnType = MVCxGridViewColumnType.TextBox;
+            //    var textBoxProperties = column.PropertiesEdit as TextBoxProperties;
+            //    textBoxProperties.ValidationSettings.EnableCustomValidation = true;
+            //    textBoxProperties.MaxLength = 1;
+            //    column.Width = System.Web.UI.WebControls.Unit.Pixel(90);
+               
+            //});
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = @"Attendance";
+
+                column.SetDataItemTemplateContent(c =>
+                {
+                    Html.DevExpress().CheckBoxList(radiobtnSettings =>
+                    {
+                        radiobtnSettings.Name = "rdbtn" + c.KeyValue;
+
+                        radiobtnSettings.ClientEnabled = true;
+                        radiobtnSettings.Properties.Items.Add("P", "Present").Selected = true;
+                        radiobtnSettings.Properties.Items.Add("A", "Absent").Selected = true;
+                        radiobtnSettings.Properties.Items.Add("L", "Leave").Selected = true;
+                        radiobtnSettings.Properties.Items.Add("M", "M L").Selected = true;
+                        radiobtnSettings.ClientVisible = true;
+                        //radiobtnSettings.Properties.ClientSideEvents.CheckedChanged = @"function (s, e) {alert('changed');}";
+                    }).Render();
+                });
+            });
+            
+            //settings.Columns.Add(column =>
+            //{
+            //    column.FieldName = @"Attendance";
+
+            //    column.SetDataItemTemplateContent(c =>
+            //    {
+            //        Html.DevExpress().RadioButtonList(radiobtnSettings =>
+            //        {
+            //            radiobtnSettings.Name = "rdbtn" + c.KeyValue;
+
+            //            radiobtnSettings.ClientEnabled = true;
+            //            radiobtnSettings.Properties.Items.Add("P", "Present").Selected = true;
+            //            radiobtnSettings.Properties.Items.Add("A", "Absent").Selected = true;
+            //            radiobtnSettings.Properties.Items.Add("L", "Leave").Selected = true;
+            //            radiobtnSettings.ClientVisible = true;
+            //            //radiobtnSettings.Properties.ClientSideEvents.CheckedChanged = @"function (s, e) {alert('changed');}";
+            //        }).Render();
+            //    });
+            //});
+       
+            
+          //settings.Columns.Add(lColumn => 
+          //  {
+
+          //      lColumn.FieldName = "Attendance";
+          //      lColumn.Caption = "Attendance";
+          //   lColumn.SetDataItemTemplateContent(c => { Html.DevExpress().RadioButtonList(ck =>
+          //   {
+
+          //       ck.Name = "cb_" + c.KeyValue;
+          //     ck.Properties.Items.AddRange(new string[] { "Oui", "Non", "NC" });
+          //     ck.Properties.ValueField = "Attendance";
+          //   }).Render();
+            
+          //  });
+          //  });
+            
+           // settings.Columns.Add(lColumn => {
+           //     lColumn.FieldName = "Attendance";
+           //     lColumn.Caption = "Attendance";
+           //    lColumn.SetDataItemTemplateContent(c => 
+           //   { 
+           //     Html.DevExpress().RadioButtonList(ck => {
+           //         ck.Name = "cb_" + c.KeyValue;
+           //         //ck.Properties.DataSource = cCommon.GetAttendanceTypeList();
+           //         ck.Properties.Items.AddRange(new string[] { "P", "A", "L" });
+           //         ck.Properties.ValueField = "Attendance";
+           //     }).Render();
+           // });
+           //});
+
+            
+            
+            
+            
+            settings.Columns.Add("Description");
+          
+            //settings.Columns.Add("HostelFacility", MVCxGridViewColumnType.CheckBox);
+            //settings.Columns.Add("BusFacility", MVCxGridViewColumnType.CheckBox);
+         
+            settings.CellEditorInitialize = (s, e) =>
+            {
+                ASPxEdit editor = (ASPxEdit)e.Editor;
+                editor.ValidationSettings.Display = Display.Dynamic;
+            };
+
+            settings.HtmlDataCellPrepared = (sender, e) =>
+            {
+                if (e.DataColumn.FieldName == "Attendance")
+                {
+                    if (Convert.ToString(e.CellValue) == "A")
+                    {
+                        e.Cell.BackColor = System.Drawing.Color.FromArgb(240, 128, 128);
+                    }
+                    if (Convert.ToString(e.CellValue) == "L")
+                    {
+                        e.Cell.BackColor = System.Drawing.Color.FromArgb(135, 206, 250);
+                    }
+                }
+
+            };
+            
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+           
+  
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+            
+            
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            
+            settings.SettingsBehavior.AllowFocusedRow = true;
+          //  settings.ClientSideEvents.FocusedRowChanged = "attendanceDailyController.RowSelectionChange";
+
+
+            settings.SummaryDisplayText = (s, e) =>
+            {
+                //if (e.Item.Tag == "FakeSummary")
+                //    e.Text = string.Format("Sum = {0}", e.Value);
+
+                @Html.DevExpress().Label(
+                settingslbl =>
+                {
+                    settingslbl.Name = "label1";
+                    settingslbl.Text = "Some text";
+                    settingslbl.Properties.EnableClientSideAPI = true;
+                }).GetHtml();
+                
+                
+            };
+            
+            
+            
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+

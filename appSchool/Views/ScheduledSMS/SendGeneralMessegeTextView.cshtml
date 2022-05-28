@@ -1,0 +1,59 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+@model modelSendSms
+
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    Html.EnableClientValidation(true);
+}
+
+
+
+
+<div>
+    @using (Ajax.BeginForm("SMSButtonClick", "ScheduledSMS",
+        new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnBegin = "loadingPanelSendSMS.Show();",
+            OnComplete = "loadingPanelSendSMS.Hide();",
+            UpdateTargetId = "contentPersonal",
+            InsertionMode = InsertionMode.Replace,
+            OnSuccess = "alert('Sent SMS Successfuly');"
+        },
+        new
+        {
+            id = "validationForm1",
+    //@class = "edit_form",
+    //style="height: 200px; position:relative; width: 100%;",
+    //enctype = "multipart/form-data"
+         }
+        ))
+       {
+
+        <div id="divmsg" style="color:red;">
+
+        </div>
+
+        <div id="contentPersonal">
+
+         @Html.Partial("SendGeneralMessegeEditTextView", Model)
+
+       </div>
+
+
+
+       }
+</div>
+
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "loadingPanelSendSMS";
+        settings.Modal = true;
+        settings.ContainerElementID = "";
+        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+    }).GetHtml()
+

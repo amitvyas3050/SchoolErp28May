@@ -1,0 +1,71 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "gridView";
+            settings.KeyFieldName = "ID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Pixel(40);
+          
+            settings.SettingsPager.PageSize = 200;
+            settings.ControlStyle.CssClass = "grid-view";
+
+            settings.CallbackRouteValues = new { Controller = "FacultyAllotment", Action = "PartialFacultyAllotmentView", pFacultyAllotmentID = int.Parse(ViewData["FacultyAllotmentID"].ToString()), pClassID = int.Parse(ViewData["ClassID_ForFacultyAllotment"].ToString()), pClassSetupID = int.Parse(ViewData["ClassSetupID_ForFacultyAllotment"].ToString()), pFacultyID = int.Parse(ViewData["FacultyID_ForFacultyAllotment"].ToString()) };
+
+            settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "FacultyAllotment", Action = "updateFacultyAllotmentAll", pFacultyAllotmentID = int.Parse(ViewData["FacultyAllotmentID"].ToString()), pClassID = int.Parse(ViewData["ClassID_ForFacultyAllotment"].ToString()), pClassSetupID = int.Parse(ViewData["ClassSetupID_ForFacultyAllotment"].ToString()), pFacultyID = int.Parse(ViewData["FacultyID_ForFacultyAllotment"].ToString()) };
+            
+            settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+            settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+            settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+            //settings.SettingsCommandButton.EditButton.ButtonType = GridViewCommandButtonType.Button;
+            
+            settings.CommandColumn.ShowNewButtonInHeader = true;
+            settings.CommandColumn.ShowDeleteButton = true;
+           //  settings.SettingsBehavior.ConfirmDelete = true;
+           // settings.SettingsPopup.EditForm.ShowHeader = true;
+           
+            settings.Columns.Add("ID").Visible=false;
+            settings.Columns.Add("FacultyAllotmentID").Visible = false;
+          
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "SubjectIDL1";
+                column.Caption = "Subject Level1";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(300);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.FacultyAllotmentDetailRepository()).GetSubjectListByClassIDDistinct(int.Parse(ViewData["ClassID_ForFacultyAllotment"].ToString()), byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "SubjectNameL1";
+                comboBoxProperties.ValueField = "IdL1";
+                comboBoxProperties.ValueType = typeof(int);
+                
+            });
+
+         
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+            };
+
+              settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+

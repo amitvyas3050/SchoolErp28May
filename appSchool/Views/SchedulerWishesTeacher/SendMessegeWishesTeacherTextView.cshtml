@@ -1,0 +1,51 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+@model modelSendSms
+
+
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    Html.EnableClientValidation(true);
+}
+    
+<div>
+@using (Ajax.BeginForm("SMSButtonClick", "SchedulerWishesTeacher",
+    new AjaxOptions {
+        HttpMethod = "POST",
+        UpdateTargetId = "contentPersonalWishes",
+        OnBegin = "loadingPanelSMSWishes.Show();",
+        OnComplete = "loadingPanelSMSWishes.Hide();",
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "alert('Sent SMS Successfuly');"
+    },
+    new {
+        id = "validationFormWishes",
+        //@class = "edit_form",
+        //style="height: 200px; position:relative; width: 100%;",
+        //enctype = "multipart/form-data" 
+    }
+    )) {
+
+
+      <div id="contentPersonalWishes" class="edit_form">
+       
+    @Html.Partial("SendMessegeWishesTeacherEditTextView", Model)
+
+    </div>
+    
+
+    
+}
+</div>
+@Html.DevExpress().LoadingPanel(
+    settings => {
+        settings.Name = "loadingPanelSMSWishes";
+        settings.Modal = true;
+        settings.ContainerElementID = "";
+        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+    }).GetHtml()
+
+  
+
+

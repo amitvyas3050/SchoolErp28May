@@ -1,0 +1,164 @@
+﻿@using appSchool.Repositories
+@using appSchool.Model
+@using appSchool.ViewModels
+@model modelSendSms
+
+  
+  
+
+<div class="SMSTempForm">
+      <div class="Line50">
+           @Html.DevExpress().LabelFor(
+            model=>model.PrefixHindi,
+    settings =>{
+        settings.Text = "For Hindi";
+        settings.ControlStyle.CssClass = "editor";
+       // settings.AssociatedControlName = "";
+     }).GetHtml()
+ @Html.DevExpress().TextBoxFor(
+            model=> model.PrefixHindi,
+            settings => {
+                settings.ShowModelErrors = true;
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                //settings.Name = "txtMessege";
+                settings.Name = "PrefixHindi";
+                settings.Width = 200;
+                settings.ReadOnly = false;
+            }).GetHtml()
+ @Html.DevExpress().MemoFor(
+            model=> model.smsTextHindi,
+            settings => {
+                settings.ShowModelErrors = true;
+                settings.ControlStyle.CssClass = "editor";
+              
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                //settings.Name = "txtMessege";
+                settings.Name = "smsTextHindi";
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                settings.Properties.ClientSideEvents.KeyPress = "feesDefaulterController.keyPressForWordCountHindi";
+            }).GetHtml()
+    
+        
+        @Html.DevExpress().TextBox(
+    settings =>{
+        settings.Text = "0";
+        settings.ClientVisible = true;
+        settings.Name = "lblCharCountHindi";
+        //settings.AssociatedControlName = "OrderedBy";
+     }).GetHtml()
+
+
+    </div>
+
+    <div class="Line50">
+          @Html.DevExpress().LabelFor(
+        model=>model.PrefixEnglish,
+    settings =>{
+        
+        settings.Text = "For English";
+        settings.ControlStyle.CssClass = "editor";
+       // settings.AssociatedControlName = "";
+     }).GetHtml()
+ @Html.DevExpress().TextBoxFor(
+            model=> model.PrefixEnglish,
+            settings => {
+                settings.ShowModelErrors = true;
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                //settings.Name = "txtMessege";
+                settings.Name = "PrefixEnglish";
+                settings.Width = 200;
+                settings.ReadOnly = false;
+            }).GetHtml()
+
+
+    @Html.DevExpress().MemoFor(
+            model=> model.smsTextEnglish,
+            settings => {
+                settings.ShowModelErrors = true;
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                //settings.Name = "txtMessege";
+                settings.Name = "smsTextEnglish";
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                settings.Properties.ClientSideEvents.KeyUp = "feesDefaulterController.keyPressForWordCountEnglish";
+            }).GetHtml()
+           @Html.DevExpress().TextBox(
+    settings =>{
+        settings.Text = "0";
+        settings.ClientVisible = true;
+        settings.Name = "lblCharCount";
+        //settings.AssociatedControlName = "OrderedBy";
+     }).GetHtml()
+
+
+    </div>
+  
+  
+
+
+
+  <div class="Line100">
+     <div class="mainbox">
+
+         <div class="box85" style="float:left;">
+               @Html.DevExpress().CheckBoxFor(
+         model=>model.includeName,
+         settings => {
+         settings.Name = "inCludeName";
+         settings.Text = "Select to Include Name & Class in Message / Use $Name$, $Class$, $TotalFee$, $Term$ & $Fine$";
+         settings.ControlStyle.ForeColor = System.Drawing.Color.Maroon;
+         settings.ControlStyle.Font.Size = 12;
+         settings.Properties.ClientSideEvents.CheckedChanged = "feesDefaulterController.IncludeNameAndClass";
+         settings.Checked = true;
+         //if (SettingMasterStaticClass._IncludeNameInSMS == true)
+         //{
+            
+         //    settings.ReadOnly = true;
+         //}
+         //else
+         //{
+            
+         //    settings.ReadOnly = false;
+         //}
+         }
+         ).GetHtml()
+         </div>
+
+         <div class="box15" style="float:left; text-align:center;">
+        @if(PermissionFlag._AddFlag==true)
+        {
+    @Html.DevExpress().Button(
+     settings => {
+                settings.ControlStyle.CssClass = "button";
+                settings.Name = "btnSendSms";
+                settings.Text = "Send SMS";
+                settings.Images.Image.IconID = IconID.MailMail16x16;
+                settings.UseSubmitBehavior = true;
+            }).GetHtml()
+        }</div>
+         </div>
+        </div> 
+
+     </div>
+
+ 
+@Html.DevExpress().MemoFor(
+             model=> model.smsMobileNo,
+            settings =>{
+                settings.ShowModelErrors = true;
+                settings.ControlStyle.CssClass = "editor";
+                //settings.ShowModelErrors = true;
+                //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Name = "smsMobileNo";
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                settings.ClientVisible = false;
+                //settings.Properties.EnableClientSideAPI = true;
+          
+            }).GetHtml()
+         
+

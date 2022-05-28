@@ -1,0 +1,154 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Repositories
+@*@if (ViewData["FeesReminderDate"] == null )
+{
+    ViewData["FeesReminderDate"] = DateTime.Now;
+}*@
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridFeeDefaulter";
+            settings.KeyFieldName = "StudmasterID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.CallbackRouteValues = new { Controller = "FeesDefaulter", Action = "PartialSendSMSAbsenteesView" };
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+            settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+            //settings.Columns.Add("StudentAttendanceID").Visible = false;
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.ShowSelectCheckbox = true;
+
+
+           // settings.CommandColumn.Width = 20;
+            settings.CommandColumn.SetHeaderTemplateContent(c =>
+            {
+                Html.DevExpress().CheckBox(settingsCheckBox =>
+                {
+                    settingsCheckBox.Name = "cbSelectAll";
+                    settingsCheckBox.Text = "";
+                    settingsCheckBox.Properties.ClientSideEvents.CheckedChanged = string.Format("function(s, e) {{ if(s.GetChecked()) {0}.SelectRows(); else {0}.UnselectRows(); }}", settings.Name);
+                    settingsCheckBox.Checked = c.Grid.VisibleRowCount == c.Grid.Selection.Count;
+                    
+                    
+                }).Render();
+               
+               
+            });
+            //settings.CommandColumn.Caption = "Select";
+            settings.SettingsBehavior.AllowSelectByRowClick = false;
+            
+            settings.ClientSideEvents.SelectionChanged = "feesDefaulterController.SelectionChanged";
+
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "StudmasterID";
+                column.Visible = false;
+            });
+
+            settings.Columns.Add(column =>
+            {
+
+                column.FieldName = "StudentID";
+                column.Caption = "StudentID";
+                //column.Width = 100;
+                column.Visible = false;
+            });
+            settings.Columns.Add(column => {
+
+                column.FieldName = "FullName";
+                column.Caption="Name";
+                column.Width = 180;
+              //  column.GroupIndex = 0;
+            });
+            settings.Columns.Add(column => {
+                column.FieldName = "FatherName";
+                column.Width = 180;
+            });
+
+
+            settings.Columns.Add(column => {
+                column.FieldName = "SMSMobileNo";
+                column.Caption=  "MobileNo";
+                column.Width = 100;
+            });
+
+            settings.Columns.Add(column => {
+                column.FieldName = "ClassName";
+                column.Caption = "Class";
+                column.Width = 80;
+            });
+
+        
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "FeeTermType";
+                column.Caption = "Term Name";
+                column.Width = 130;
+            });
+            
+            settings.Columns.Add(column => {
+                column.FieldName = "FeeTermFromDate";
+                column.Caption = "Form Date";
+                column.PropertiesEdit.DisplayFormatString = "dd/MMM/yyyy";
+                column.Width = 120;
+            });
+            settings.Columns.Add(column => {
+                column.FieldName = "FeeTermToDate";
+                column.Caption = "To Date";
+                column.PropertiesEdit.DisplayFormatString = "dd/MMM/yyyy";
+                column.Width = 120;
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Amount";
+                column.Width = 120;
+            });
+            //settings.Columns.Add(column => {
+            //    column.FieldName = "DueDate";
+            //});
+            
+            
+            
+            
+
+            settings.Settings.ShowGroupPanel = true;
+            settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Amount");
+        
+            
+             
+         
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            settings.SettingsPager.PageSize = 200;
+         
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Pixel(40);
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+          
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            settings.SettingsPager.PageSize = 100;
+            settings.SettingsBehavior.AllowFocusedRow = true;
+          //  settings.ClientSideEvents.FocusedRowChanged = "sendMessegeController.RowSelectionChangeM";
+        });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+

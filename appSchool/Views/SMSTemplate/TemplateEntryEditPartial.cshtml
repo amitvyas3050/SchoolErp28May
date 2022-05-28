@@ -1,0 +1,303 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@model modelStudentPersonalInfo
+
+@Html.Hidden("StudentID")
+
+<div id="form_edit_controls" style="width:100%;height:auto;">
+<div class="line" >
+    @Html.DevExpress().LabelFor(
+            model=> model.EnrollmentNo,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Enrollment No : ";
+                settings.AssociatedControlName = "EnrollmentNo";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model=> model.EnrollmentNo,
+            settings => {
+                settings.Name = "EnrollmentNo";    
+                settings.ControlStyle.CssClass = "editor";
+                //settings.Properties.MaskSettings.Mask = "(AAA)-000-0000";
+                //settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.None;
+            }).GetHtml()
+    
+</div>
+<div class="line" >
+    @Html.DevExpress().LabelFor(
+            model=> model.EnrollmentDate,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Enrollment Date : ";
+                settings.AssociatedControlName = "EnrollmentDate";
+            }
+        ).GetHtml()
+      @Html.DevExpress().DateEditFor(
+                model=> model.EnrollmentDate,
+                settings => {
+                    settings.Name = "EnrollmentDate";
+                    settings.ControlStyle.CssClass = "editor";
+                    settings.Properties.NullText = "dd MMM yyyy";
+                    settings.Properties.EditFormat = EditFormat.Custom;
+                    settings.Properties.EditFormatString = "dd MMM yyyy";
+                    //settings.ShowModelErrors = true;
+                    //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                }
+            ).GetHtml()
+</div>
+<div class="line" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.FirstName,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "First Name : ";
+                settings.AssociatedControlName = "FirstName";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model=> model.FirstName,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+  
+    </div>
+<div class="line" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.LastName,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Last Name : ";
+                settings.AssociatedControlName = "LastName";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.LastName,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+
+    </div>
+<div class="line" >
+    @Html.DevExpress().LabelFor(
+            model=> model.DateOfBirth,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Birth Date : ";
+                settings.AssociatedControlName = "DateofBirth";
+            }
+        ).GetHtml()
+    @Html.DevExpress().DateEditFor(
+            model => model.DateOfBirth,
+            settings => {
+                settings.Name = "DateofBirth";
+                settings.ControlStyle.CssClass = "editor";
+                settings.Properties.NullText = "dd MMM yyyy";
+                settings.Properties.EditFormat = EditFormat.Custom;
+                settings.Properties.EditFormatString = "dd MMM yyyy";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+<div class="line" >
+    @Html.DevExpress().LabelFor(
+            model=> model.BloodGroup,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Blood Group : ";
+                settings.AssociatedControlName = "BloodGroup";
+            }
+        ).GetHtml()
+
+    @Html.DevExpress().ComboBoxFor(
+            model=> model.BloodGroup,
+                    settings => {
+                        settings.Name = "BloodGroup";
+                        settings.ControlStyle.CssClass = "editor";
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.TextField = "Value";
+                        settings.Properties.ValueField = "Key";
+                        //settings.ShowModelErrors = true;
+                        //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                    }
+                ).BindList(cCommon.GetBloodGroupList()).GetHtml()
+</div>
+<div class="line" >
+    @Html.DevExpress().LabelFor(
+            model=> model.Gender,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Gender : ";
+                settings.AssociatedControlName = "Gender";
+            }
+        ).GetHtml()
+     @Html.DevExpress().ComboBoxFor(
+            model=> model.Gender,
+                    settings => {
+                        settings.Name = "Gender";
+                        settings.ControlStyle.CssClass = "editor";
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.TextField = "Value";
+                        settings.Properties.ValueField = "Key";
+                        //settings.ShowModelErrors = true;
+                        //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                    }
+                ).BindList(cCommon.GetGenderList()).GetHtml()
+   
+</div>
+<div class="line" >
+    @Html.DevExpress().LabelFor(
+            model=> model.Religion,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Religion : ";
+                settings.AssociatedControlName = "Religion";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.Religion,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+            }).GetHtml()
+    
+</div>
+<div class="line" >
+    @Html.DevExpress().LabelFor(
+            model=> model.Caste,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Caste : ";
+                settings.AssociatedControlName = "Caste";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.Caste,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                //settings.ShowModelErrors = true;
+                //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+<div class="line" >
+    @Html.DevExpress().LabelFor(
+            model=> model.Nationality,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Nationality : ";
+                settings.AssociatedControlName = "Nationality";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.Nationality,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                //settings.ShowModelErrors = true;
+                //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+<div class="line" >
+    @Html.DevExpress().LabelFor(
+            model=> model.City,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "City : ";
+                settings.AssociatedControlName = "City";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.City,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                //settings.ShowModelErrors = true;
+                //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+<div class="line" >
+    @Html.DevExpress().LabelFor(
+            model=> model.LocalAddress,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Local Address : ";
+                settings.AssociatedControlName = "LocalAddress";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.LocalAddress,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                //settings.ShowModelErrors = true;
+                //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+<div class="line" >
+    @Html.DevExpress().LabelFor(
+            model=> model.HomePhoneNo,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Home PhoneNo : ";
+                settings.AssociatedControlName = "HomePhoneNo";
+                
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.HomePhoneNo,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                //settings.ShowModelErrors = true;
+                //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Properties.MaskSettings.Mask = "(999) 000-0000";
+                settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.None;
+            }).GetHtml()
+</div>
+<div class="line" >
+    @Html.DevExpress().LabelFor(
+            model=> model.MotherTounge,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Mother Tounge : ";
+                settings.AssociatedControlName = "MotherTounge";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.MotherTounge,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                //settings.ShowModelErrors = true;
+                //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+    
+
+</div>
+<div class="line">
+ @*   <input type="file" name="FileUpload" />*@
+</div>
+</div>
+<div style="clear:both"></div>
+
+<div class="lineFooter" >
+   <div class="divSubmit">
+       @Html.DevExpress().Button(
+        settings => {
+            settings.Name = "btnUpdatePersonalInfo";
+            settings.ControlStyle.CssClass = "button";
+            settings.Text = "Update Info.";
+            settings.UseSubmitBehavior = true;
+        }).GetHtml()
+    </div>
+    <div class="divError" >
+
+        @Html.ValidationMessageFor(model=> model.FirstName) 
+        @Html.ValidationMessageFor(model=> model.LastName)  
+    </div>
+
+     
+</div>

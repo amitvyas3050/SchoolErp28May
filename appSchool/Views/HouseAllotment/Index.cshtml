@@ -1,0 +1,149 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@{ ViewBag.Title = "House Allotment";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+@section Head {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/GridView.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap.css")" />
+    <script type="text/javascript" src="@Url.Content("~/Content/GridView.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/jsControllers/houseAllotmentController.js")"></script>
+}
+
+@section PageToolbar {
+    @Html.DevExpress().Menu(menuSettings =>
+        {
+            menuSettings.Name = "pageToolbar";
+
+            menuSettings.ItemAutoWidth = false;
+            menuSettings.AllowSelectItem = false;
+            menuSettings.ApplyItemStyleToTemplates = true;
+
+            menuSettings.SettingsAdaptivity.Enabled = true;
+            menuSettings.SettingsAdaptivity.EnableAutoHideRootItems = true;
+            menuSettings.SettingsAdaptivity.EnableCollapseRootItemsToIcons = true;
+            menuSettings.SettingsAdaptivity.CollapseRootItemsToIconsAtWindowInnerWidth = 600;
+
+            menuSettings.Width = Unit.Percentage(100);
+            menuSettings.ControlStyle.SeparatorWidth = Unit.Pixel(0);
+            menuSettings.ControlStyle.CssClass = "page-toolbar";
+
+            menuSettings.Styles.Item.CssClass = "item";
+            menuSettings.Styles.Item.VerticalAlign = VerticalAlign.Middle;
+
+            menuSettings.Images.Item.Width = Unit.Pixel(16);
+            menuSettings.Images.Item.Height = Unit.Pixel(16);
+
+            menuSettings.Items.Add(item =>
+{
+                    item.Enabled = false;
+                    item.SetTemplateContent(template => ViewContext.Writer.Write("<h1>House Allotment</h1>"));
+                });
+        }).GetHtml()
+}
+
+@section LeftPanelContent {
+
+    @{Html.RenderAction("ReturnLeftPanelView", "LeftAndRightPanel", new { moduleid = (int)appModule.appAcademicManager });}
+}
+
+@section RightPanelContent {
+    @{Html.RenderAction("ReturnRightPanelView", "LeftAndRightPanel");}
+
+}
+
+<div class="row">
+
+    <div class="col-sm-4">
+        @Html.DevExpress().Label(settingslbl =>
+             {
+                 settingslbl.Name = "lblHouseAllotment";
+                 settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+                 settingslbl.Text = "Select Class for House Allotment";
+
+             }).GetHtml()
+
+        @Html.DevExpress().ComboBox(
+                  settingscbo =>
+                  {
+                      settingscbo.Name = "ClassID";
+                      settingscbo.ControlStyle.CssClass = "form-control";
+                      settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                      settingscbo.Properties.DropDownStyle = DropDownStyle.DropDownList;
+                      settingscbo.Properties.TextField = "ClassName";
+                      settingscbo.Properties.ValueField = "ClassID";
+                      settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "houseAllotmentController.SelectedClass";
+                  }).BindList(new UnitOfWork().ClassService.GetClassList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))).GetHtml()
+    </div>
+
+
+    <div class="col-sm-3">
+        @Html.DevExpress().Label(settingslbl =>
+              {
+                  settingslbl.Name = "lblHouseID";
+                  settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+                  settingslbl.Text = "Select House Name";
+                  settingslbl.ClientVisible = true;
+              }).GetHtml()
+
+        @Html.DevExpress().ComboBox(
+                    settingsHouse =>
+                    {
+                        settingsHouse.Name = "HouseID";
+                        settingsHouse.ControlStyle.CssClass = "form-control";
+                        settingsHouse.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settingsHouse.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settingsHouse.Properties.TextField = "HouseName";
+                        settingsHouse.Properties.ValueField = "HouseID";
+                        settingsHouse.ClientVisible = true;
+                    }
+                  ).BindList(new UnitOfWork().houseRepositoryViewModel.GetHouseList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))).GetHtml()
+
+    </div>
+    <div class="col-sm-4">
+
+        @Html.DevExpress().Button(
+                                          settingsbtn =>
+                                          {
+                                              settingsbtn.Name = "btnStudSession";
+                                              settingsbtn.ControlStyle.CssClass = "btnpaddingrow15px";
+                                              settingsbtn.Text = "Update";
+                                              settingsbtn.Width = 100;
+                                              settingsbtn.Images.Image.IconID = IconID.EditCopy16x16;
+                                              settingsbtn.ImagePosition = ImagePosition.Left;
+                                     //settings.ClientSideEvents.Click = "function(s, e) { CallbackPanel.PerformCallback(); }";
+                                     settingsbtn.ClientSideEvents.Click = "houseAllotmentController.UpdateStudentHouse";
+                                          }).GetHtml()
+    </div>
+    <div class="col-sm-4">
+        @Html.DevExpress().TextBox(
+                         settingsStudentID =>
+                         {
+                             settingsStudentID.Name = "StudentIDs";
+                             settingsStudentID.ControlStyle.CssClass = "editor";
+                             settingsStudentID.ClientVisible = false;
+
+                         }
+                     ).GetHtml()
+    </div>
+
+</div>
+
+
+@using (Html.BeginForm())
+{
+@Html.AntiForgeryToken()ViewContext.Writer.Write("<div id=\"divhouseallotment\"  class=\"gridviewdivhight\"   > ");
+Html.RenderPartial("ListHouseAllotmentView");
+ViewContext.Writer.Write("</div>");
+}
+
+
+@Html.DevExpress().LoadingPanel(
+        settings =>
+        {
+            settings.Name = "loadingPanelStudentRegistration";
+            settings.Modal = true;
+            settings.ContainerElementID = "";
+            settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+        }).GetHtml()

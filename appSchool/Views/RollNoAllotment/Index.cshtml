@@ -1,0 +1,123 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@{ ViewBag.Title = "Roll No Allotment";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+@section Head {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/GridView.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap.css")" />
+    <script type="text/javascript" src="@Url.Content("~/Content/GridView.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/jsControllers/rollNoAllotmentController.js")"></script>
+}
+@section PageToolbar {
+
+    @Html.DevExpress().Menu(menuSettings =>
+        {
+            menuSettings.Name = "pageToolbar";
+
+            menuSettings.ItemAutoWidth = false;
+            menuSettings.AllowSelectItem = false;
+            menuSettings.ApplyItemStyleToTemplates = true;
+
+            menuSettings.SettingsAdaptivity.Enabled = true;
+            menuSettings.SettingsAdaptivity.EnableAutoHideRootItems = true;
+            menuSettings.SettingsAdaptivity.EnableCollapseRootItemsToIcons = true;
+            menuSettings.SettingsAdaptivity.CollapseRootItemsToIconsAtWindowInnerWidth = 600;
+
+            menuSettings.Width = Unit.Percentage(100);
+            menuSettings.ControlStyle.SeparatorWidth = Unit.Pixel(0);
+            menuSettings.ControlStyle.CssClass = "page-toolbar";
+
+            menuSettings.Styles.Item.CssClass = "item";
+            menuSettings.Styles.Item.VerticalAlign = VerticalAlign.Middle;
+
+            menuSettings.Images.Item.Width = Unit.Pixel(16);
+            menuSettings.Images.Item.Height = Unit.Pixel(16);
+
+            menuSettings.Items.Add(item =>
+{
+                    item.Enabled = false;
+                    item.SetTemplateContent(template => ViewContext.Writer.Write("<h1>Roll No Allotment</h1>"));
+                });
+        }).GetHtml()
+
+
+}
+@section LeftPanelContent {
+    @{Html.RenderAction("ReturnLeftPanelView", "LeftAndRightPanel", new { moduleid = (int)appModule.appAcademicManager });}
+}
+
+@section RightPanelContent {
+    @{Html.RenderAction("ReturnRightPanelView", "LeftAndRightPanel");}
+}
+<div class="row">
+    <div class="col-sm-3">
+        @Html.DevExpress().Label(settingslbl =>
+                  {
+
+                      settingslbl.Name = "lblRollNoAllotment";
+                      settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+                      settingslbl.Text = "Select Class for RollNo Allotment";
+
+                  }).GetHtml()
+
+        @Html.DevExpress().ComboBox(
+                  settingscbo =>
+                  {
+                      settingscbo.Name = "ClassID";
+                      settingscbo.ControlStyle.CssClass = "form-control";
+                      settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                      settingscbo.Properties.DropDownStyle = DropDownStyle.DropDownList;
+                      settingscbo.Properties.TextField = "ClassName";
+                      settingscbo.Properties.ValueField = "ClassID";
+                      settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "rollNoAllotmentController.SelectedClass";
+                  }).BindList(new UnitOfWork().ClassService.GetClassList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))).GetHtml()
+    </div>
+    <div class="col-sm-3">
+        @Html.DevExpress().Label(settingslbl =>
+                {
+
+                    settingslbl.Name = "lblRollNo";
+                    settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+                    settingslbl.Text = "Enter Roll No";
+
+                }).GetHtml()
+
+        @Html.DevExpress().TextBox(
+                            settingstxt =>
+                            {
+                                settingstxt.Name = "txtRollNo";
+                                settingstxt.Width = 170;
+                                settingstxt.ControlStyle.CssClass = "form-control";
+                            }
+                        ).GetHtml()
+
+    </div>
+    <div class="col-sm-3">
+        @Html.DevExpress().Button(
+              settingsBttn =>
+              {
+                  settingsBttn.Name = "GenerateRollNo";
+                  settingsBttn.Width = 90;
+                  settingsBttn.Text = "GenerateRollNo";
+                  settingsBttn.ControlStyle.CssClass = "btnpaddingrow15px";
+                  settingsBttn.ClientSideEvents.Click = "rollNoAllotmentController.UpdateStudentRollNo";
+              }).GetHtml()
+    </div>
+</div>
+@using (Html.BeginForm())
+{
+@Html.AntiForgeryToken() @*@Html.Partial("GridViewPartial")*@ViewContext.Writer.Write("<div id=\"divrollnoallotment\" class=\"gridviewdivhight\"  > ");
+Html.RenderPartial("ListRollNoAllotmentView");
+ViewContext.Writer.Write("</div>");
+}
+
+@Html.DevExpress().LoadingPanel(
+        settings =>
+        {
+            settings.Name = "loadingPanelStudentRegistration";
+            settings.Modal = true;
+            settings.ContainerElementID = "";
+            settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+        }).GetHtml()

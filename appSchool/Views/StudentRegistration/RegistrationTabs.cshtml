@@ -1,0 +1,50 @@
+﻿@using appSchool.Repositories;
+
+
+@model int
+
+
+@Html.DevExpress().PageControl(
+        settings =>
+        {
+            settings.Name = "pcClientSideAPI";
+            settings.EnableClientSideAPI = true;
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Height = 126;
+            settings.TabAlign = TabAlign.Justify;
+            settings.TabPages.Add("Personal Info", "PersonalInfo").SetContent(() =>
+            {
+                modelStudentPersonalInfo obj =(new StudentRegistrationRepository()).GetPersonalInfo(Model);
+                @Html.RenderPartial("PersonalInfoPartial", obj);
+            });
+
+          
+            settings.TabPages.Add("Parent's Info", "GuardianInfo").SetContent(() =>
+            {
+                modelGuardianInfo objGuardianInfo = (new StudentRegistrationRepository()).GetGuardianInfo(Model);
+                @Html.RenderPartial("GuardianPartial", objGuardianInfo);
+            });
+
+            settings.TabPages.Add("Photo Upload Info", "PhotoUploadInfo").SetContent(() =>
+            {
+                modelStudentPhotoUploadInfo obj1 = (new StudentRegistrationRepository()).GetStudentPhotoInfo(Model);
+                @Html.RenderPartial("UploadPhotoPartial", obj1);
+            });
+
+            settings.TabPages.Add("Document Upload Info", "DocumentUploadInfo").SetContent(() =>
+            {
+                modelStudentDocumentUploadInfo obj1 = (new StudentRegistrationRepository()).GetStudentDocumentInfo(Model);
+                @Html.RenderPartial("UploadDocumentPartial", obj1);
+            });
+
+            settings.TabPages.Add("Student's Privious Details", "StudentPriviousDetails").SetContent(() =>
+            {
+                StudentPreviousDetail obj1 = (new StudentPriviousDetailsRepository()).GetStudentPriviousInfo(Model);
+                @Html.RenderPartial("StudentPriviousPartial", obj1);
+            });  
+            
+            
+          
+            
+           
+        }).GetHtml()

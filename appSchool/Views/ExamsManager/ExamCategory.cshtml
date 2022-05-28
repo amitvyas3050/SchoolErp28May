@@ -1,0 +1,52 @@
+﻿@using appSchool.Repositories;
+
+@{
+    ViewBag.Title = "Exam Category Info.";
+}
+<script src="@Url.Content("~/jsControllers/ExamCategoriesController.js")" type="text/javascript"></script>
+@model System.Collections.IEnumerable
+
+ @Html.DevExpress().Splitter(settings => {
+    settings.Name = "ExamCatagorySplitter";
+        settings.AllowResize = true;
+        settings.Orientation = System.Web.UI.WebControls.Orientation.Vertical;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SeparatorVisible = true;
+        settings.ClientSideEvents.PaneResized = "examCategoriesController.splitterResized";
+
+       settings.Panes.Add(subpane =>
+        {
+            subpane.Name = "ExamCatagoryBody";
+            subpane.PaneStyle.CssClass = "contentPane";
+            subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+            subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+            subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+            subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(50);
+            subpane.Size = System.Web.UI.WebControls.Unit.Percentage(100);
+            subpane.Separator.Visible = DefaultBoolean.True;
+            subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.SetContent(() =>
+            {
+                Html.RenderPartial("ListExamCategory", (new UnitOfWork()).examCategoryService.GetExamCategoryList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString())));
+            });
+        });
+        //settings.Panes.Add(subpane =>
+        //{
+        //    subpane.Name = "ExamCategoryFooter";
+        //    subpane.PaneStyle.CssClass = "contentPane";
+        //    subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+        //    subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+        //    subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+        //    subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(100);
+        //    subpane.Size = System.Web.UI.WebControls.Unit.Percentage(40);
+        //    subpane.Separator.Visible = DefaultBoolean.True;
+        //    subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+        //    subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+        //    subpane.SetContent(() =>
+        //    {
+        //        //Html.RenderPartial("RegistrationTabs",(int)1);
+        //    });
+        //});
+    }).GetHtml()

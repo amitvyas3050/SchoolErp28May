@@ -1,0 +1,18 @@
+﻿@using appSchool.Controllers;
+@using appSchool.Repositories;
+@using appSchool.Model;
+@model List<ClassSetup>
+
+
+@Html.DevExpress().ComboBox(
+
+             settingscbo =>
+             {
+                 settingscbo.Name = "ClassSetupID";
+                 settingscbo.ControlStyle.CssClass = "form-control";
+                 settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                 settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                 settingscbo.Properties.TextField = "ClassDescription";
+                 settingscbo.Properties.ValueField = "ClassSetupID";
+             }
+         ).BindList(Model).GetHtml()

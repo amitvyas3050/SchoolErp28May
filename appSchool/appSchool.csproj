@@ -1,0 +1,2643 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{566DE4D6-C449-479D-AA7F-F1D75BFAB243}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>appSchool</RootNamespace>
+    <AssemblyName>appSchool</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <UpgradeBackupLocation />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="DevExpress.Data.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxThemes.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v19.2.Export, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.Mvc5.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxTreeList.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxPivotGrid.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.PivotGrid.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxHtmlEditor.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Pdf.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxRichEdit.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Spreadsheet.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxSpreadsheet.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraScheduler.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxScheduler.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxGantt.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxDiagram.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Charts.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraCharts.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraCharts.v19.2.Web, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.Resources.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v19.2.Web, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v19.2.Web.WebForms, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.CodeParser.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.DataAccess.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Office.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Sparkline.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpo.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGauges.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Dashboard.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Dashboard.v19.2.Web, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Dashboard.v19.2.Web.WebForms, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Dashboard.v19.2.Web.Mvc5, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.TreeMap.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Map.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraTreeMap.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGauges.v19.2.Presets, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGauges.v19.2.Win, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraMap.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraEditors.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraPrinting.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxSpellChecker.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.SpellChecker.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="WebMatrix.Data, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.3.2.7\lib\net45\WebMatrix.Data.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Article.html" />
+    <Content Include="App_Data\ArticleContents.xml" />
+    <Content Include="App_Data\Overview.html" />
+    <Content Include="App_Data\OverviewContents.xml" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\cardview.css" />
+    <Content Include="Content\cardvieworange.css" />
+    <Content Include="Content\fromlayout.css" />
+    <Content Include="Content\Content.css" />
+    <Content Include="Content\GridView.css" />
+    <Content Include="Content\GridView.js" />
+    <Content Include="Content\Images\adaptive-menu.svg" />
+    <Content Include="Content\Images\add.svg" />
+    <Content Include="Content\Images\application.svg" />
+    <Content Include="Content\Images\Article-white.svg" />
+    <Content Include="Content\Images\Article.svg" />
+    <Content Include="Content\Images\back.svg" />
+    <Content Include="Content\Images\delete.svg" />
+    <Content Include="Content\Images\double-close.svg" />
+    <Content Include="Content\Images\double.svg" />
+    <Content Include="Content\Images\edit.svg" />
+    <Content Include="Content\Images\export.svg" />
+    <Content Include="Content\Images\eye-button-hide.svg" />
+    <Content Include="Content\Images\eye-button.svg" />
+    <Content Include="Content\Images\GridView-white.svg" />
+    <Content Include="Content\Images\GridView.svg" />
+    <Content Include="Content\Images\Home-white.svg" />
+    <Content Include="Content\Images\Home.svg" />
+    <Content Include="Content\Images\image-sample.png" />
+    <Content Include="Content\Images\kind1-white.svg" />
+    <Content Include="Content\Images\kind1.svg" />
+    <Content Include="Content\Images\kind2-white.svg" />
+    <Content Include="Content\Images\kind2.svg" />
+    <Content Include="Content\Images\logo-small.svg" />
+    <Content Include="Content\Images\logo.svg" />
+    <Content Include="Content\Images\menu.svg" />
+    <Content Include="Content\Images\Menuicon\academic.png" />
+    <Content Include="Content\Images\Menuicon\academic1.png" />
+    <Content Include="Content\Images\Menuicon\academic2.png" />
+    <Content Include="Content\Images\Menuicon\add.png" />
+    <Content Include="Content\Images\Menuicon\admission.png" />
+    <Content Include="Content\Images\Menuicon\approve.png" />
+    <Content Include="Content\Images\Menuicon\book.png" />
+    <Content Include="Content\Images\Menuicon\bus.png" />
+    <Content Include="Content\Images\Menuicon\category.png" />
+    <Content Include="Content\Images\Menuicon\certificate.png" />
+    <Content Include="Content\Images\Menuicon\class setup.png" />
+    <Content Include="Content\Images\Menuicon\class.png" />
+    <Content Include="Content\Images\Menuicon\class1.png" />
+    <Content Include="Content\Images\Menuicon\class2.png" />
+    <Content Include="Content\Images\Menuicon\class3.png" />
+    <Content Include="Content\Images\Menuicon\classsubject.png" />
+    <Content Include="Content\Images\Menuicon\comment.png" />
+    <Content Include="Content\Images\Menuicon\comments.png" />
+    <Content Include="Content\Images\Menuicon\contact.png" />
+    <Content Include="Content\Images\Menuicon\data-transfer.png" />
+    <Content Include="Content\Images\Menuicon\datamanager.png" />
+    <Content Include="Content\Images\Menuicon\datamanager1.png" />
+    <Content Include="Content\Images\Menuicon\datatransfer.png" />
+    <Content Include="Content\Images\Menuicon\department.png" />
+    <Content Include="Content\Images\Menuicon\exam %281%29.png" />
+    <Content Include="Content\Images\Menuicon\exam.png" />
+    <Content Include="Content\Images\Menuicon\exam1.png" />
+    <Content Include="Content\Images\Menuicon\exammarks.png" />
+    <Content Include="Content\Images\Menuicon\examsyllabes.png" />
+    <Content Include="Content\Images\Menuicon\facebook.png" />
+    <Content Include="Content\Images\Menuicon\family.png" />
+    <Content Include="Content\Images\Menuicon\fee.png" />
+    <Content Include="Content\Images\Menuicon\fee1.png" />
+    <Content Include="Content\Images\Menuicon\feehead.png" />
+    <Content Include="Content\Images\Menuicon\feelist.png" />
+    <Content Include="Content\Images\Menuicon\feeliststructure.png" />
+    <Content Include="Content\Images\Menuicon\feercipt.png" />
+    <Content Include="Content\Images\Menuicon\feesaddstruct.png" />
+    <Content Include="Content\Images\Menuicon\feescatagory.png" />
+    <Content Include="Content\Images\Menuicon\feestructer.png" />
+    <Content Include="Content\Images\Menuicon\feetearm.png" />
+    <Content Include="Content\Images\Menuicon\female.png" />
+    <Content Include="Content\Images\Menuicon\folder.png" />
+    <Content Include="Content\Images\Menuicon\fundraiser.png" />
+    <Content Include="Content\Images\Menuicon\grade.png" />
+    <Content Include="Content\Images\Menuicon\graduated.png" />
+    <Content Include="Content\Images\Menuicon\graduationhat.png" />
+    <Content Include="Content\Images\Menuicon\hand.png" />
+    <Content Include="Content\Images\Menuicon\house master.png" />
+    <Content Include="Content\Images\Menuicon\housemaster.png" />
+    <Content Include="Content\Images\Menuicon\info.png" />
+    <Content Include="Content\Images\Menuicon\money-transfer.png" />
+    <Content Include="Content\Images\Menuicon\money.png" />
+    <Content Include="Content\Images\Menuicon\moneytransfer.png" />
+    <Content Include="Content\Images\Menuicon\note.png" />
+    <Content Include="Content\Images\Menuicon\notificationtop.png" />
+    <Content Include="Content\Images\Menuicon\parents.png" />
+    <Content Include="Content\Images\Menuicon\phone.png" />
+    <Content Include="Content\Images\Menuicon\player.png" />
+    <Content Include="Content\Images\Menuicon\presentation.png" />
+    <Content Include="Content\Images\Menuicon\puzzle.png" />
+    <Content Include="Content\Images\Menuicon\refresh16.png" />
+    <Content Include="Content\Images\Menuicon\refresh64.png" />
+    <Content Include="Content\Images\Menuicon\registration.png" />
+    <Content Include="Content\Images\Menuicon\remarketing.png" />
+    <Content Include="Content\Images\Menuicon\save.png" />
+    <Content Include="Content\Images\Menuicon\seaction.png" />
+    <Content Include="Content\Images\Menuicon\setup.png" />
+    <Content Include="Content\Images\Menuicon\share.png" />
+    <Content Include="Content\Images\Menuicon\sms.png" />
+    <Content Include="Content\Images\Menuicon\sms1.png" />
+    <Content Include="Content\Images\Menuicon\sms2.png" />
+    <Content Include="Content\Images\Menuicon\sms3.png" />
+    <Content Include="Content\Images\Menuicon\statistics.png" />
+    <Content Include="Content\Images\Menuicon\student.png" />
+    <Content Include="Content\Images\Menuicon\studentcap.png" />
+    <Content Include="Content\Images\Menuicon\studphoto.png" />
+    <Content Include="Content\Images\Menuicon\subjectlavele1.png" />
+    <Content Include="Content\Images\Menuicon\subjectlavele2.png" />
+    <Content Include="Content\Images\Menuicon\subjectlavele3.png" />
+    <Content Include="Content\Images\Menuicon\syllabes.png" />
+    <Content Include="Content\Images\Menuicon\syllabesh.png" />
+    <Content Include="Content\Images\Menuicon\teacher %281%29.png" />
+    <Content Include="Content\Images\Menuicon\teacher.png" />
+    <Content Include="Content\Images\Menuicon\teacher2.png" />
+    <Content Include="Content\Images\Menuicon\template.png" />
+    <Content Include="Content\Images\Menuicon\timetable1.png" />
+    <Content Include="Content\Images\Menuicon\timetable2.png" />
+    <Content Include="Content\Images\Menuicon\transfer %281%29.png" />
+    <Content Include="Content\Images\Menuicon\transfer %282%29.png" />
+    <Content Include="Content\Images\Menuicon\transfer.png" />
+    <Content Include="Content\Images\Menuicon\transfer1.png" />
+    <Content Include="Content\Images\Menuicon\transfer2.png" />
+    <Content Include="Content\Images\Menuicon\user.png" />
+    <Content Include="Content\Images\Menuicon\userpermission.png" />
+    <Content Include="Content\Images\Overview\article.png" />
+    <Content Include="Content\Images\Overview\demo.png" />
+    <Content Include="Content\Images\Overview\grid.png" />
+    <Content Include="Content\Images\Overview\login.gif" />
+    <Content Include="Content\Images\Overview\login.png" />
+    <Content Include="Content\Images\Overview\menu.gif" />
+    <Content Include="Content\Images\Overview\scheduler.png" />
+    <Content Include="Content\Images\Overview\sidebar.gif" />
+    <Content Include="Content\Images\Overview\sticky-footer.gif" />
+    <Content Include="Content\Images\Overview\toolbar.gif" />
+    <Content Include="Content\Images\PNG\school_logo.jpg" />
+    <Content Include="Content\Images\PNG\school_logosml.jpg" />
+    <Content Include="Content\Images\print.svg" />
+    <Content Include="Content\Images\priority1-white.svg" />
+    <Content Include="Content\Images\priority1.svg" />
+    <Content Include="Content\Images\priority2-white.svg" />
+    <Content Include="Content\Images\priority2.svg" />
+    <Content Include="Content\Images\priority3-white.svg" />
+    <Content Include="Content\Images\priority3.svg" />
+    <Content Include="Content\Images\Scheduler-white.svg" />
+    <Content Include="Content\Images\Scheduler.svg" />
+    <Content Include="Content\Images\search-selected.svg" />
+    <Content Include="Content\Images\search.svg" />
+    <Content Include="Content\Images\sign-out.svg" />
+    <Content Include="Content\Images\user.svg" />
+    <Content Include="Content\Layout.css" />
+    <Content Include="Content\loginpage.css" />
+    <Content Include="Content\Photo\admin.png" />
+    <Content Include="Content\Photo\Alberto_Alonso.jpg" />
+    <Content Include="Content\Photo\Alfredo_Gomez.jpg" />
+    <Content Include="Content\Photo\Andrew_Lee.jpg" />
+    <Content Include="Content\Photo\Angela_Murphy.jpg" />
+    <Content Include="Content\Photo\Clarence_Nath.jpg" />
+    <Content Include="Content\Photo\Colin_He.jpg" />
+    <Content Include="Content\Photo\Connor_Jenkins.jpg" />
+    <Content Include="Content\Photo\Connor_Lopez.jpg" />
+    <Content Include="Content\Photo\Destiny_Clark.jpg" />
+    <Content Include="Content\Photo\Diana_Martin.jpg" />
+    <Content Include="Content\Photo\Gary_Rubio.jpg" />
+    <Content Include="Content\Photo\Heidi_Lopez.jpg" />
+    <Content Include="Content\Photo\Jesse_Gonzalez.jpg" />
+    <Content Include="Content\Photo\Jessie_She.jpg" />
+    <Content Include="Content\Photo\Julia_Bell.jpg" />
+    <Content Include="Content\Photo\Julia_Evans.jpg" />
+    <Content Include="Content\Photo\Katelyn_Lopez.jpg" />
+    <Content Include="Content\Photo\Kevin_Collins.jpg" />
+    <Content Include="Content\Photo\Logan_Hernandez.jpg" />
+    <Content Include="Content\Photo\Maria_Hernandez.jpg" />
+    <Content Include="Content\Photo\Martha_Gao.jpg" />
+    <Content Include="Content\Photo\Megan_Sanchez.jpg" />
+    <Content Include="Content\Photo\Miguel_Jones.jpg" />
+    <Content Include="Content\Photo\Naomi_Moreno.jpg" />
+    <Content Include="Content\Photo\Nathan_Bryant.jpg" />
+    <Content Include="Content\Photo\Rafael_Raje.jpg" />
+    <Content Include="Content\Photo\Rebekah_Raman.jpg" />
+    <Content Include="Content\Photo\Shannon_Sanz.jpg" />
+    <Content Include="Content\Photo\User.png" />
+    <Content Include="Content\Photo\Xavier_Richardson.jpg" />
+    <Content Include="Content\Scheduler.css" />
+    <Content Include="Content\Scheduler.js" />
+    <Content Include="Content\Script.js" />
+    <Content Include="Content\SignInRegister.css" />
+    <Content Include="Content\SignInRegister.js" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\validdateencrypt.txt" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\blank.jpg" />
+    <Content Include="Images\blankstudent.png" />
+    <Content Include="Images\excel.png" />
+    <Content Include="Images\FlyerVoice\Voice\Instrume3.mp3" />
+    <Content Include="Images\ImageFlyer\10.png" />
+    <Content Include="Images\ImageFlyer\2.mp4" />
+    <Content Include="Images\ImageFlyer\2.png" />
+    <Content Include="Images\ImageFlyer\3.mp4" />
+    <Content Include="Images\ImageFlyer\4.mp4" />
+    <Content Include="Images\ImageFlyer\4tumblr_n4hrvqSuXs1qd8w33o1_250.gif" />
+    <Content Include="Images\ImageFlyer\9.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\logout.png" />
+    <Content Include="Images\pdf.png" />
+    <Content Include="Images\pdf1.png" />
+    <Content Include="Images\permission.png" />
+    <Content Include="Images\SchoolGallery\14bg_bgkcd_Scho_14_1364399g.jpg" />
+    <Content Include="Images\SchoolGallery\images1.jpg" />
+    <Content Include="Images\SchoolGallery\images11.jpg" />
+    <Content Include="Images\SchoolGallery\images12.jpg" />
+    <Content Include="Images\SchoolGallery\images23.jpg" />
+    <Content Include="Images\SchoolGallery\images44.jpg" />
+    <Content Include="Images\SchoolGallery\images45.jpg" />
+    <Content Include="Images\SchoolGallery\images456.jpg" />
+    <Content Include="Images\SchoolGallery\images543.jpg" />
+    <Content Include="Images\SchoolGallery\images555.jpg" />
+    <Content Include="Images\SchoolGallery\images56.jpg" />
+    <Content Include="Images\SchoolGallery\images65.jpg" />
+    <Content Include="Images\SchoolGallery\images6784.jpg" />
+    <Content Include="Images\SchoolGallery\images78787.jpg" />
+    <Content Include="Images\SchoolGallery\images90.jpg" />
+    <Content Include="Images\SchoolGallery\images99.jpg" />
+    <Content Include="Images\SchoolGallery\index1.jpg" />
+    <Content Include="Images\SchoolGallery\index2.jpg" />
+    <Content Include="Images\SchoolGallery\index77.jpg" />
+    <Content Include="Images\SchoolGallery\Well-done-Function-2011.jpg" />
+    <Content Include="Images\Signature\2.png" />
+    <Content Include="Images\Signature\2\%28SMT%29-134-5075.png" />
+    <Content Include="Images\Signature\3.png" />
+    <Content Include="Images\Signature\38.png" />
+    <Content Include="Images\Signature\blank.jpg" />
+    <Content Include="Images\studentDocuments\115\Penguins.jpg" />
+    <Content Include="Images\studentDocuments\15\14bg_bgkcd_Scho_14_1364399g.jpg" />
+    <Content Include="Images\studentDocuments\15\images44.jpg" />
+    <Content Include="Images\studentDocuments\15\images45.jpg" />
+    <Content Include="Images\studentDocuments\15\images543.jpg" />
+    <Content Include="Images\studentDocuments\15\images99.jpg" />
+    <Content Include="Images\studentDocuments\1\%28SMT%29-111-1003.png" />
+    <Content Include="Images\studentDocuments\1\%28SMT%29-111-1005.png" />
+    <Content Include="Images\studentDocuments\1\%28SMT%29-111-1006.png" />
+    <Content Include="Images\studentDocuments\1\%28SMT%29-111-1007.png" />
+    <Content Include="Images\studentDocuments\1\Capture.PNG" />
+    <Content Include="Images\studentDocuments\1\comp.png" />
+    <Content Include="Images\studentDocuments\1\images1.jpg" />
+    <Content Include="Images\studentDocuments\1\images11.jpg" />
+    <Content Include="Images\studentDocuments\1\images44.jpg" />
+    <Content Include="Images\studentDocuments\1\images45.jpg" />
+    <Content Include="Images\studentDocuments\1\images78787.jpg" />
+    <Content Include="Images\studentDocuments\1\images99.jpg" />
+    <Content Include="Images\studentDocuments\1\index2.jpg" />
+    <Content Include="Images\studentDocuments\1\index77.jpg" />
+    <Content Include="Images\studentDocuments\2825\%28SMT%29-111-1007.png" />
+    <Content Include="Images\studentDocuments\3833\TraceCmd.png" />
+    <Content Include="Images\studentDocuments\3\Desert.jpg" />
+    <Content Include="Images\studentDocuments\6\EMPMG-11111.jpg" />
+    <Content Include="Images\studentDocuments\9\index1.jpg" />
+    <Content Include="Images\students\.png" />
+    <Content Include="Images\students\001.png" />
+    <Content Include="Images\students\1.png" />
+    <Content Include="Images\students\1073.png" />
+    <Content Include="Images\students\1290.png" />
+    <Content Include="Images\students\14477.png" />
+    <Content Include="Images\students\149.png" />
+    <Content Include="Images\students\2.png" />
+    <Content Include="Images\students\20.png" />
+    <Content Include="Images\students\2747.png" />
+    <Content Include="Images\students\276.png" />
+    <Content Include="Images\students\2825.png" />
+    <Content Include="Images\students\3.png" />
+    <Content Include="Images\students\31.png" />
+    <Content Include="Images\students\3833.png" />
+    <Content Include="Images\students\4.png" />
+    <Content Include="Images\students\421.png" />
+    <Content Include="Images\students\6.png" />
+    <Content Include="Images\students\62.png" />
+    <Content Include="Images\students\67.png" />
+    <Content Include="Images\students\705.png" />
+    <Content Include="Images\students\780.png" />
+    <Content Include="Images\students\9.png" />
+    <Content Include="Images\students\blank.jpg" />
+    <Content Include="Images\students\Koala.jpg" />
+    <Content Include="Images\students\Penguins.jpg" />
+    <Content Include="Images\students\SMT-1345001.jpg" />
+    <Content Include="Images\students\SMT-1345002.jpg" />
+    <Content Include="Images\students\SMT-1345003.jpg" />
+    <Content Include="Images\students\SMT-1345004.jpg" />
+    <Content Include="Images\students\SMT-1345005.jpg" />
+    <Content Include="Images\students\SMT-1345006.jpg" />
+    <Content Include="Images\students\SMT-1345007.jpg" />
+    <Content Include="Images\students\SMT-1345008.jpg" />
+    <Content Include="Images\students\SMT-1345009.jpg" />
+    <Content Include="Images\students\SMT-1345010.jpg" />
+    <Content Include="Images\students\SMT-1345011.jpg" />
+    <Content Include="Images\students\SMT-1345012.jpg" />
+    <Content Include="Images\students\SMT-1345013.jpg" />
+    <Content Include="Images\students\SMT-1345014.jpg" />
+    <Content Include="Images\students\SMT-1345015.jpg" />
+    <Content Include="Images\students\SMT-1345016.jpg" />
+    <Content Include="Images\students\SMT-1345017.jpg" />
+    <Content Include="Images\students\SMT-1345018.jpg" />
+    <Content Include="Images\students\SMT-1345019.jpg" />
+    <Content Include="Images\students\SMT-1345020.jpg" />
+    <Content Include="Images\students\SMT-1345027.jpg" />
+    <Content Include="Images\students\SMT-1345036.jpg" />
+    <Content Include="Images\students\SMT-1345037.jpg" />
+    <Content Include="Images\students\SMT-1345038.jpg" />
+    <Content Include="Images\students\SMT-1345039.jpg" />
+    <Content Include="Images\students\SMT-1345041.jpg" />
+    <Content Include="Images\students\SMT-1345042.jpg" />
+    <Content Include="Images\students\SMT-1345043.jpg" />
+    <Content Include="Images\students\SMT-1345044.jpg" />
+    <Content Include="Images\students\SMT-1345045.jpg" />
+    <Content Include="Images\students\SMT-1345046.jpg" />
+    <Content Include="Images\students\SMT-1345047.jpg" />
+    <Content Include="Images\students\SMT-1345048.jpg" />
+    <Content Include="Images\students\SMT-1345049.jpg" />
+    <Content Include="Images\students\SMT-1345050.jpg" />
+    <Content Include="Images\students\SMT-1345051.jpg" />
+    <Content Include="Images\students\SMT-1345052.jpg" />
+    <Content Include="Images\students\SMT-1345053.jpg" />
+    <Content Include="Images\students\SMT-1345054.jpg" />
+    <Content Include="Images\students\SMT-1345055.jpg" />
+    <Content Include="Images\students\SMT-1345056.jpg" />
+    <Content Include="Images\students\SMT-1345057.jpg" />
+    <Content Include="Images\students\SMT-1345058.jpg" />
+    <Content Include="Images\students\SMT-1345059.jpg" />
+    <Content Include="Images\students\SMT-1345060.jpg" />
+    <Content Include="Images\students\SMT-1345061.jpg" />
+    <Content Include="Images\students\SMT-1345063.jpg" />
+    <Content Include="Images\students\SMT-1345075.jpg" />
+    <Content Include="Images\teacherDocuments\2\Jellyfish.jpg" />
+    <Content Include="Images\teacherDocuments\2\Penguins.jpg" />
+    <Content Include="Images\teacherDocuments\3\Desert.jpg" />
+    <Content Include="Images\teachers\%28EMP%29-256-6487.png" />
+    <Content Include="Images\teachers\%28EMP%29-898-9256.png" />
+    <Content Include="Images\teachers\121.png" />
+    <Content Include="Images\teachers\2.png" />
+    <Content Include="Images\teachers\23sasas.png" />
+    <Content Include="Images\teachers\38.png" />
+    <Content Include="Images\teachers\blank.jpg" />
+    <Content Include="Images\teachers\EMPAJ-107.jpg" />
+    <Content Include="Images\teachers\EMPAS-109.jpg" />
+    <Content Include="Images\teachers\EMPAS-116.jpg" />
+    <Content Include="Images\teachers\EMPAV-106.jpg" />
+    <Content Include="Images\teachers\EMPAY-114.jpg" />
+    <Content Include="Images\teachers\EMPDM-105.jpg" />
+    <Content Include="Images\teachers\EMPMG-111.jpg" />
+    <Content Include="Images\teachers\EMPMG-111.png" />
+    <Content Include="Images\teachers\EMPNS-104.jpg" />
+    <Content Include="Images\teachers\EMPRJ-112.jpg" />
+    <Content Include="Images\teachers\EMPRS-113.jpg" />
+    <Content Include="Images\teachers\EMPSJ-115.jpg" />
+    <Content Include="Images\teachers\EMPSM-101.jpg" />
+    <Content Include="Images\teachers\EMPSY-102.jpg" />
+    <Content Include="Images\teachers\EMPVA-103.jpg" />
+    <Content Include="Images\teachers\EMPVG-108.jpg" />
+    <Content Include="Images\teachers\EMPVS-110.jpg" />
+    <Content Include="Images\Teacher_school_student_professor_produce_organic_male.png" />
+    <Content Include="Images\TemplateIcon.png" />
+    <Content Include="Images\underconstruction.png" />
+    <Content Include="Images\users\1.png" />
+    <Content Include="Images\users\2.png" />
+    <Content Include="Images\users\3.png" />
+    <Content Include="Images\word.png" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\14bg_bgkcd_Scho_14_1364399g.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\images1.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\images11.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\images12.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\images23.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\images44.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\images45.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\images456.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\images543.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\images555.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\images56.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\images65.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\images6784.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\images78787.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\images90.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\images99.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\index1.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\index2.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\index77.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\1200x1200.0\Well-done-Function-2011.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\14bg_bgkcd_Scho_14_1364399g.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\images1.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\images11.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\images12.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\images23.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\images44.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\images45.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\images456.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\images543.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\images555.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\images56.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\images65.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\images6784.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\images78787.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\images90.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\images99.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\index1.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\index2.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\index77.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\200x200.2\Well-done-Function-2011.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\14bg_bgkcd_Scho_14_1364399g.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\images1.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\images11.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\images12.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\images23.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\images44.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\images45.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\images456.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\images543.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\images555.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\images56.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\images65.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\images6784.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\images78787.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\images90.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\images99.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\index1.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\index2.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\index77.jpg" />
+    <Content Include="Image\ImageCache\011333022777029323e60b2d1172c497\90x90.2\Well-done-Function-2011.jpg" />
+    <Content Include="jsControllers\academicyearController.js" />
+    <Content Include="jsControllers\accountMasterController.js" />
+    <Content Include="jsControllers\achievementController.js" />
+    <Content Include="jsControllers\admissionFormSaleController.js" />
+    <Content Include="jsControllers\applicationImageController.js" />
+    <Content Include="jsControllers\assignClassesController.js" />
+    <Content Include="jsControllers\attendanceClasswiseController.js" />
+    <Content Include="jsControllers\attendanceController.js" />
+    <Content Include="jsControllers\attendanceDailyController.js" />
+    <Content Include="jsControllers\attendanceDataExportController.js" />
+    <Content Include="jsControllers\attendanceDatewiseController.js" />
+    <Content Include="jsControllers\attendanceManagerController.js" />
+    <Content Include="jsControllers\bookAccessionController.js" />
+    <Content Include="jsControllers\bookIssueSubmitController.js" />
+    <Content Include="jsControllers\bookLostController.js" />
+    <Content Include="jsControllers\busMasterController.js" />
+    <Content Include="jsControllers\busRoutePlanController.js" />
+    <Content Include="jsControllers\busStopMasterController.js" />
+    <Content Include="jsControllers\classCategoriesController.js" />
+    <Content Include="jsControllers\classesController.js" />
+    <Content Include="jsControllers\classSetupController.js" />
+    <Content Include="jsControllers\classSubjectLevelController.js" />
+    <Content Include="jsControllers\classSyllabusController.js" />
+    <Content Include="jsControllers\classTimeTableController.js" />
+    <Content Include="jsControllers\contectListController.js" />
+    <Content Include="jsControllers\departmentMasterController.js" />
+    <Content Include="jsControllers\designationMasterController.js" />
+    <Content Include="jsControllers\driverMasterController.js" />
+    <Content Include="jsControllers\employeeattendanceDailyController.js" />
+    <Content Include="jsControllers\employeeattendancedataemportController.js" />
+    <Content Include="jsControllers\employeeattendanceReportController.js" />
+    <Content Include="jsControllers\employeeSendSMSAbsenteesController.js" />
+    <Content Include="jsControllers\employeeshiftmasterController.js" />
+    <Content Include="jsControllers\employeeshifttimeController.js" />
+    <Content Include="jsControllers\ExamCategoriesController.js" />
+    <Content Include="jsControllers\examMarkEntryController.js" />
+    <Content Include="jsControllers\examRemarkMasterController.js" />
+    <Content Include="jsControllers\examSetupController.js" />
+    <Content Include="jsControllers\examSetupTransferController.js" />
+    <Content Include="jsControllers\examSyllabusController.js" />
+    <Content Include="jsControllers\facultyAllotmentController.js" />
+    <Content Include="jsControllers\feeCategoryController.js" />
+    <Content Include="jsControllers\feesDefaulterController.js" />
+    <Content Include="jsControllers\feesHeadController.js" />
+    <Content Include="jsControllers\FeesManagerController.js" />
+    <Content Include="jsControllers\feesStructureController.js" />
+    <Content Include="jsControllers\feesStructureDataExportController.js" />
+    <Content Include="jsControllers\feesTermMasterController.js" />
+    <Content Include="jsControllers\feesTransactionController.js" />
+    <Content Include="jsControllers\flyermasterController.js" />
+    <Content Include="jsControllers\flyervoiceMasterController.js" />
+    <Content Include="jsControllers\gradeMasterController.js" />
+    <Content Include="jsControllers\homeController.js" />
+    <Content Include="jsControllers\houseAllotmentController.js" />
+    <Content Include="jsControllers\houseAllotmentExportController.js" />
+    <Content Include="jsControllers\housesController.js" />
+    <Content Include="jsControllers\imageflyerController.js" />
+    <Content Include="jsControllers\importedURLController.js" />
+    <Content Include="jsControllers\instalmentController.js" />
+    <Content Include="jsControllers\letterheadmasterController.js" />
+    <Content Include="jsControllers\LibraryController.js" />
+    <Content Include="jsControllers\mastersController.js" />
+    <Content Include="jsControllers\messageBroadcastController.js" />
+    <Content Include="jsControllers\navController.js" />
+    <Content Include="jsControllers\newsEventMasterController.js" />
+    <Content Include="jsControllers\noticeBoardController.js" />
+    <Content Include="jsControllers\onlineClassAttendDetailController.js" />
+    <Content Include="jsControllers\onlineClassDetailController.js" />
+    <Content Include="jsControllers\onlinePortalLoginDetailController.js" />
+    <Content Include="jsControllers\ownerMasterController.js" />
+    <Content Include="jsControllers\parentPortalController.js" />
+    <Content Include="jsControllers\personalcontectListController.js" />
+    <Content Include="jsControllers\photoGalleryController.js" />
+    <Content Include="jsControllers\photogallerydetailController.js" />
+    <Content Include="jsControllers\rackMasterController.js" />
+    <Content Include="jsControllers\rollNoAllotmentController.js" />
+    <Content Include="jsControllers\routeMasterController.js" />
+    <Content Include="jsControllers\schedularSMSController.js" />
+    <Content Include="jsControllers\schedulerWishesController.js" />
+    <Content Include="jsControllers\schedulerWishesTeacherController.js" />
+    <Content Include="jsControllers\schoolMasterController.js" />
+    <Content Include="jsControllers\sectionsController.js" />
+    <Content Include="jsControllers\menuController.js" />
+    <Content Include="jsControllers\sendGeneralMessegeController.js" />
+    <Content Include="jsControllers\sendHouseMessegeController.js" />
+    <Content Include="jsControllers\sendMessegeController.js" />
+    <Content Include="jsControllers\sendMessegeWishesController.js" />
+    <Content Include="jsControllers\sendMessegeWishesTeacherController.js" />
+    <Content Include="jsControllers\sendParentIDPasswordController.js" />
+    <Content Include="jsControllers\sendPersonalMessegeController.js" />
+    <Content Include="jsControllers\sendReligionMessegeController.js" />
+    <Content Include="jsControllers\sendSMSAbsenteesController.js" />
+    <Content Include="jsControllers\sendSMSController.js" />
+    <Content Include="jsControllers\sendSMSOnlineAbsenteesController.js" />
+    <Content Include="jsControllers\sendStudentIDPasswordController.js" />
+    <Content Include="jsControllers\sendTeacherIDPasswordController.js" />
+    <Content Include="jsControllers\sessionClassAllotmentController.js" />
+    <Content Include="jsControllers\sessionTransferController.js" />
+    <Content Include="jsControllers\shelfMasterController.js" />
+    <Content Include="jsControllers\smsLogDataExportController.js" />
+    <Content Include="jsControllers\smsManagerController.js" />
+    <Content Include="jsControllers\smsReportController.js" />
+    <Content Include="jsControllers\smsTemplatesController.js" />
+    <Content Include="jsControllers\staffRegistrationController.js" />
+    <Content Include="jsControllers\studentBonafideReportController.js" />
+    <Content Include="jsControllers\studentDataExportController.js" />
+    <Content Include="jsControllers\studentExamResultController.js" />
+    <Content Include="jsControllers\studentFeeStructDataExportController.js" />
+    <Content Include="jsControllers\studentFeeStructureController.js" />
+    <Content Include="jsControllers\studentIDPasswordExportController.js" />
+    <Content Include="jsControllers\studentListfeesStructureController.js" />
+    <Content Include="jsControllers\studentManagerController.js" />
+    <Content Include="jsControllers\studentManagerReportController.js" />
+    <Content Include="jsControllers\studentPortalController.js" />
+    <Content Include="jsControllers\studentRegistrationController.js" />
+    <Content Include="jsControllers\studentRegistrationWithTCController.js" />
+    <Content Include="jsControllers\studentSessionController.js" />
+    <Content Include="jsControllers\studentwiseReportController.js" />
+    <Content Include="jsControllers\subjectAllotmentController.js" />
+    <Content Include="jsControllers\subjectAllotmenttDataExportController.js" />
+    <Content Include="jsControllers\subjectController.js" />
+    <Content Include="jsControllers\subjectLevel1MasterController.js" />
+    <Content Include="jsControllers\subjectLevel2MasterController.js" />
+    <Content Include="jsControllers\subjectLevel3MasterController.js" />
+    <Content Include="jsControllers\tCAllotmentController.js" />
+    <Content Include="jsControllers\tcCertificateReportController.js" />
+    <Content Include="jsControllers\tCDetailSessionWiseController.js" />
+    <Content Include="jsControllers\teacherDataExportController.js" />
+    <Content Include="jsControllers\teacherDataExportDateWiseController.js" />
+    <Content Include="jsControllers\teacherPortalController.js" />
+    <Content Include="jsControllers\teacherRegistrationController.js" />
+    <Content Include="jsControllers\thoughtMasterController.js" />
+    <Content Include="jsControllers\timeScheduleMasterController.js" />
+    <Content Include="jsControllers\topperListController.js" />
+    <Content Include="jsControllers\topperNoticeBoardController.js" />
+    <Content Include="jsControllers\topperOldStudentController.js" />
+    <Content Include="jsControllers\userPermissionController.js" />
+    <Content Include="jsControllers\userRegistrationController.js" />
+    <Content Include="jsControllers\vehicleRTOController.js" />
+    <Content Include="Repositories\dbSchool.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>dbSchool.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Repositories\dbSchool.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>dbSchool2.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\AjaxLogin.js" />
+    <Content Include="Images\teachers\StudentChart.pdf" />
+    <Content Include="Images\teachers\Thumbs.db" />
+    <Content Include="Images\Thumbs.db" />
+    <None Include="Scripts\jquery-1.6.2-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.6.2.js" />
+    <Content Include="Scripts\jquery-1.6.2.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.11.js" />
+    <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jsapi.js" />
+    <Content Include="Scripts\knockout-2.0.0.debug.js" />
+    <Content Include="Scripts\knockout-2.0.0.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\modernizr-2.0.6-development-only.js" />
+    <Content Include="Views\FeesStructure\AddClassesHeadView.cshtml" />
+    <Content Include="Views\FeesStructure\AddFeesStructure.cshtml" />
+    <Content Include="Views\FeesStructure\FeesStructureLeftRightView.cshtml" />
+    <Content Include="Views\FeesStructure\GridListFeesStructure.cshtml" />
+    <Content Include="Views\FeesStructure\ListAllFeesTerms.cshtml" />
+    <Content Include="Views\FeesStructure\ListFeesStructure.cshtml" />
+    <Content Include="Views\FeesStructure\ListFeesStructureForEdit.cshtml" />
+    <Content Include="Views\FeesStructure\TermMultiSelectPartial.cshtml" />
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\ApplicationMenuDataSource.sitemap" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Account\SignIn.cshtml" />
+    <Content Include="Views\Account\TabControlPartial.cshtml" />
+    <Content Include="Views\Account\UserMenuItemPartial.cshtml" />
+    <Content Include="Views\Article\Index.cshtml" />
+    <Content Include="Views\Article\LeftPanelPartial.cshtml" />
+    <Content Include="Views\GridView\GridViewDetailsPage.cshtml" />
+    <Content Include="Views\GridView\GridViewPartial.cshtml" />
+    <Content Include="Views\GridView\Index.cshtml" />
+    <Content Include="Views\GridView\LeftPanelPartial.cshtml" />
+    <Content Include="Views\Home\LeftPanelPartial.cshtml" />
+    <None Include="packages.config" />
+    <EntityDeploy Include="Repositories\dbSchool.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>dbSchool2.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Repositories\dbSchool.edmx.diagram">
+      <DependentUpon>dbSchool.edmx</DependentUpon>
+    </Content>
+    <Content Include="Views\ClassSetup\ClassSetupMain.cshtml" />
+    <Content Include="Views\ClassSetup\LeftPanelPartial.cshtml" />
+    <Content Include="Views\ClassSetup\ListPartialClassSetup.cshtml" />
+    <Content Include="Views\StudentSession\ClassSetupPartial.cshtml" />
+    <Content Include="Views\StudentSession\ListStudentSessionView.cshtml" />
+    <Content Include="Views\StudentSession\StudentSessionView.cshtml" />
+    <Content Include="Views\UserLogin\Indexreponsive.cshtml" />
+    <Content Include="Views\UserLogin\Indexold.cshtml" />
+    <Content Include="Views\Shared\_Layoutlogin.cshtml" />
+    <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\Menu\IndexDevexpress.cshtml" />
+    <Content Include="Views\Menu\Indexhtmlorange.cshtml" />
+    <Content Include="Views\ClassSetup\GridViewPartial.cshtml" />
+    <Content Include="Views\ClassSetup\Index.cshtml" />
+    <Content Include="Views\UserLogin\Index.cshtml" />
+    <Content Include="Views\Menu\Indexforeach.cshtml" />
+    <Content Include="Views\Menu\IndexOrangebuitton.cshtml" />
+    <Content Include="Views\Shared\SessionViewPartial.cshtml" />
+    <Content Include="Views\Shared\_Layoutsignin.cshtml" />
+    <Content Include="Views\LeftAndRightPanel\LeftPanelPartial.cshtml" />
+    <Content Include="Views\StudentRegistration\fileUploadPartial.cshtml" />
+    <Content Include="Views\StudentRegistration\GridDocumentListPartial.cshtml" />
+    <Content Include="Views\StudentRegistration\GuardianEditPartial.cshtml" />
+    <Content Include="Views\StudentRegistration\GuardianPartial.cshtml" />
+    <Content Include="Views\StudentRegistration\HeaderRegistration.cshtml" />
+    <Content Include="Views\StudentRegistration\ListRegistrations.cshtml" />
+    <Content Include="Views\StudentRegistration\ListStudentPrevioussessiondetail.cshtml" />
+    <Content Include="Views\StudentRegistration\PersonalInfoEditPartial.cshtml" />
+    <Content Include="Views\StudentRegistration\Registrations.cshtml" />
+    <Content Include="Views\StudentRegistration\RegistrationTabs.cshtml" />
+    <Content Include="Views\StudentRegistration\StudentPriviousEditPartial.cshtml" />
+    <Content Include="Views\StudentRegistration\StudentPriviousPartial.cshtml" />
+    <Content Include="Views\StudentRegistration\UploadDocumentEditPartial.cshtml" />
+    <Content Include="Views\StudentRegistration\UploadDocumentPartial.cshtml" />
+    <Content Include="Views\StudentRegistration\UploadPhotoEditPartial.cshtml" />
+    <Content Include="Views\StudentRegistration\UploadPhotoPartial.cshtml" />
+    <Content Include="Views\ClassCategories\ClassCategories.cshtml" />
+    <Content Include="Views\ClassCategories\ClassCategoryTabs.cshtml" />
+    <Content Include="Views\ClassCategories\GridViewPartial.cshtml" />
+    <Content Include="Views\ClassCategories\HeaderClassCategories.cshtml" />
+    <Content Include="Views\ClassCategories\Index.cshtml" />
+    <Content Include="Views\ClassCategories\LeftPanelPartial.cshtml" />
+    <Content Include="Views\ClassCategories\ListClassCategories.cshtml" />
+    <Content Include="Views\StudentSession\Index.cshtml" />
+    <Content Include="Views\Classes\Classes.cshtml" />
+    <Content Include="Views\Classes\ClassTabs.cshtml" />
+    <Content Include="Views\Classes\GridViewPartial.cshtml" />
+    <Content Include="Views\Classes\HeaderClasses.cshtml" />
+    <Content Include="Views\Classes\Index.cshtml" />
+    <Content Include="Views\Classes\LeftPanelPartial.cshtml" />
+    <Content Include="Views\Classes\ListClasses.cshtml" />
+    <Content Include="Views\DepartmentMaster\DepartmentMasterGridRowChange.cshtml" />
+    <Content Include="Views\DepartmentMaster\DepartmentMasterView.cshtml" />
+    <Content Include="Views\DepartmentMaster\GridViewPartial.cshtml" />
+    <Content Include="Views\DepartmentMaster\Index.cshtml" />
+    <Content Include="Views\DepartmentMaster\LeftPanelPartial.cshtml" />
+    <Content Include="Views\DepartmentMaster\ListDepartmentMasterView.cshtml" />
+    <Content Include="Views\DesignationMaster\DesignationView.cshtml" />
+    <Content Include="Views\DesignationMaster\GridViewPartial.cshtml" />
+    <Content Include="Views\DesignationMaster\Index.cshtml" />
+    <Content Include="Views\DesignationMaster\LeftPanelPartial.cshtml" />
+    <Content Include="Views\DesignationMaster\ListDesignationView.cshtml" />
+    <Content Include="Views\FeesHead\FeesHeadGridRowChange.cshtml" />
+    <Content Include="Views\FeesHead\FeesHeadView.cshtml" />
+    <Content Include="Views\FeesHead\GridViewPartial.cshtml" />
+    <Content Include="Views\FeesHead\Index.cshtml" />
+    <Content Include="Views\FeesHead\LeftPanelPartial.cshtml" />
+    <Content Include="Views\FeesHead\ListFeesHeadView.cshtml" />
+    <Content Include="Views\FeesTermMaster\FeesTermView.cshtml" />
+    <Content Include="Views\FeesTermMaster\GridViewPartial.cshtml" />
+    <Content Include="Views\FeesTermMaster\Index.cshtml" />
+    <Content Include="Views\FeesTermMaster\LeftPanelPartial.cshtml" />
+    <Content Include="Views\FeesTermMaster\ListFeesTermView.cshtml" />
+    <Content Include="Views\Houses\GridViewPartial.cshtml" />
+    <Content Include="Views\Houses\HeaderHouses.cshtml" />
+    <Content Include="Views\Houses\Houses.cshtml" />
+    <Content Include="Views\Houses\HouseTabs.cshtml" />
+    <Content Include="Views\Houses\Index.cshtml" />
+    <Content Include="Views\Houses\LeftPanelPartial.cshtml" />
+    <Content Include="Views\Houses\ListHouses.cshtml" />
+    <Content Include="Views\Sections\GridViewPartial.cshtml" />
+    <Content Include="Views\Sections\HeaderSections.cshtml" />
+    <Content Include="Views\Sections\Index.cshtml" />
+    <Content Include="Views\Sections\LeftPanelPartial.cshtml" />
+    <Content Include="Views\Sections\ListSections.cshtml" />
+    <Content Include="Views\Sections\Sections.cshtml" />
+    <Content Include="Views\Sections\SectionTabs.cshtml" />
+    <Content Include="Views\StudentRegistration\Index.cshtml" />
+    <Content Include="Views\SendGeneralMessege\ListClassSetupPartial.cshtml" />
+    <Content Include="Views\SendGeneralMessege\ListSendGeneralMessegeViewold.cshtml" />
+    <Content Include="Views\SendGeneralMessege\SendGeneralMessegeBottomView.cshtml" />
+    <Content Include="Views\SendGeneralMessege\SendGeneralMessegeEditTextViewold.cshtml" />
+    <Content Include="Views\SendGeneralMessege\SendGeneralMessegeHeadView.cshtml" />
+    <Content Include="Views\SendGeneralMessege\SendGeneralMessegeTemplateView.cshtml" />
+    <Content Include="Views\SendGeneralMessege\SendGeneralMessegeTextView.cshtml" />
+    <Content Include="Views\SendGeneralMessege\SendGeneralMessegeView.cshtml" />
+    <Content Include="Views\StudentRegistration\GridViewPartial.cshtml" />
+    <Content Include="Views\appDataManager\Index.cshtml" />
+    <Content Include="Views\StudentRegistration\PersonalInfoPartial.cshtml" />
+    <Content Include="Views\StudentRegistration\PersonalInfoEditPartialold.cshtml" />
+    <Content Include="Views\LeftAndRightPanel\RightPanelPartial.cshtml" />
+    <Content Include="Views\SendGeneralMessege\Index.cshtml" />
+    <Content Include="Views\SendGeneralMessege\SendGeneralMessegeEditTextView.cshtml" />
+    <Content Include="Views\SendGeneralMessege\ListClassGridLookupPartial.cshtml" />
+    <Content Include="Views\ClassSubjectLevel\ClassSubjectLevelView.cshtml" />
+    <Content Include="Views\ClassSubjectLevel\GridViewPartial.cshtml" />
+    <Content Include="Views\ClassSubjectLevel\Index.cshtml" />
+    <Content Include="Views\ClassSubjectLevel\LeftPanelPartial.cshtml" />
+    <Content Include="Views\ClassSubjectLevel\ListClassSubjectLevelView.cshtml" />
+    <Content Include="Views\ClassSyllabus\ClassSyllabusView.cshtml" />
+    <Content Include="Views\ClassSyllabus\Index.cshtml" />
+    <Content Include="Views\ClassSyllabus\ListClassSyllabus.cshtml" />
+    <Content Include="Views\ClassSyllabus\SubjectPartialView.cshtml" />
+    <Content Include="Views\ClassTimeTable\GridTimeTableView.cshtml" />
+    <Content Include="Views\ClassTimeTable\GridViewPartial.cshtml" />
+    <Content Include="Views\ClassTimeTable\Index.cshtml" />
+    <Content Include="Views\ClassTimeTable\LeftPanelPartial.cshtml" />
+    <Content Include="Views\ExamRemarkMaster\ExamRemarkMasterView.cshtml" />
+    <Content Include="Views\ExamRemarkMaster\GridViewPartial.cshtml" />
+    <Content Include="Views\ExamRemarkMaster\Index.cshtml" />
+    <Content Include="Views\ExamRemarkMaster\LeftPanelPartial.cshtml" />
+    <Content Include="Views\ExamRemarkMaster\ListExamRemarkMasterView.cshtml" />
+    <Content Include="Views\ExamsManager\ExamCategory.cshtml" />
+    <Content Include="Views\ExamsManager\GridViewPartial.cshtml" />
+    <Content Include="Views\ExamsManager\Index.cshtml" />
+    <Content Include="Views\ExamsManager\LeftPanelPartial.cshtml" />
+    <Content Include="Views\ExamsManager\ListExamCategory.cshtml" />
+    <Content Include="Views\FacultyAllotment\ClassSetupPartialView.cshtml" />
+    <Content Include="Views\FacultyAllotment\FacultyAllotmentView.cshtml" />
+    <Content Include="Views\FacultyAllotment\FacultyPartialView.cshtml" />
+    <Content Include="Views\FacultyAllotment\Index.cshtml" />
+    <Content Include="Views\FacultyAllotment\ListFacultyAllotment.cshtml" />
+    <Content Include="Views\GradeMaster\GradeTabs.cshtml" />
+    <Content Include="Views\GradeMaster\GradeView.cshtml" />
+    <Content Include="Views\GradeMaster\GridViewPartial.cshtml" />
+    <Content Include="Views\GradeMaster\Index.cshtml" />
+    <Content Include="Views\GradeMaster\LeftPanelPartial.cshtml" />
+    <Content Include="Views\GradeMaster\ListGradeView.cshtml" />
+    <Content Include="Views\HouseAllotment\HouseView.cshtml" />
+    <Content Include="Views\HouseAllotment\Index.cshtml" />
+    <Content Include="Views\HouseAllotment\ListHouseAllotmentView.cshtml" />
+    <Content Include="Views\RollNoAllotment\Index.cshtml" />
+    <Content Include="Views\RollNoAllotment\ListRollNoAllotmentView.cshtml" />
+    <Content Include="Views\RollNoAllotment\RollNoView.cshtml" />
+    <Content Include="Views\FlyerVoiceMaster\FlyerVoiceMasterTabs.cshtml" />
+    <Content Include="Views\FlyerVoiceMaster\FlyerVoiceMasterView.cshtml" />
+    <Content Include="Views\FlyerVoiceMaster\GridViewPartial.cshtml" />
+    <Content Include="Views\FlyerVoiceMaster\HeaderFlyerVoiceMaster.cshtml" />
+    <Content Include="Views\FlyerVoiceMaster\HtmlEditor.cshtml" />
+    <Content Include="Views\FlyerVoiceMaster\Index.cshtml" />
+    <Content Include="Views\FlyerVoiceMaster\LeftPanelPartial.cshtml" />
+    <Content Include="Views\FlyerVoiceMaster\ListFlyerVoiceMaster.cshtml" />
+    <Content Include="Views\FlyerVoiceMaster\UploadFlyerVoiceMasterPhotoEditPartial.cshtml" />
+    <Content Include="Views\FlyerVoiceMaster\UploadFlyerVoiceMasterPhotoPartial.cshtml" />
+    <Content Include="Views\FlyerVoiceMaster\VoiceGalleryPartial.cshtml" />
+    <Content Include="Views\SMSManager\Index.cshtml" />
+    <Content Include="Views\SMSManager\ListSMSType.cshtml" />
+    <Content Include="Views\SMSManager\SMSTypes.cshtml" />
+    <Content Include="Views\SMSTemplate\GridViewPartial.cshtml" />
+    <Content Include="Views\SMSTemplate\HeaderTemplates.cshtml" />
+    <Content Include="Views\SMSTemplate\Index.cshtml" />
+    <Content Include="Views\SMSTemplate\LeftPanelPartial.cshtml" />
+    <Content Include="Views\SMSTemplate\ListSMSTemplate.cshtml" />
+    <Content Include="Views\SMSTemplate\SMSTemplate.cshtml" />
+    <Content Include="Views\SMSTemplate\SMSTemplateEditForm.cshtml" />
+    <Content Include="Views\SMSTemplate\SMSTemplateEntryPartial.cshtml" />
+    <Content Include="Views\SMSTemplate\SMSTemplateForm.cshtml" />
+    <Content Include="Views\SMSTemplate\SMSTemplatesMain.cshtml" />
+    <Content Include="Views\SMSTemplate\TemplateEntryEditPartial.cshtml" />
+    <Content Include="Views\SMSTemplate\TemplateEntryPartial.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\fileUploadPartial.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\GridDocumentListPartial.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\GuardianEditPartial.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\GuardianPartial.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\HeaderRegistration.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\Index.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\ListRegistrationsWithTC.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\PersonalInfoEditPartial.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\PersonalInfoPartial.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\RegistrationsWithTC.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\RegistrationTabs.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\StudentPriviousEditPartial.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\StudentPriviousPartial.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\UploadDocumentEditPartial.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\UploadDocumentPartial.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\UploadPhotoEditPartial.cshtml" />
+    <Content Include="Views\StudentRegistrationWithTC\UploadPhotoPartial.cshtml" />
+    <Content Include="Views\SubjectLevel1Master\GridViewPartial.cshtml" />
+    <Content Include="Views\SubjectLevel1Master\Index.cshtml" />
+    <Content Include="Views\SubjectLevel1Master\LeftPanelPartial.cshtml" />
+    <Content Include="Views\SubjectLevel1Master\ListSubjectLevel1View.cshtml" />
+    <Content Include="Views\SubjectLevel1Master\SubjectLevel1View.cshtml" />
+    <Content Include="Views\SubjectLevel2Master\GridViewPartial.cshtml" />
+    <Content Include="Views\SubjectLevel2Master\Index.cshtml" />
+    <Content Include="Views\SubjectLevel2Master\LeftPanelPartial.cshtml" />
+    <Content Include="Views\SubjectLevel2Master\ListsubjectLevel2MasterView.cshtml" />
+    <Content Include="Views\SubjectLevel2Master\SubjectLevel2MasterView.cshtml" />
+    <Content Include="Views\SubjectLevel3Master\GridViewPartial.cshtml" />
+    <Content Include="Views\SubjectLevel3Master\Index.cshtml" />
+    <Content Include="Views\SubjectLevel3Master\LeftPanelPartial.cshtml" />
+    <Content Include="Views\SubjectLevel3Master\ListsubjectLevel3MasterView.cshtml" />
+    <Content Include="Views\SubjectLevel3Master\SubjectLevel3MasterEditPartial.cshtml" />
+    <Content Include="Views\SubjectLevel3Master\SubjectLevel3MasterPartial.cshtml" />
+    <Content Include="Views\SubjectLevel3Master\SubjectLevel3MasterView.cshtml" />
+    <Content Include="Views\ThoughtMaster\GridViewPartial.cshtml" />
+    <Content Include="Views\ThoughtMaster\HeaderThought.cshtml" />
+    <Content Include="Views\ThoughtMaster\Index.cshtml" />
+    <Content Include="Views\ThoughtMaster\LeftPanelPartial.cshtml" />
+    <Content Include="Views\ThoughtMaster\ListThoughtMaster.cshtml" />
+    <Content Include="Views\ThoughtMaster\ThoughtMasterView.cshtml" />
+    <Content Include="Views\TimeScheduleMaster\GridViewPartial.cshtml" />
+    <Content Include="Views\TimeScheduleMaster\Index.cshtml" />
+    <Content Include="Views\TimeScheduleMaster\LeftPanelPartial.cshtml" />
+    <Content Include="Views\TimeScheduleMaster\ListTimeScheduleMasterView.cshtml" />
+    <Content Include="Views\TimeScheduleMaster\TimeScheduleMasterView.cshtml" />
+    <Content Include="Views\StudentRegistration\GuardianEditPartialold.cshtml" />
+    <Content Include="Views\appAcademicManager\Index.cshtml" />
+    <Content Include="Views\appLFDManager\Index.cshtml" />
+    <Content Include="Views\appExamManager\Index.cshtml" />
+    <Content Include="Views\appSMSManager\Index.cshtml" />
+    <Content Include="Views\appFeesManager\Index.cshtml" />
+    <Content Include="Views\appTimeTableManager\Index.cshtml" />
+    <Content Include="Views\FeesCategory\AccountMaster.cshtml" />
+    <Content Include="Views\FeesCategory\FeeCategories.cshtml" />
+    <Content Include="Views\FeesCategory\FeeSummaryQuarterwiseChart.cshtml" />
+    <Content Include="Views\FeesCategory\Index.cshtml" />
+    <Content Include="Views\FeesCategory\InstalmentMaster.cshtml" />
+    <Content Include="Views\FeesCategory\ListAccountMaster.cshtml" />
+    <Content Include="Views\FeesCategory\ListFeeCategoryPartial.cshtml" />
+    <Content Include="Views\FeesCategory\ListInstalmentMasterPartial.cshtml" />
+    <Content Include="Views\FeesCategory\GridViewPartial.cshtml" />
+    <Content Include="Views\ListFeesStructure\AddClassesHeadView.cshtml" />
+    <Content Include="Views\ListFeesStructure\AddFeesStructure.cshtml" />
+    <Content Include="Views\ListFeesStructure\FeesStructureLeftRightView.cshtml" />
+    <Content Include="Views\ListFeesStructure\GridListFeesStructure.cshtml" />
+    <Content Include="Views\ListFeesStructure\ListAllFeesTerms.cshtml" />
+    <Content Include="Views\ListFeesStructure\ListFeesStructure.cshtml" />
+    <Content Include="Views\ListFeesStructure\ListFeesStructureForEdit.cshtml" />
+    <Content Include="Views\ListFeesStructure\TermMultiSelectPartial.cshtml" />
+    <Content Include="Views\FeesStructure\Index.cshtml" />
+    <Content Include="Views\ListFeesStructure\Index.cshtml" />
+    <Content Include="Views\FeesTransaction\FeesTransactionBodyPartial.cshtml" />
+    <Content Include="Views\FeesTransaction\FeesTransactionEditView.cshtml" />
+    <Content Include="Views\FeesTransaction\FeesTransactionView.cshtml" />
+    <Content Include="Views\FeesTransaction\GridStudentListForFee.cshtml" />
+    <Content Include="Views\FeesTransaction\Indexpermission.cshtml" />
+    <Content Include="Views\FeesTransaction\ListHeadView.cshtml" />
+    <Content Include="Views\FeesTransaction\ListTermView.cshtml" />
+    <Content Include="Views\FeesTransaction\TermPartialView.cshtml" />
+    <Content Include="Views\FeesTransaction\testview.cshtml" />
+    <Content Include="Views\StudentFeeStructure\CallBackPanelPartial.cshtml" />
+    <Content Include="Views\StudentFeeStructure\GridStudentListForSFS.cshtml" />
+    <Content Include="Views\StudentFeeStructure\StudentFeeStructureView.cshtml" />
+    <Content Include="Views\StudentListFeesStructure\GridFeesTermList.cshtml" />
+    <Content Include="Views\StudentListFeesStructure\GridStudentList.cshtml" />
+    <Content Include="Views\StudentListFeesStructure\ListFeesStructureForEdit.cshtml" />
+    <Content Include="Views\StudentListFeesStructure\SplitterGridStudentListFeesStructure.cshtml" />
+    <Content Include="Views\StudentListFeesStructure\StudentListFeesStructure.cshtml" />
+    <Content Include="Views\StudentFeeStructure\Index.cshtml" />
+    <Content Include="Views\StudentListFeesStructure\Index.cshtml" />
+    <Content Include="Views\FeesTransaction\IndexOld.cshtml" />
+    <Content Include="Views\FeesStructure\ListClassGridLookupPartial.cshtml" />
+    <Content Include="Views\FeesStructure\ListTermGridLookupPartial.cshtml" />
+    <Content Include="Views\EmployeeSMSAbsentees\Index.cshtml" />
+    <Content Include="Views\EmployeeSMSAbsentees\ListSendSMSAbsenteesView.cshtml" />
+    <Content Include="Views\EmployeeSMSAbsentees\ListTemplateGridLookupPartial.cshtml" />
+    <Content Include="Views\EmployeeSMSAbsentees\SendGeneralMessegeBottomView.cshtml" />
+    <Content Include="Views\EmployeeSMSAbsentees\SendSMSAbsenteesEditTextView.cshtml" />
+    <Content Include="Views\EmployeeSMSAbsentees\SendSMSAbsenteesEditTextViewold.cshtml" />
+    <Content Include="Views\EmployeeSMSAbsentees\SendSMSAbsenteesHeadView.cshtml" />
+    <Content Include="Views\EmployeeSMSAbsentees\SendSMSAbsenteesTemplateView.cshtml" />
+    <Content Include="Views\EmployeeSMSAbsentees\SendSMSAbsenteesTextView.cshtml" />
+    <Content Include="Views\EmployeeSMSAbsentees\SendSMSAbsenteesView.cshtml" />
+    <Content Include="Views\FeesDefaulter\Index.cshtml" />
+    <Content Include="Views\FeesDefaulter\ListSendSMSDefaulterView.cshtml" />
+    <Content Include="Views\FeesDefaulter\SendSMSAbsenteesView.cshtml" />
+    <Content Include="Views\FeesDefaulter\SendSMSDefaulterEditTextView.cshtml" />
+    <Content Include="Views\FeesDefaulter\SendSMSDefaulterEditTextViewold.cshtml" />
+    <Content Include="Views\FeesDefaulter\SendSMSDefaulterHeadView.cshtml" />
+    <Content Include="Views\FeesDefaulter\SendSMSDefaulterTemplateView.cshtml" />
+    <Content Include="Views\FeesDefaulter\SendSMSDefaulterTextView.cshtml" />
+    <Content Include="Views\SendHouseMessege\Index.cshtml" />
+    <Content Include="Views\SendHouseMessege\ListClassGridLookupPartial.cshtml" />
+    <Content Include="Views\SendHouseMessege\ListClassSetupPartial.cshtml" />
+    <Content Include="Views\SendHouseMessege\ListHouseGridLookupPartial.cshtml" />
+    <Content Include="Views\SendHouseMessege\ListSendHouseMessegeView.cshtml" />
+    <Content Include="Views\SendHouseMessege\SendGeneralMessegeView.cshtml" />
+    <Content Include="Views\SendHouseMessege\SendHouseMessegeBottomView.cshtml" />
+    <Content Include="Views\SendHouseMessege\SendHouseMessegeEditTextView.cshtml" />
+    <Content Include="Views\SendHouseMessege\SendHouseMessegeEditTextViewold.cshtml" />
+    <Content Include="Views\SendHouseMessege\SendHouseMessegeHeadView.cshtml" />
+    <Content Include="Views\SendHouseMessege\SendHouseMessegeTemplateView.cshtml" />
+    <Content Include="Views\SendHouseMessege\SendHouseMessegeTextView.cshtml" />
+    <Content Include="Views\SendHouseMessege\SendHouseMessegeView.cshtml" />
+    <Content Include="Views\SendMessegeWishesTeacher\Index.cshtml" />
+    <Content Include="Views\SendMessegeWishesTeacher\ListClassSetupPartial.cshtml" />
+    <Content Include="Views\SendMessegeWishesTeacher\ListSendMessegeWishesTeacherView.cshtml" />
+    <Content Include="Views\SendMessegeWishesTeacher\SendMessegeWishesTeacherBottomView.cshtml" />
+    <Content Include="Views\SendMessegeWishesTeacher\SendMessegeWishesTeacherEditTextView.cshtml" />
+    <Content Include="Views\SendMessegeWishesTeacher\SendMessegeWishesTeacherEditTextViewold.cshtml" />
+    <Content Include="Views\SendMessegeWishesTeacher\SendMessegeWishesTeacherHeadView.cshtml" />
+    <Content Include="Views\SendMessegeWishesTeacher\SendMessegeWishesTeacherTemplateView.cshtml" />
+    <Content Include="Views\SendMessegeWishesTeacher\SendMessegeWishesTeacherTextView.cshtml" />
+    <Content Include="Views\SendMessegeWishesTeacher\SendMessegeWishesTeacherView.cshtml" />
+    <Content Include="Views\SendMessegeWishes\Index.cshtml" />
+    <Content Include="Views\SendMessegeWishes\ListClassGridLookupPartial.cshtml" />
+    <Content Include="Views\SendMessegeWishes\ListClassSetupPartial.cshtml" />
+    <Content Include="Views\SendMessegeWishes\ListSendMessegeWishesView.cshtml" />
+    <Content Include="Views\SendMessegeWishes\SendMessegeWishesBottomView.cshtml" />
+    <Content Include="Views\SendMessegeWishes\SendMessegeWishesEditTextView.cshtml" />
+    <Content Include="Views\SendMessegeWishes\SendMessegeWishesEditTextViewold.cshtml" />
+    <Content Include="Views\SendMessegeWishes\SendMessegeWishesHeadView.cshtml" />
+    <Content Include="Views\SendMessegeWishes\SendMessegeWishesTemplateView.cshtml" />
+    <Content Include="Views\SendMessegeWishes\SendMessegeWishesTextView.cshtml" />
+    <Content Include="Views\SendMessegeWishes\SendMessegeWishesView.cshtml" />
+    <Content Include="Views\SendMessege\Index.cshtml" />
+    <Content Include="Views\SendMessege\ListClassGridLookupPartial.cshtml" />
+    <Content Include="Views\SendMessege\ListClassSetupPartial.cshtml" />
+    <Content Include="Views\SendMessege\ListSendMessegeView.cshtml" />
+    <Content Include="Views\SendMessege\SendMessegeBottomView.cshtml" />
+    <Content Include="Views\SendMessege\SendMessegeEditTextView.cshtml" />
+    <Content Include="Views\SendMessege\SendMessegeEditTextViewold.cshtml" />
+    <Content Include="Views\SendMessege\SendMessegeHeadView.cshtml" />
+    <Content Include="Views\SendMessege\SendMessegeTemplateView.cshtml" />
+    <Content Include="Views\SendMessege\SendMessegeTextView.cshtml" />
+    <Content Include="Views\SendMessege\SendMessegeView.cshtml" />
+    <Content Include="Views\SendReligionMessege\Index.cshtml" />
+    <Content Include="Views\SendReligionMessege\ListClassGridLookupPartial.cshtml" />
+    <Content Include="Views\SendReligionMessege\ListClassSetupPartial.cshtml" />
+    <Content Include="Views\SendReligionMessege\ListReligionGridLookupPartial.cshtml" />
+    <Content Include="Views\SendReligionMessege\ListSendReligionMessegeView.cshtml" />
+    <Content Include="Views\SendReligionMessege\SendReligionMessegeBottomView.cshtml" />
+    <Content Include="Views\SendReligionMessege\SendReligionMessegeEditTextView.cshtml" />
+    <Content Include="Views\SendReligionMessege\SendReligionMessegeEditTextViewold.cshtml" />
+    <Content Include="Views\SendReligionMessege\SendReligionMessegeHeadView.cshtml" />
+    <Content Include="Views\SendReligionMessege\SendReligionMessegeTemplateView.cshtml" />
+    <Content Include="Views\SendReligionMessege\SendReligionMessegeTextView.cshtml" />
+    <Content Include="Views\SendReligionMessege\SendReligionMessegeView.cshtml" />
+    <Content Include="Views\SendSMSAbsentees\Index.cshtml" />
+    <Content Include="Views\SendSMSAbsentees\ListClassGridLookupPartial.cshtml" />
+    <Content Include="Views\SendSMSAbsentees\ListClassSetupPartial.cshtml" />
+    <Content Include="Views\SendSMSAbsentees\ListSendSMSAbsenteesView.cshtml" />
+    <Content Include="Views\SendSMSAbsentees\SendGeneralMessegeBottomView.cshtml" />
+    <Content Include="Views\SendSMSAbsentees\SendSMSAbsenteesEditTextView.cshtml" />
+    <Content Include="Views\SendSMSAbsentees\SendSMSAbsenteesEditTextViewold.cshtml" />
+    <Content Include="Views\SendSMSAbsentees\SendSMSAbsenteesHeadView.cshtml" />
+    <Content Include="Views\SendSMSAbsentees\SendSMSAbsenteesTemplateView.cshtml" />
+    <Content Include="Views\SendSMSAbsentees\SendSMSAbsenteesTextView.cshtml" />
+    <Content Include="Views\SendSMSAbsentees\SendSMSAbsenteesView.cshtml" />
+    <Content Include="Views\SendSMSOnlineAbsentees\Index.cshtml" />
+    <Content Include="Views\SendSMSOnlineAbsentees\ListClassGridLookupPartial.cshtml" />
+    <Content Include="Views\SendSMSOnlineAbsentees\ListClassSetupPartial.cshtml" />
+    <Content Include="Views\SendSMSOnlineAbsentees\ListSendSMSOnlineAbsenteesView.cshtml" />
+    <Content Include="Views\SendSMSOnlineAbsentees\SendGeneralMessegeBottomView.cshtml" />
+    <Content Include="Views\SendSMSOnlineAbsentees\SendSMSOnlineAbsenteesEditTextView.cshtml" />
+    <Content Include="Views\SendSMSOnlineAbsentees\SendSMSOnlineAbsenteesEditTextViewold.cshtml" />
+    <Content Include="Views\SendSMSOnlineAbsentees\SendSMSOnlineAbsenteesHeadView.cshtml" />
+    <Content Include="Views\SendSMSOnlineAbsentees\SendSMSOnlineAbsenteesTemplateView.cshtml" />
+    <Content Include="Views\SendSMSOnlineAbsentees\SendSMSOnlineAbsenteesTextView.cshtml" />
+    <Content Include="Views\SendSMSOnlineAbsentees\SendSMSOnlineAbsenteesView.cshtml" />
+    <Content Include="Views\SendStudentIDPassword\Index.cshtml" />
+    <Content Include="Views\SendStudentIDPassword\ListClassGridLookupPartial.cshtml" />
+    <Content Include="Views\SendStudentIDPassword\ListClassSetupPartial.cshtml" />
+    <Content Include="Views\SendStudentIDPassword\ListSendStudentIDPasswordView.cshtml" />
+    <Content Include="Views\SendStudentIDPassword\SendStudentIDPasswordBottomView.cshtml" />
+    <Content Include="Views\SendStudentIDPassword\SendStudentIDPasswordEditTextView.cshtml" />
+    <Content Include="Views\SendStudentIDPassword\SendStudentIDPasswordEditTextViewold.cshtml" />
+    <Content Include="Views\SendStudentIDPassword\SendStudentIDPasswordHeadView.cshtml" />
+    <Content Include="Views\SendStudentIDPassword\SendStudentIDPasswordTemplateView.cshtml" />
+    <Content Include="Views\SendStudentIDPassword\SendStudentIDPasswordTextView.cshtml" />
+    <Content Include="Views\SendStudentIDPassword\SendStudentIDPasswordView.cshtml" />
+    <Content Include="Views\SendTeacherIDPassword\Index.cshtml" />
+    <Content Include="Views\SendTeacherIDPassword\ListSendTeacherIDPasswordView.cshtml" />
+    <Content Include="Views\SendTeacherIDPassword\SendTeacherIDPasswordBottomView.cshtml" />
+    <Content Include="Views\SendTeacherIDPassword\SendTeacherIDPasswordEditTextView.cshtml" />
+    <Content Include="Views\SendTeacherIDPassword\SendTeacherIDPasswordEditTextViewold.cshtml" />
+    <Content Include="Views\SendTeacherIDPassword\SendTeacherIDPasswordHeadView.cshtml" />
+    <Content Include="Views\SendTeacherIDPassword\SendTeacherIDPasswordTemplateView.cshtml" />
+    <Content Include="Views\SendTeacherIDPassword\SendTeacherIDPasswordTextView.cshtml" />
+    <Content Include="Views\SendTeacherIDPassword\SendTeacherIDPasswordView.cshtml" />
+    <Content Include="Views\ContectList\ContectListGridRowChange.cshtml" />
+    <Content Include="Views\ContectList\ContectListView.cshtml" />
+    <Content Include="Views\ContectList\Index.cshtml" />
+    <Content Include="Views\ContectList\ListContectListView.cshtml" />
+    <Content Include="Views\SessionTransfer\FromSectionPartial.cshtml" />
+    <Content Include="Views\SessionTransfer\Index.cshtml" />
+    <Content Include="Views\SessionTransfer\ListSessionTransferView.cshtml" />
+    <Content Include="Views\SessionTransfer\SessionTransferView.cshtml" />
+    <Content Include="Views\SessionTransfer\ToClassPartial.cshtml" />
+    <Content Include="Views\SessionTransfer\ToSectionPartial.cshtml" />
+    <Content Include="Views\TCAllotment\ClassSetupPartial.cshtml" />
+    <Content Include="Views\TCAllotment\Index.cshtml" />
+    <Content Include="Views\TCAllotment\Indexold.cshtml" />
+    <Content Include="Views\TCAllotment\ListTCAllotmentView.cshtml" />
+    <Content Include="Views\TCAllotment\TCAllotmentView.cshtml" />
+    <Content Include="Views\Teacher\ContectListGridRowChange.cshtml" />
+    <Content Include="Views\Teacher\ContectListView.cshtml" />
+    <Content Include="Views\Teacher\Index.cshtml" />
+    <Content Include="Views\Teacher\ListContectListView.cshtml" />
+    <Content Include="Views\FeesTransaction\Index.cshtml" />
+    <Content Include="Views\FeesTransaction\ListStudentGridLookupPartial.cshtml" />
+    <Content Include="Views\appUserPermitManager\Index.cshtml" />
+    <Content Include="Views\appCofigManager\Index.cshtml" />
+    <Content Include="Views\ExamMarkEntry\GridStudentMarkList.cshtml" />
+    <Content Include="Views\ExamMarkEntry\Index.cshtml" />
+    <Content Include="Views\ExamMarkEntry\Indexold.cshtml" />
+    <Content Include="Views\ExamSetup\DateOrderPartialView.cshtml" />
+    <Content Include="Views\ExamSetup\Index.cshtml" />
+    <Content Include="Views\ExamSetup\Indexold.cshtml" />
+    <Content Include="Views\ExamSetup\ListExamSetup.cshtml" />
+    <Content Include="Views\SubjectAllotment\Index.cshtml" />
+    <Content Include="Views\SubjectAllotment\Indexold.cshtml" />
+    <Content Include="Views\SubjectAllotment\ListForSubjectAllotment.cshtml" />
+    <Content Include="Views\SubjectAllotment\ListForSubjectlevelOne.cshtml" />
+    <Content Include="Views\SubjectAllotment\ListForSubjectLevelThree.cshtml" />
+    <Content Include="Views\SubjectAllotment\ListForSubjectLevelTwo.cshtml" />
+    <Content Include="Views\SubjectAllotment\SubjectAllotmentView.cshtml" />
+    <Content Include="Views\SendGeneralMessege\ListSendGeneralMessegeView.cshtml" />
+    <Content Include="Views\AttendanceClassWise\AttendanceChartPartial.cshtml" />
+    <Content Include="Views\AttendanceClassWise\BodyPartial.cshtml" />
+    <Content Include="Views\AttendanceClassWise\Index.cshtml" />
+    <Content Include="Views\AttendanceClassWise\Indexold.cshtml" />
+    <Content Include="Views\AttendanceClassWise\ListAttendancePartial.cshtml" />
+    <Content Include="Views\AttendanceClassWise\ListClassesPartial.cshtml" />
+    <Content Include="Views\AttendanceClassWise\ListClassGridLookupPartial.cshtml" />
+    <Content Include="Views\AttendanceDaily\AttendanceDailyBodyPartial.cshtml" />
+    <Content Include="Views\AttendanceDaily\AttendanceSplitterPartial.cshtml" />
+    <Content Include="Views\AttendanceDaily\AttendanceTemplatePartial.cshtml" />
+    <Content Include="Views\AttendanceDaily\AttendanceTopBottomPartial.cshtml" />
+    <Content Include="Views\AttendanceDaily\AttendanceTreePartial.cshtml" />
+    <Content Include="Views\AttendanceDaily\Index.cshtml" />
+    <Content Include="Views\AttendanceDaily\ListClassGridLookupPartial.cshtml" />
+    <Content Include="Views\AttendanceDaily\ListStudentAttendance.cshtml" />
+    <Content Include="Views\AttendanceDatewise\AttendanceDatewiseBodyPartial.cshtml" />
+    <Content Include="Views\AttendanceDatewise\AttendanceDatewiseLeftRight.cshtml" />
+    <Content Include="Views\AttendanceDatewise\AttendanceTreePartial.cshtml" />
+    <Content Include="Views\AttendanceDatewise\Index.cshtml" />
+    <Content Include="Views\AttendanceDatewise\ListAbsentStudentClasswise.cshtml" />
+    <Content Include="Views\AttendanceDatewise\ListAllDatewiseAttendance.cshtml" />
+    <Content Include="Views\AttendanceDatewise\ListClassGridLookupPartial.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Code\AuthHelper.cs" />
+    <Compile Include="Code\DBContext.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\appUserPermitManagerController.cs" />
+    <Compile Include="Controllers\appCofigManagerController.cs" />
+    <Compile Include="Controllers\appLFDManagerController.cs" />
+    <Compile Include="Controllers\appTimeTableManagerController.cs" />
+    <Compile Include="Controllers\appExamManagerController.cs" />
+    <Compile Include="Controllers\appFeesManagerController.cs" />
+    <Compile Include="Controllers\appAcademicManagerController.cs" />
+    <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\AttendanceClassWiseController.cs" />
+    <Compile Include="Controllers\AttendanceDailyController.cs" />
+    <Compile Include="Controllers\AttendanceDatewiseController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ClassCategoriesController.cs" />
+    <Compile Include="Controllers\ClassSubjectLevelController.cs" />
+    <Compile Include="Controllers\ClassSyllabusController.cs" />
+    <Compile Include="Controllers\ClassTimeTableController.cs" />
+    <Compile Include="Controllers\appSMSManagerController.cs" />
+    <Compile Include="Controllers\appDataManagerController.cs" />
+    <Compile Include="Controllers\ClassesController.cs" />
+    <Compile Include="Controllers\ContectListController.cs" />
+    <Compile Include="Controllers\DepartmentMasterController.cs" />
+    <Compile Include="Controllers\DesignationMasterController.cs" />
+    <Compile Include="Controllers\EmployeeSMSAbsenteesController.cs" />
+    <Compile Include="Controllers\ExamMarkEntryController.cs" />
+    <Compile Include="Controllers\ExamRemarkMasterController.cs" />
+    <Compile Include="Controllers\ExamSetupController.cs" />
+    <Compile Include="Controllers\ExamsManagerController.cs" />
+    <Compile Include="Controllers\FacultyAllotmentController.cs" />
+    <Compile Include="Controllers\FeesCategoryController.cs" />
+    <Compile Include="Controllers\FeesDefaulterController.cs" />
+    <Compile Include="Controllers\FeesHeadController.cs" />
+    <Compile Include="Controllers\FeesTransactionController.cs" />
+    <Compile Include="Controllers\ListFeesStructureController.cs" />
+    <Compile Include="Controllers\FeesStructureController.cs" />
+    <Compile Include="Controllers\FeesTermMasterController.cs" />
+    <Compile Include="Controllers\GradeMasterController.cs" />
+    <Compile Include="Controllers\HouseAllotmentController.cs" />
+    <Compile Include="Controllers\HousesController.cs" />
+    <Compile Include="Controllers\ImageFlyerController.cs" />
+    <Compile Include="Controllers\LeftAndRightPanelController.cs" />
+    <Compile Include="Controllers\ClassSetupController.cs" />
+    <Compile Include="Controllers\GridViewController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\RollNoAllotmentController.cs" />
+    <Compile Include="Controllers\RouteMasterController.cs" />
+    <Compile Include="Controllers\SectionsController.cs" />
+    <Compile Include="Controllers\SendGeneralMessegeController.cs" />
+    <Compile Include="Controllers\SendHouseMessegeController.cs" />
+    <Compile Include="Controllers\SendMessegeController.cs" />
+    <Compile Include="Controllers\SendMessegeWishesController.cs" />
+    <Compile Include="Controllers\SendMessegeWishesTeacherController.cs" />
+    <Compile Include="Controllers\SendReligionMessegeController.cs" />
+    <Compile Include="Controllers\SendSMSAbsenteesController.cs" />
+    <Compile Include="Controllers\SendSMSOnlineAbsenteesController.cs" />
+    <Compile Include="Controllers\SendStudentIDPasswordController.cs" />
+    <Compile Include="Controllers\SendTeacherIDPasswordController.cs" />
+    <Compile Include="Controllers\SessionTransferController.cs" />
+    <Compile Include="Controllers\SMSManagerController.cs" />
+    <Compile Include="Controllers\SMSTemplateController.cs" />
+    <Compile Include="Controllers\StudentFeeStructureController.cs" />
+    <Compile Include="Controllers\StudentListFeesStructureController.cs" />
+    <Compile Include="Controllers\StudentRegistrationController.cs" />
+    <Compile Include="Controllers\StudentRegistrationWithTCController.cs" />
+    <Compile Include="Controllers\StudentSessionController.cs" />
+    <Compile Include="Controllers\SubjectAllotmentController.cs" />
+    <Compile Include="Controllers\SubjectLevel1MasterController.cs" />
+    <Compile Include="Controllers\SubjectLevel2MasterController.cs" />
+    <Compile Include="Controllers\SubjectLevel3MasterController.cs" />
+    <Compile Include="Controllers\TCAllotmentController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
+    <Compile Include="Controllers\ThoughtMasterController.cs" />
+    <Compile Include="Controllers\TimeScheduleMasterController.cs" />
+    <Compile Include="Controllers\UserLoginController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Account\AccountViewModels.cs" />
+    <Compile Include="Models\GridView\GridViewHelper.cs" />
+    <Compile Include="Models\ReligionModel.cs" />
+    <Compile Include="Models\Scheduler\SchedulerDataSource.cs" />
+    <Compile Include="Models\Scheduler\SchedulerHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AbsentTypeForMarksSheet.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AcademicyearRepository.cs" />
+    <Compile Include="Repositories\AccountMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AccountMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AccountMasterRepository.cs" />
+    <Compile Include="Repositories\Achievement.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AchievementRepository.cs" />
+    <Compile Include="Repositories\AcOpeningBalance.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AdmissionFormSale.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AdmissionFormSaleHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AdmissionFormSaleRepository.cs" />
+    <Compile Include="Repositories\AllowanceMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AndroidLogin.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AppFeature.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ApplicationImage.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ApplicationImageRepository.cs" />
+    <Compile Include="Repositories\AppModule.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AppFeatureRepository.cs" />
+    <Compile Include="Repositories\dbSchool2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\UserRoleRepository.cs" />
+    <Compile Include="Repositories\RoleModuleRepository.cs" />
+    <Compile Include="Repositories\Appointment.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AssessmentGroupDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AssessmentGroupDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AssessmentGroupMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AssessmentGroupMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AssignmentDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AssignmentDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AssignmentMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AssignmentMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AttendanceClass.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AttendanceClassRepository.cs" />
+    <Compile Include="Repositories\AttendanceOnlineClassRepository.cs" />
+    <Compile Include="Repositories\AttendanceStudent.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AttendanceStudentHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AttendanceStudentRepository.cs" />
+    <Compile Include="Repositories\BookDetailRepository.cs" />
+    <Compile Include="Repositories\BookIssueSubmitRepository.cs" />
+    <Compile Include="Repositories\BookMasterRepository.cs" />
+    <Compile Include="Repositories\Branch.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\BranchRepository.cs" />
+    <Compile Include="Repositories\BusMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\BusMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\BusMasterRepository.cs" />
+    <Compile Include="Repositories\BusRoutePlan.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\BusRoutePlanHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\BusRoutePlanRepository.cs" />
+    <Compile Include="Repositories\BusStopMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\BusStopMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\BusStopMasterRepository.cs" />
+    <Compile Include="Repositories\CategoryRepository.cs" />
+    <Compile Include="Repositories\CatMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Class.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ClassCategory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ClassCategoryHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ClassHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ClassMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ClassPromoteFeesHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AppModuleRepository.cs" />
+    <Compile Include="Repositories\ClassRepository.cs" />
+    <Compile Include="Repositories\ClassSetup.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ClassSetupHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ClassSetupRepository.cs" />
+    <Compile Include="Repositories\ClassSyllabusDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ClassSyllabusDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ClassSyllabusDetailRepository.cs" />
+    <Compile Include="Repositories\ClassSyllabusMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ClassSyllabusMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ClassSyllabusMasterRepository.cs" />
+    <Compile Include="Repositories\ContactList.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ContactListHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ContectListRepository.cs" />
+    <Compile Include="Repositories\CountryMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\dbSchool.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbSchool.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\dbSchool.cs" />
+    <Compile Include="Repositories\dbSchool.Designer.cs">
+      <DependentUpon>dbSchool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\dbSchool1.cs" />
+    <Compile Include="Repositories\dbSchool1.Designer.cs">
+      <DependentUpon>dbSchool1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\dbSchool2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbSchool.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\DeductionMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\DepartmentMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\DepartmentMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\DepartmentMasterRepository.cs" />
+    <Compile Include="Repositories\DesignationMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\DesignationMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\DesignationMasterRepository.cs" />
+    <Compile Include="Repositories\DistrictMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\DivisionMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\DriverMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\DriverMasterRepository.cs" />
+    <Compile Include="Repositories\EmpGradeAllotmentDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EmpGradeAllotmentMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EmployeeAchievement.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EmployeeAttendance.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EmployeeAttendanceDailyRepository.cs" />
+    <Compile Include="Repositories\EmployeeAttendanceEmportRepository.cs" />
+    <Compile Include="Repositories\EmployeeAttendanceHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EmployeeCategory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EmployeeCategoryHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EmployeeDocumentDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EmployeeExperience.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EmployeeLeavesYearly.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EmployeeMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EmployeeQualification.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EmployeeRegistration.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EmployeeRegistrationHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EmployeeShiftMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EmployeeShiftMasterRepository.cs" />
+    <Compile Include="Repositories\EmployeeWorkingDay.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamAnswerImage.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamAnswerSubmitMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamCategoryRepository.cs" />
+    <Compile Include="Repositories\ExamMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamQuestionAnswerMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamRemarkEntry.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamRemarkMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamRemarkMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamRemarkMasterRepository.cs" />
+    <Compile Include="Repositories\ExamResult.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamResultHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamSetupDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamSetupDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamSetupDetailRepository.cs" />
+    <Compile Include="Repositories\ExamSetupMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamSetupMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamSetupMasterRepository.cs" />
+    <Compile Include="Repositories\ExamSyllabusDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamSyllabusDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamSyllabusDetailRepository.cs" />
+    <Compile Include="Repositories\ExamSyllabusMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamSyllabusMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ExamSyllabusMasterRepository.cs" />
+    <Compile Include="Repositories\FacultyAllotmentDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FacultyAllotmentDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FacultyAllotmentDetailRepository.cs" />
+    <Compile Include="Repositories\FacultyAllotmentMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FacultyAllotmentMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FacultyAllotmentMasterRepository.cs" />
+    <Compile Include="Repositories\FeesCategory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FeesCategoryHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FeesCategoryRepository.cs" />
+    <Compile Include="Repositories\FeesCollectionDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FeesCollectionDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FeesCollectionDetailRepository.cs" />
+    <Compile Include="Repositories\FeesCollectionMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FeesCollectionMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FeesCollectionMasterRepository.cs" />
+    <Compile Include="Repositories\FeesHead.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FeesHeadHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FeesHeadRepository.cs" />
+    <Compile Include="Repositories\FeesReceiptRepository.cs" />
+    <Compile Include="Repositories\FeesStructureDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FeesStructureDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FeesStructureDetailRepository.cs" />
+    <Compile Include="Repositories\FeesStructureMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FeesStructureMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FeesStructureMasterRepository.cs" />
+    <Compile Include="Repositories\FeesVoucherDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FeesVoucherMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FeeTerm.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FeeTermHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FeeTermRepository.cs" />
+    <Compile Include="Repositories\FitnessDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FitnessDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FitnessDetailRepository.cs" />
+    <Compile Include="Repositories\FlyerMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FlyerMasterRepository.cs" />
+    <Compile Include="Repositories\FlyerVoiceMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FlyerVoiceMasterRepository.cs" />
+    <Compile Include="Repositories\GenericRepository.cs" />
+    <Compile Include="Repositories\GoDown.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\GradeMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\GradeMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\GradeMasterRepository.cs" />
+    <Compile Include="Repositories\GroupCategory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\House.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\HouseHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\HouseRepository.cs" />
+    <Compile Include="Repositories\ImageFlyer.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ImageFlyerRepository.cs" />
+    <Compile Include="Repositories\ImportedURLMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ImportedURLRepository.cs" />
+    <Compile Include="Repositories\InstalmentMasterRepository.cs" />
+    <Compile Include="Repositories\InsuranceDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\InsuranceDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\InsuranceDetailRepository.cs" />
+    <Compile Include="Repositories\IPLogMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ItemAllotmentDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ItemAllotmentMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ItemGroup.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ItemLedgerDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ItemLedgerMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ItemMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Ledger.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\LessonMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\LetterHeadMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\LetterHeadMasterRepository.cs" />
+    <Compile Include="Repositories\Library.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\LibrarySetting.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Lib_BookDemand.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Lib_BookDemandHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Lib_BookDemandRepository.cs" />
+    <Compile Include="Repositories\Lib_BookDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Lib_BookDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Lib_BookDetailRepository.cs" />
+    <Compile Include="Repositories\Lib_BookIssueSubmit.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Lib_BookIssueSubmitHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Lib_BookMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Lib_BookMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Lib_RackMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Lib_RackMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Lib_ShelfMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Lib_ShelfMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\MachineValidatation.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\MainCategory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\MenuMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Message.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\MessageBroadcast.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\MessageBroadcasteRepository.cs" />
+    <Compile Include="Repositories\NarrationMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\NewRegistrationForm.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\NewsEventMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\NewsEventMasterRepository.cs" />
+    <Compile Include="Repositories\NoticeBoard.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\NoticeBoardHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\NoticeBoardRepository.cs" />
+    <Compile Include="Repositories\OccasionMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\OccasionMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\OnlineAttendanceStudent.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\OnlinePortalLogin.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Online_ZoomAttendClass.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\OwnerMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\OwnerMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\OwnerMasterRepository.cs" />
+    <Compile Include="Repositories\ParentLogin.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ParentLoginHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ParentLoginRepository.cs" />
+    <Compile Include="Repositories\ParentRequest.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\PayBillDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\PayBillMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\PaymentApiResponse.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\PayRollGradeMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\PeriodMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\PermitDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\PermitDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\PermitDetailRepository.cs" />
+    <Compile Include="Repositories\PersonalContactList.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\PersonalContectListRepository.cs" />
+    <Compile Include="Repositories\PhotoGallerdetailRepository.cs" />
+    <Compile Include="Repositories\PhotoGalleryDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\PhotoGalleryMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\PhotoGalleryMasterRepository.cs" />
+    <Compile Include="Repositories\PurchaseRequestDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\PurchaseRequestMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\RackMasterRepository.cs" />
+    <Compile Include="Repositories\Registration.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\RegistrationForm.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\RequestMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Resource.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\RoleModule.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\RolePermission.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\RouteDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\RouteDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\RouteDetailRepository.cs" />
+    <Compile Include="Repositories\RouteMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\RouteMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\RouteMasterRepository.cs" />
+    <Compile Include="Repositories\SchoolMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SchoolMasterRepository.cs" />
+    <Compile Include="Repositories\SchoolProfile.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Section.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SectionHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SectionRepository.cs" />
+    <Compile Include="Repositories\SendMessegeRepository.cs" />
+    <Compile Include="Repositories\SendSMSRepository.cs" />
+    <Compile Include="Repositories\Session.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SessionRepository.cs" />
+    <Compile Include="Repositories\SetExam.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SettingMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SettingMasterRepository.cs" />
+    <Compile Include="Repositories\Setup.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SetupRepository.cs" />
+    <Compile Include="Repositories\ShelfMasterRepository.cs" />
+    <Compile Include="Repositories\SmartClassMachineValidatation.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SMSLogDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SMSLogMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SMSTemplate.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SMSTemplateHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SMSTemplateRepository.cs" />
+    <Compile Include="Repositories\SMSType.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SMSTypeHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SMSTypeRepository.cs" />
+    <Compile Include="Repositories\State.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentDocumentDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentDocumentDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentDocumentRepository.cs" />
+    <Compile Include="Repositories\StudentFeesDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentFeesDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentFeesDetailRepository.cs" />
+    <Compile Include="Repositories\StudentFeesMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentFeesMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentFeesMasterRepository.cs" />
+    <Compile Include="Repositories\StudentLeaveApplication.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentLeaveApplicationHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentLogin.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentLoginHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentLoginRepository.cs" />
+    <Compile Include="Repositories\StudentParentLogin.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentParentLoginHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentParentLoginRepository.cs" />
+    <Compile Include="Repositories\StudentPreviousDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentPreviousDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentPriviousDetailsRepository.cs" />
+    <Compile Include="Repositories\StudentRegistration.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentRegistrationHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentRegistrationRepository.cs" />
+    <Compile Include="Repositories\StudentRequest.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentRequestHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentSession.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentSessionHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentSessionRepository.cs" />
+    <Compile Include="Repositories\StudentSiblingDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\StudentVisitor.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SubjectAllotment.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SubjectAllotmentHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SubjectAllotmentRepository.cs" />
+    <Compile Include="Repositories\SubjectCategory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SubjectExpertiseRepository.cs" />
+    <Compile Include="Repositories\SubjectLevel1Repository.cs" />
+    <Compile Include="Repositories\SubjectLevel2Repository.cs" />
+    <Compile Include="Repositories\SubjectLevel3Repository.cs" />
+    <Compile Include="Repositories\SubjectLevelOne.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SubjectLevelOneHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SubjectLevelThree.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SubjectLevelThreeHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SubjectLevelTwo.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SubjectLevelTwoHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SubjectMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SubjectOptAllot.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SubjectSelectCategory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SubtitutionMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\SupplierMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\sysdiagram.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TaxDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TaxDetailHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TaxDetailRepository.cs" />
+    <Compile Include="Repositories\Teacher.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherAchievement.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherAchievementHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherAchivmentRepository.cs" />
+    <Compile Include="Repositories\TeacherDocumentDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherDocumentRepository.cs" />
+    <Compile Include="Repositories\TeacherExpertise.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherExpertiseHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherExpertiseRepository.cs" />
+    <Compile Include="Repositories\TeacherHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherLogin.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherLoginHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherLoginRepository.cs" />
+    <Compile Include="Repositories\TeacherLogMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherQualification.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherQualificationHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherQualificationRepository.cs" />
+    <Compile Include="Repositories\TeacherRegistrationRepository.cs" />
+    <Compile Include="Repositories\TeacherRemarkMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherRequest.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherRequestHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherSubjectExpertise.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherSubjectExpertiseHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TeacherSyllabusLog.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TestMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TestMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ThoughtMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ThoughtMasterRepository.cs" />
+    <Compile Include="Repositories\TimeSchedule.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TimeScheduleHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TimeScheduleMasterRepository.cs" />
+    <Compile Include="Repositories\TimeTable.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TimeTableHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TimeTableTeacherSetting.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TopperNoticeBoard.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TopperNoticeBoardRepository.cs" />
+    <Compile Include="Repositories\TownMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TT_ClassTeachers.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\TT_Resource.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\UnitMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\UnitOfWork.cs" />
+    <Compile Include="Repositories\UserLogin.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\UserLoginRepository.cs" />
+    <Compile Include="Repositories\UserPermission.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\UserPermissionRepository.cs" />
+    <Compile Include="Repositories\UserRole.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vAndroidLoginByStudentDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vAndroidLoginByTeacherDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vAttendanceClass.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vAttendanceDailyChart.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vAttendanceDailyChartClasswise.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vAttendanceDailyChartRepository.cs" />
+    <Compile Include="Repositories\VAttendanceDataExport.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vAttendanceDataExportRepository.cs" />
+    <Compile Include="Repositories\vAttendanceOnlineClass.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vAttendanceStudent.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vBookIssueSubmitDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vBookLostList.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vBookMasterDetailList.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vClass.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vClassSetupReport.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\VClassStrength.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vClassSyllabusSubjectwise.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vClassTimeTable.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vClassTimeTableRepository.cs" />
+    <Compile Include="Repositories\VehicleMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\VehicleMasterHistory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vEmployeeattendancelist.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vEmployeeDataExport.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vEmployeeDetailForGradAllote.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vEmployeeLeaveQuota.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vEmployeeLeaveReqest.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vEmployeeWorkingDay.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vEmployeeWorkingDaysdetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vExamListFromExamSetup.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vExamMarkEntry.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vExamMarkEntryRepository.cs" />
+    <Compile Include="Repositories\vExamRemarkEntry.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vEXamSetUpTransfer.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vExamSyllabusDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\VFeesCompulsory.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vFeesStructure.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vFeesStructureDataExport.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vFeesStructureDataExportRepository.cs" />
+    <Compile Include="Repositories\vFeesStructureOldStudent.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vFeeSummaryQuarterwise.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vFeeSummaryQuaterwiseChartRepository.cs" />
+    <Compile Include="Repositories\view_ClassSetup.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\VillageMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vListFeesStructure.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vListFeesStructureRepository.cs" />
+    <Compile Include="Repositories\vMessageBroadcast.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vParentCreateLoginRepository.cs" />
+    <Compile Include="Repositories\vParentForCreateLoginID.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vParentLoginDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vSessionAdmissionChartRepository.cs" />
+    <Compile Include="Repositories\vSessionwiseAdmission.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vSMSLogDataExport.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vSMSLogDataExportRepository.cs" />
+    <Compile Include="Repositories\vSMSTtmplate.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentAllSessiondetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentAttendanceDateWise.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentBirthday.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentBirthdayRepository.cs" />
+    <Compile Include="Repositories\vStudentCreateLoginRepository.cs" />
+    <Compile Include="Repositories\vStudentDataExport.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentDataExportRepository.cs" />
+    <Compile Include="Repositories\VStudentDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\VStudentDetailRepository.cs" />
+    <Compile Include="Repositories\vStudentExamResult.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentExamResultRepository.cs" />
+    <Compile Include="Repositories\vStudentFeeReceiptPrint.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentFeesReminder.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\VStudentFeesReminderRepository.cs" />
+    <Compile Include="Repositories\vStudentFeesStructDataExport.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentFeesStructDataExportRepository.cs" />
+    <Compile Include="Repositories\vStudentForCreateLoginID.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentListForLibrary.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentListFromStudFeeStructure.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentListFromStudFeeStructureRepository.cs" />
+    <Compile Include="Repositories\vStudentLoginDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentParentLogin.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentPhoto.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentReportDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentSession.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentStrengthChart.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vStudentStrengthChartRepository.cs" />
+    <Compile Include="Repositories\vStudentTopperList.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vSubjectAllotement.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vSubjectAllotmentDataExport.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vSubjectAllotmentDataExportRepository.cs" />
+    <Compile Include="Repositories\vSubjectAllotmentWithIDLOne.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vSubjectAllotmentwithIDLThree.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vSubjectAllotmentwithIDLTwo.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vSubjectAllotmentwithName.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vSubjectLevelThreeByIDLOne.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vSubjectListByClassID.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vTeacherBirthDay.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vTeacherCreateLoginRepository.cs" />
+    <Compile Include="Repositories\vTeacherDataExport.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vTeacherDataExportDateWise.cs" />
+    <Compile Include="Repositories\vTeacherDataExportDateWiseRepository.cs" />
+    <Compile Include="Repositories\vTeacherDataExportRepository.cs" />
+    <Compile Include="Repositories\vTeacherForLoginID.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vTeacherLoginDetail.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vTermListFromStudFeeMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vTermListStudentFeeMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vTotalFeesReminder.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vUserPermission.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vUserPermissionList.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\vUserRoleModulePermission.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\WingMaster.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ZoomMetting.cs">
+      <DependentUpon>dbSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\appUIModels.cs" />
+    <Compile Include="ViewModels\cCommon.cs" />
+    <Compile Include="ViewModels\ChartModels.cs" />
+    <Compile Include="ViewModels\DB.cs" />
+    <Compile Include="ViewModels\MachineActivation.cs" />
+    <Compile Include="ViewModels\MenuModels.cs" />
+    <Compile Include="ViewModels\ModulesAndFeatures.cs" />
+    <Compile Include="ViewModels\RoleFeaturePermission.cs" />
+    <Compile Include="ViewModels\RoleModulePermission.cs" />
+    <Compile Include="ViewModels\Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\Achievement\" />
+    <Folder Include="Images\Flyer\" />
+    <Folder Include="Images\ImageCache\" />
+    <Folder Include="Images\NewsEvent\" />
+    <Folder Include="Images\studentDocuments\24\" />
+    <Folder Include="Images\TopperStudent\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>51734</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:51734/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>

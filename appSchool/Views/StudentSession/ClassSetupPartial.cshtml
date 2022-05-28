@@ -1,0 +1,30 @@
+﻿@using appSchool.Controllers
+@using appSchool.Repositories
+
+@model List<ClassSetup>
+
+
+   @Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lblClassSetupID";
+                    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settingslbl.Text = "Select Class Description";
+                    settingslbl.ClientVisible = false;
+                }).GetHtml()
+
+              @Html.DevExpress().ComboBox(
+                  settingsClass =>
+                  {
+                      settingsClass.Name = "ClassSetupID";
+                      settingsClass.ControlStyle.CssClass = "editor";
+                      settingsClass.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                      settingsClass.Properties.DropDownStyle = DropDownStyle.DropDown;
+                      settingsClass.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+                      settingsClass.Properties.TextField = "ClassDescription";
+                      settingsClass.Properties.ValueField = "ClassSetupID";
+                      settingsClass.ClientVisible = false;
+                      //settingscbo.ShowModelErrors = true;
+                      //settingscbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                      //settingsHouse.Properties.ClientSideEvents.SelectedIndexChanged = "studentSessionController.SelectedClass";
+                  }
+              ).BindList(Model).GetHtml()

@@ -1,0 +1,94 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridFeesStructure";
+            settings.KeyFieldName = "FeeStructID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            settings.CommandColumn.Visible = false;
+            //settings.CommandColumn.ShowSelectCheckbox = true;
+          //  settings.CommandColumn.ShowClearFilterButton = true;
+            
+            //settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            settings.CallbackRouteValues = new { Controller = "ListFeesStructure", Action = "PartialGridListFeesStructure"};
+            //settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "RouteMaster", Action = "AddNewRoute" };
+            //settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "RouteMaster", Action = "UpdateRoute" };
+            //settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "RouteMaster", Action = "DeleteRoute" };
+
+            settings.SettingsBehavior.ConfirmDelete = true;
+
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+            settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+            //settings.CommandColumn.Visible = true;
+            settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(2);
+            //settings.CommandColumn.ButtonType = GridViewCommandButtonType.Default;
+            //settings.CommandColumn.ShowEditButton = true;
+          //  settings.CommandColumn.ShowNewButtonInHeader = true;
+         //   settings.CommandColumn.ShowDeleteButton = true;
+
+
+
+            settings.Columns.Add("FeeStructID").Visible=false;
+            settings.Columns.Add("FeeStructSessionID").Visible=false;
+            settings.Columns.Add("FeesStructClassID").Visible=false;
+            settings.Columns.Add("ClassName").GroupIndex=0;
+            //settings.Columns.Add("ClassName");
+            settings.Columns.Add("FeeTermName");
+            settings.Columns.Add("FeesHeadName");
+            settings.Columns.Add("FeeAmount");
+            settings.CellEditorInitialize = (s, e) =>
+            {
+                ASPxEdit editor = (ASPxEdit)e.Editor;
+                editor.ValidationSettings.Display = Display.Dynamic;
+            };
+
+
+            //settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            //settings.SettingsPager.FirstPageButton.Visible = true;
+            //settings.SettingsPager.LastPageButton.Visible = true;
+            //settings.SettingsPager.PageSizeItemSettings.Visible = true;
+
+            settings.Settings.ShowGroupPanel = true;
+            settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, "FeeAmount");
+        
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            settings.Settings.VerticalScrollableHeight = 350;
+
+            settings.SettingsPager.Mode = GridViewPagerMode.EndlessPaging;
+            settings.SettingsPager.PageSize = 20;
+           
+            
+           // settings.SettingsPager.PageSizeItemSettings.Items =20;
+            //settings.Settings.ShowFilterRow = true;
+            //settings.Settings.ShowFilterRowMenu = true;
+            //settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            //settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+           // settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            
+            settings.SettingsBehavior.AllowFocusedRow = true;
+
+            settings.ClientSideEvents.FocusedRowChanged = "feesStructureController.RowSelectionChangeforGridListFeesStructure";
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+

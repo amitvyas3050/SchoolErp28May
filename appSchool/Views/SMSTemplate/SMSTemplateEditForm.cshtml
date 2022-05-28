@@ -1,0 +1,212 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@model SMSTemplate 
+
+
+<div class="Line50" >
+
+     @Html.DevExpress().LabelFor(
+            model => model.SMSTypeID,
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "SMSTypeID";
+                settings.AssociatedControlName = "SMSTypeID";
+            }
+        ).GetHtml()
+
+      
+     @Html.DevExpress().ComboBoxFor(
+            model => model.SMSTypeID,
+                    settings =>
+                    {
+                        settings.Name = "SMSTypeID";
+                        settings.ControlStyle.CssClass = "editor";
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.TextField = "SMSTypeName";
+                        settings.Properties.ValueField = "SMSTypeID";
+                        //settings.ShowModelErrors = true;
+                        //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                    }
+                ).BindList((new UnitOfWork().SMSTypeService.Get())).GetHtml()
+
+
+
+    </div>
+
+<div class="Line100" >
+
+    @Html.DevExpress().LabelFor(
+            model => model.TemplateName,
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Template Name";
+                settings.AssociatedControlName = "TemplateName";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.TemplateName,
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "editor";
+                settings.Width = System.Web.UI.WebControls.Unit.Pixel(450);
+                //settings.ShowModelErrors = true;
+                //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+
+            }).GetHtml()
+  
+    </div>
+
+
+
+ @* <div class="Line50"  >
+    @Html.DevExpress().LabelFor(
+            model => model.LanguageID,
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Language";
+                settings.AssociatedControlName = "LanguageID";
+            }
+        ).GetHtml()
+
+      
+
+    @Html.DevExpress().ComboBoxFor(
+            model => model.LanguageID,
+                    settings =>
+                    {
+                        settings.Name = "LanguageID";
+                        settings.ControlStyle.CssClass = "editor";
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.TextField = "Value";
+                        settings.Properties.ValueField = "Key";
+                        //settings.ShowModelErrors = true;
+                        //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+
+                        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){onLoad();}";
+
+                    }
+                ).BindList(cCommon.GetLanguageList()).GetHtml()
+</div>*@
+
+<div class="Line100" >
+
+    @Html.DevExpress().LabelFor(
+            model => model.PreFix,
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Prefix in English";
+                settings.AssociatedControlName = "PreFix";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.PreFix,
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "editor";
+                settings.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+                //settings.ShowModelErrors = true;
+                //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+
+
+            }).GetHtml()
+  
+    </div>          
+<div class="Line100" >
+
+    @Html.DevExpress().LabelFor(
+            model => model.TemplateMessage,
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Template (English)";
+                settings.AssociatedControlName = "TemplateMessage";
+            }
+        ).GetHtml()
+    @Html.DevExpress().MemoFor(
+            model => model.TemplateMessage,
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "editor";
+                settings.Width = System.Web.UI.WebControls.Unit.Pixel(450);
+                //settings.ShowModelErrors = true;
+                //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+
+
+            }).GetHtml()
+  
+    </div>          
+
+
+<div class="Line100" >
+
+    @Html.DevExpress().LabelFor(
+            model => model.PreFixH,
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Prefix in Hindi";
+                settings.AssociatedControlName = "PreFixH";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.PreFixH,
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "editor";
+                settings.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+                //settings.ShowModelErrors = true;
+                //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+
+
+            }).GetHtml()
+  
+    </div>          
+<div class="Line100" >
+
+    @Html.DevExpress().LabelFor(
+            model => model.TemplateMessageH,
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Template (Hindi)";
+                settings.AssociatedControlName = "TemplateMessageH";
+            }
+        ).GetHtml()
+    @Html.DevExpress().MemoFor(
+            model => model.TemplateMessageH,
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "editor";
+                settings.Width = System.Web.UI.WebControls.Unit.Pixel(450);
+                //settings.ShowModelErrors = true;
+                //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+
+
+            }).GetHtml()
+  
+    </div>          
+
+
+        <div class="Line100" >
+
+
+
+          @Html.DevExpress().Button(
+        settings =>
+        {
+            settings.Name = "btnUpdatePersonalInfo";
+            settings.ControlStyle.CssClass = "button";
+            settings.Text = "Update";
+            settings.UseSubmitBehavior = true;
+        }).GetHtml()
+             
+
+</div>
+   

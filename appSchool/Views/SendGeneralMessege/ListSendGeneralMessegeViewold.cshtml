@@ -1,0 +1,93 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Repositories
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridSendGeneralMessege";
+            settings.KeyFieldName = "StudentSessionID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(99);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.CallbackRouteValues = new { Controller = "SendGeneralMessege", Action = "PartialSendGeneralMessegeView", mClassSetup= ViewData["ClassSetupID"] };
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+            //settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.WindowCenter;
+            //settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+           // settings.Columns.Add("StudentSessionID").EditFormSettings.ColumnSpan = 3;
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.ShowSelectCheckbox = true;
+            
+            
+            settings.CommandColumn.Width = 40;
+            settings.CommandColumn.SetHeaderTemplateContent(c =>
+            {
+                Html.DevExpress().CheckBox(settingsCheckBox =>
+                {
+                    settingsCheckBox.Name = "cbSelectAll";
+                    settingsCheckBox.Text = "";
+                    settingsCheckBox.Properties.ClientSideEvents.CheckedChanged = string.Format("function(s, e) {{ if(s.GetChecked()) {0}.SelectRows(); else {0}.UnselectRows(); }}", settings.Name);
+                    settingsCheckBox.Checked = c.Grid.VisibleRowCount == c.Grid.Selection.Count;
+                }).Render();
+            });
+            //settings.CommandColumn.Caption = "Select";
+            settings.SettingsBehavior.AllowSelectByRowClick = false;
+            settings.ClientSideEvents.SelectionChanged = "sendGeneralMessegeController.SelectionChanged";
+            settings.Columns.Add("StudentID").Visible=false;
+            settings.Columns.Add("EnrollmentNo");
+            settings.Columns.Add("FullName","Name");
+            settings.Columns.Add("ClassDescription","Class");
+           // settings.Columns.Add("DateOfBirth", "DOB");
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "DateOfBirth";
+                column.Caption = "Date Of Birth";
+                column.ColumnType = MVCxGridViewColumnType.DateEdit;
+
+                var dateProperties = column.PropertiesEdit as DateEditProperties;
+                dateProperties.UseMaskBehavior = true;
+                dateProperties.EditFormat = EditFormat.Custom;
+                dateProperties.EditFormatString = "MMMM dd, yyyy";
+                dateProperties.DisplayFormatString = "MMMM dd, yyyy";
+                dateProperties.MaxDate = DateTime.Now;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                //column.EditFormSettings.ColumnSpan = 1;
+
+            });
+            settings.Columns.Add("FatherName").ReadOnly = true;
+            settings.Columns.Add("HouseName", "House").Visible = false;
+            settings.Columns.Add("BusName").Visible = SchoolSetupStaticClass._BusFacility;
+           
+            settings.Columns.Add("BusFacility", MVCxGridViewColumnType.CheckBox).Visible = SchoolSetupStaticClass._BusFacility;
+            settings.Columns.Add("SMSMobileNo","MobileNo");
+            settings.Columns.Add("SMSInHindi", MVCxGridViewColumnType.CheckBox).Visible=true ;
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+          
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+            
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            
+           // settings.SettingsBehavior.AllowFocusedRow = true;
+          //  settings.ClientSideEvents.FocusedRowChanged = "sendMessegeController.RowSelectionChangeM";
+        });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+

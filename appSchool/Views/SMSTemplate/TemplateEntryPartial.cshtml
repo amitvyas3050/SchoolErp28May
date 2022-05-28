@@ -1,0 +1,38 @@
+﻿@using appSchool.Repositories
+@model modelStudentPersonalInfo
+
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    Html.EnableClientValidation(true);
+}
+
+<div style="float:left;position:relative">
+<div style="width:15%;height:100%;float:left;position:relative">
+    <div class="imageContainer" style="width:80%;height:80%" >
+        @{
+            string strFile = "~/Images/students/" + Model.EnrollmentNo + ".jpg";
+            <img alt="" id="previewImage" src="@Url.Content(strFile)" width="170" height="170" />
+            }
+
+    </div>
+</div>
+<div style="width:84%;float:left;position:relative">
+@using (Ajax.BeginForm("UpdateProfileInfo", "StudentRegistration",
+    new AjaxOptions {
+        HttpMethod = "POST",
+        UpdateTargetId = "contentPersonal",
+        InsertionMode = InsertionMode.Replace
+    },
+    new {
+        id = "validationForm1",
+        @class = "edit_form",
+        style="height: 200px; position:relative; width: 100%;",
+        enctype = "multipart/form-data" 
+    }
+    )) {
+    <div id="contentPersonal" class="edit_form">
+        @Html.Partial("PersonalInfoEditPartial", Model)
+    </div>
+}
+</div>
+</div>

@@ -1,0 +1,28 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+
+
+@{
+    ViewBag.Title = "Time Table";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Head {
+
+}
+
+@section LeftPanelContent {
+    @*@Html.Partial("LeftPanelPartial")*@
+
+    @{Html.RenderAction("ReturnLeftPanelView", "LeftAndRightPanel", new { moduleid = (int)appModule.appTimetableManager });}
+
+    @*{ @Html.RenderAction("ReturnLeftPanelView", "LeftPanel") }*@
+}
+
+@section RightPanelContent {
+    @{Html.RenderAction("ReturnRightPanelView", "LeftAndRightPanel");}
+
+}
+
+<h1>App Time Table Manager Home Page</h1>

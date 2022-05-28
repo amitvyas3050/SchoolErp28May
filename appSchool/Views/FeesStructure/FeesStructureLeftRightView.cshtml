@@ -1,0 +1,45 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+
+
+
+@Html.DevExpress().Splitter(settings => {
+    settings.Name = "FeesStructureLFSplitter";
+    settings.Orientation = System.Web.UI.WebControls.Orientation.Vertical;
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Styles.Pane.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(1);
+    settings.Styles.Pane.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(1);
+    settings.ClientSideEvents.PaneResized = "feesStructureController.splitterResized";
+    settings.Panes.Add(subpane =>
+    {
+        subpane.Name = "LeftPane";
+        //subpane.PaneStyle.CssClass = "leftPane";
+        subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+        subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+        //subpane.Size = System.Web.UI.WebControls.Unit.Percentage(95);
+        subpane.PaneStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(1);
+        subpane.SetContent(() =>
+        {
+
+
+
+            // Html.RenderPartial("ListAllFeesTerms", (new UnitOfWork().feesHeadService.GetTermHeadForFeeStructure()));
+        });
+    });
+
+    //settings.Panes.Add(subpane =>
+    //{
+    //    subpane.Name = "RightPane";
+    //    //subpane.PaneStyle.CssClass = "leftPane";
+    //    subpane.ShowCollapseBackwardButton = DefaultBoolean.False;
+    //    //subpane.Size = System.Web.UI.WebControls.Unit.Percentage(95);
+    //    subpane.PaneStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(1);
+    //    subpane.SetContent(() =>
+    //    {
+    //       // Html.RenderPartial("ListAllFeesHead");
+    //    });
+    //});
+   
+}).GetHtml()

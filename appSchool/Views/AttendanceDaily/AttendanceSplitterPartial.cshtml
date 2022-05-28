@@ -1,0 +1,58 @@
+﻿@using appSchool.ViewModels
+
+@Html.DevExpress().Splitter(settings => {
+    settings.Name = "AttendanceSplitter";
+    settings.Orientation = System.Web.UI.WebControls.Orientation.Horizontal;
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Styles.Pane.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(0);
+    settings.Styles.Pane.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+
+    settings.ClientSideEvents.PaneResized = "attendanceDailyController.splitterResized";
+    
+    settings.Panes.Add(subpane => {
+        subpane.Name = "LeftPane";
+        subpane.PaneStyle.CssClass = "leftPane";
+        subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+        subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+        subpane.Size = System.Web.UI.WebControls.Unit.Pixel(280);
+        subpane.PaneStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(1);
+        subpane.SetContent(() => {
+            Html.RenderPartial("AttendanceTreePartial");
+        });
+    });
+
+    settings.Panes.Add(subpane => {
+        subpane.Name = "MiddleCenter";
+        subpane.PaneStyle.CssClass = "contentPane";
+        //subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+        subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+        subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+        subpane.Separator.Visible = DefaultBoolean.True;
+        subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+        subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+        subpane.PaneStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(5);
+        subpane.SetContent(() =>
+        {
+            Html.RenderPartial("AttendanceTopBottomPartial");
+        });
+    });
+    //settings.Panes.Add(subpane =>
+    //{
+    //    subpane.Name = "RightPane";
+    //    subpane.PaneStyle.CssClass = "contentPane";
+    //    //subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+    //    subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(100);
+    //    subpane.Separator.Visible = DefaultBoolean.True;
+    //    subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+    //    subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+    //    subpane.PaneStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(8);
+    //    subpane.SetContent(() =>
+    //    {
+    //      //  Html.RenderPartial("PickRecipientPartial");
+    //    });
+    //});
+    
+    
+
+}).GetHtml()

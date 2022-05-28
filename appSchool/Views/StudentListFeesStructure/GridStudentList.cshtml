@@ -1,0 +1,139 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridStudentList";
+            settings.KeyFieldName = "StudentID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            settings.CommandColumn.Visible = false;
+
+
+
+
+            settings.CallbackRouteValues = new { Controller = "StudentListFeesStructure", Action = "PartialGridListFeesStructure"};
+
+
+            settings.SettingsBehavior.ConfirmDelete = true;
+
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+            settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+
+            settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(2);
+            //settings.CommandColumn.ButtonType = GridViewCommandButtonType.Default;
+
+
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName= "FullName";
+                column.Caption = "Name";
+                column.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "FatherName";
+                column.Caption = "FatherName";
+                column.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            });
+            settings.Columns.Add("StudentID").Visible = false;
+            settings.Columns.Add("SessionID").Visible = false;
+
+            //settings.Columns.Add("FatherName");
+            //settings.Columns.Add("ClassSetupID").GroupIndex = 0;
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Gender";
+                column.Caption = "Gender";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(50);
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "DateOfBirth";
+                column.Caption = "DateOFBirth";
+                column.PropertiesEdit.DisplayFormatString = "dd/MMM/yy";
+
+            });
+
+            settings.Columns.Add(column=>
+            {
+                column.FieldName="RollNo";
+                column.Caption= "RollNo";
+                column.Width= System.Web.UI.WebControls.Unit.Pixel(50);
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ClassSetupID";
+                column.Caption = "ClassName";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(70);
+                //column.EditFormSettings.ColumnSpan = 1;
+
+
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.ClassSetupRepository()).GetClassSetupList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "ClassDescription";
+                comboBoxProperties.ValueField = "ClassSetupID";
+
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+            settings.CellEditorInitialize = (s, e) =>
+            {
+                ASPxEdit editor = (ASPxEdit)e.Editor;
+                editor.ValidationSettings.Display = Display.Dynamic;
+            };
+
+
+            //settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            //settings.SettingsPager.FirstPageButton.Visible = true;
+            //settings.SettingsPager.LastPageButton.Visible = true;
+            //settings.SettingsPager.PageSizeItemSettings.Visible = true;
+
+            settings.Settings.ShowGroupPanel = false;
+
+
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            //settings.Settings.VerticalScrollableHeight = 350;
+            settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+
+            settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+            settings.SettingsPager.PageSize = 20;
+
+
+            // settings.SettingsPager.PageSizeItemSettings.Items =20;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            //settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+            // settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+
+            settings.SettingsBehavior.AllowFocusedRow = true;
+
+            settings.ClientSideEvents.FocusedRowChanged = "studentListfeesStructureController.RowSelectionChangeforGridListFeesStructure";
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+

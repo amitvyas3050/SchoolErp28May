@@ -1,0 +1,39 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+ <div class="vertComponentContainer" style="width: 100%;">
+
+   @Html.DevExpress().Label(settings => {
+    settings.Name = "lb";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Text = "Select Religion";
+}).GetHtml()
+
+     
+        @Html.DevExpress().CheckBoxList(
+            settings =>
+            {
+                settings.Name = "checkBoxList1";
+                settings.Properties.ValueField = "Key";
+                settings.Properties.TextField = "Value";
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+                
+                settings.Properties.RepeatLayout =System.Web.UI.WebControls.RepeatLayout.Table;
+                settings.Properties.RepeatDirection = System.Web.UI.WebControls.RepeatDirection.Horizontal;
+                settings.Properties.RepeatColumns =1;
+                settings.Properties.ClientSideEvents.SelectedIndexChanged = "sendReligionMessegeController.SelectionChangedForReligion";
+            }).BindList(cCommon.GetReligionList()).GetHtml()
+
+      @Html.DevExpress().TextBox(
+   
+        settings =>
+        {
+         settings.Name = "txtReligion";
+         settings.ClientVisible = true ;
+            
+        }).GetHtml()
+
+    </div>
+
+   

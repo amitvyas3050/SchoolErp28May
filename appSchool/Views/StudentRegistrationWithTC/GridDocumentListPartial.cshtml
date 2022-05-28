@@ -1,0 +1,125 @@
+﻿@using appSchool.ViewModels
+@{
+    if (ViewBag.ShowFilter == null){
+        ViewBag.ShowFilter = false;
+    }
+
+    var grid = Html.DevExpress().GridView (
+        settings =>
+        {
+            settings.Name = "GridDocuments";
+            settings.KeyFieldName = "StudDocID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            // settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            //settings.CallbackRouteValues = new { Controller = "StudentRegistrationWithTC", Action = "GetStudentDocumentPartial", mShowFilter = ViewBag.ShowFilter };
+            //settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "StudentRegistrationWithTC", Action = "AddNewRegistration" };
+            //settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "StudentRegistrationWithTC", Action = "UpdateRegistration" };
+            //settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "StudentRegistrationWithTC", Action = "DeleteRegistration" };
+
+
+            settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+            settings.SettingsBehavior.ConfirmDelete = true;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+            //settings.CommandColumn.ButtonType = GridViewCommandButtonType.Button;
+            //if(PermissionFlag._ModFlag==true)
+            //settings.SettingsCommandButton.UpdateButton.ButtonType = GridViewCommandButtonType.Link;
+            //settings.SettingsCommandButton.CancelButton.ButtonType = GridViewCommandButtonType.Link;
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "StudentID";
+                column.Caption = "StudentID";
+                column.Visible = false;
+
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "StudDocID";
+                column.Caption = "StudDocID";
+                column.Visible = false;
+
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "DocumentName";
+                column.Caption = "Document Name";
+                column.ToolTip = "Click to Sort";
+                // column.EditFormSettings.ColumnSpan=2;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                //var editProperties = (TextBoxProperties)column.PropertiesEdit;
+                //editProperties.MaskSettings.Mask = "(AAA)-000-0000";
+
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "FileName";
+                column.Caption = "FileName";
+                column.ToolTip = "Click to Sort";
+
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+                //var editProperties = (TextBoxProperties)column.PropertiesEdit;
+                //editProperties.MaskSettings.Mask = "(AAA)-000-0000";
+
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Remark";
+                column.Caption = "Remark";
+                column.ToolTip = "Click to Sort";
+                column.EditFormSettings.ColumnSpan = 2;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                //var editProperties = (TextBoxProperties)column.PropertiesEdit;
+                //editProperties.MaskSettings.Mask = "(AAA)-000-0000";
+
+            });
+
+
+
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+
+            settings.Settings.ShowFilterRow = settings.Settings.ShowFilterRowMenu = ViewBag.ShowFilter;
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            // settings.ClientSideEvents.FocusedRowChanged = "studentRegistrationController.RowSelectionChange";
+
+
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).Settings.ShowFilterRow = !((MVCxGridView)sender).Settings.ShowFilterRow;
+                //MVCxGridView grid = (MVCxGridView)sender;
+                //grid.Settings.ShowFilterRow = !grid.Settings.ShowFilterRow;
+                //((MVCxGridView)sender).StartEdit(((MVCxGridView)sender).GetFocusedRowIndex());
+                //GridStudents.StartEdit(GridStudents.GetFocusedRowIndex());
+
+            };
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

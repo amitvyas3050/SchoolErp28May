@@ -1,0 +1,22 @@
+﻿@using appSchool.Controllers;
+@using appSchool.Repositories;
+@using appSchool.Model;
+@model List<Teacher>
+
+
+@Html.DevExpress().ComboBox(
+
+             settingscbo =>
+             {
+                 settingscbo.Name = "FacultyID";
+                 settingscbo.ControlStyle.CssClass = "editor";
+                 settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                 settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                 settingscbo.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+                 settingscbo.Properties.TextField = "FirstName";
+                 settingscbo.Properties.ValueField = "TeacherID";
+                 //settingscbo.ShowModelErrors = true;
+                 //settingscbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                 //settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "classSyllabusController.SelectedSubject";
+             }
+         ).BindList(new UnitOfWork().teacherRegistrationService.GetTeacherRegistrationDataForList(byte.Parse(Session["CompID"].ToString()),byte.Parse(Session["BranchID"].ToString()))).GetHtml()

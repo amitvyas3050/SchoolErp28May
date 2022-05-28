@@ -1,0 +1,27 @@
+﻿
+
+@Html.DevExpress().FileManager(
+settings =>
+        {
+            settings.Name = "fileManagerVoice";
+            settings.CallbackRouteValues = new { Controller = "FlyerVoiceMaster", Action = "VoiceGalleryPartial" };
+            settings.DownloadRouteValues = new { Controller = "FlyerVoiceMaster", Action = "DownloadImages" };
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Settings.AllowedFileExtensions = appSchool.Models.ArtsDataProvider.AllowedFileExtensions;
+
+            settings.Settings.InitialFolder = "FlyerVoice";
+            settings.Settings.ThumbnailFolder = Url.Content("~/Content/FileManager/Thumbnails");
+           // settings.SettingsFileList.ThumbnailsViewSettings.ThumbnailWidth = 100;
+           // settings.SettingsFileList.ThumbnailsViewSettings.ThumbnailHeight = 100;
+
+            settings.SettingsEditing.AllowCreate = false;
+            settings.SettingsEditing.AllowDelete = true;
+            settings.SettingsEditing.AllowMove = false;
+            settings.SettingsEditing.AllowRename = false;
+            settings.Settings.EnableMultiSelect = true;
+            //settings.SettingsUpload.AdvancedModeSettings.EnableMultiSelect = true;
+            
+            
+        }
+      ).BindToFolder(Model).GetHtml()

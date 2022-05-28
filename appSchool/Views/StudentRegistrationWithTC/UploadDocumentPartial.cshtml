@@ -1,0 +1,88 @@
+﻿@using appSchool.Repositories
+@model modelStudentDocumentUploadInfo
+
+
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    Html.EnableClientValidation(true);
+}
+
+
+<script type="text/javascript">
+    function OnClickDoc(s, e) {
+        ucDoc.Upload();
+    }
+    function OnFileUploadComplete(s, e) {
+        if (e.callbackData !== "") {
+            alert(e.callbackData);
+        }
+        else {
+            alert("The selected file was not uploaded.");
+        }
+    }
+
+    function updateSuccess(data) {
+        alert(data);
+
+        $("contentPersonal1").html(data);
+    }
+
+    function RefreshDocumentList() {
+        var regID;
+        regID=StudentID.GetText();
+       
+
+        $.ajax({
+            url: "/StudentRegistrationWithTC/StudentGridRowChange",
+            type: "POST",
+            data: {RegID:regID},
+            success: function (data) {
+                $("#RegistrationSplitter_2_CC").html(data);
+            },
+            error: function () {
+            }
+        });
+        //$("#BodySplitter_1_CC").html("<h1>"+values+"</h1>");
+        //alert(values);
+    }
+
+
+</script>
+
+
+  
+
+ <script src="@Url.Content("~/jsControllers/studentRegistrationWithTCController.js")" type="text/javascript"></script>
+    
+  
+    <div style="width:100%;float:left;position:relative">
+
+@using (Ajax.BeginForm("UploadDocument", "StudentRegistrationWithTC",
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "contentPersonal1",
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "updateSuccess"
+        
+        
+    },
+    new
+    {
+        //id = "validationForm1",
+        id="profilePictureForm",
+        @class = "edit_form",
+        style = "height: 200px; position:relative; width: 100%;",
+        enctype = "multipart/form-data",
+        
+    }
+    ))
+{
+    <div id="contentPersonal1" class="edit_form">
+        @Html.Partial("UploadDocumentEditPartial", Model)
+    </div>
+}
+</div>
+    
+    
+  

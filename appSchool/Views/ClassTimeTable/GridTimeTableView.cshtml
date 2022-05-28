@@ -1,0 +1,370 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Repositories
+
+@if (ViewData["ClassID"] == null)
+{
+    ViewData["ClassID"] = 0;
+}
+
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridTimeTable";
+            settings.KeyFieldName = "ID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(99);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+
+
+
+            settings.CallbackRouteValues = new { Controller = "ClassTimeTable", Action = "PartialGridClassTimeTable", pClassID = ViewData["ClassID"] };
+
+           settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "ClassTimeTable", Action = "UpdateTimetableAllotment", PClassID = ViewData["ClassID"] };
+
+           settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+           settings.SettingsEditing.BatchEditSettings.EditMode = appSchool.Controllers.GridViewEditingDemosHelper.BatchEditMode;
+           settings.SettingsEditing.BatchEditSettings.StartEditAction = appSchool.Controllers.GridViewEditingDemosHelper.BatchStartEditAction;
+           settings.SettingsCommandButton.EditButton.ButtonType = GridViewCommandButtonType.Button;
+
+           settings.SettingsBehavior.ConfirmDelete = true;
+
+           settings.SettingsPopup.EditForm.ShowHeader = true;
+           
+            
+            //settings.Columns.Add("ID").Visible = false;
+            
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ID";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(0);
+                column.ShowInCustomizationForm = false;
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ClassId";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(0);
+                column.ShowInCustomizationForm = false;
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ScheduleId";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(0);
+                column.ShowInCustomizationForm = false;
+            });
+            
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ScheduleName";
+                column.Caption = "Schedule Name";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Time";
+                column.Caption = "Time";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+            });
+            
+            
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "MonFID";
+                column.Caption = "Monday Faculty Name";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.vClassTimeTableRepository()).GetTeachereList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "FullName";
+                comboBoxProperties.ValueField = "TeacherID";
+                comboBoxProperties.ValueType = typeof(int);
+                
+                //if()
+                //{
+                //column.ReadOnly = true;
+                //}
+           });
+
+            
+            
+          
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "MonSID";
+                column.Caption = "Monday Subject Name";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.vClassTimeTableRepository()).GetSubjectlListForTimeTable(int.Parse(ViewData["ClassID"].ToString()), byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "SubjectNameL1";
+                comboBoxProperties.ValueField = "IdL1";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "TueFID";
+                column.Caption = "Tuesday Faculty Name";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.vClassTimeTableRepository()).GetTeachereList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "FullName";
+                comboBoxProperties.ValueField = "TeacherID";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "TueSID";
+                column.Caption = "Tuesday Subject Name";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.vClassTimeTableRepository()).GetSubjectlListForTimeTable(int.Parse(ViewData["ClassID"].ToString()), byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "SubjectNameL1";
+                comboBoxProperties.ValueField = "IdL1";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "WedFID";
+                column.Caption = "Wedensday Faculty Name";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.vClassTimeTableRepository()).GetTeachereList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "FullName";
+                comboBoxProperties.ValueField = "TeacherID";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "WedSID";
+                column.Caption = "Wedensday Subject Name";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.vClassTimeTableRepository()).GetSubjectlListForTimeTable(int.Parse(ViewData["ClassID"].ToString()), byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "SubjectNameL1";
+                comboBoxProperties.ValueField = "IdL1";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ThuFID";
+                column.Caption = "Thrusday Faculty Name";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.vClassTimeTableRepository()).GetTeachereList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "FullName";
+                comboBoxProperties.ValueField = "TeacherID";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ThuSID";
+                column.Caption = "Thrusday Subject Name";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.vClassTimeTableRepository()).GetSubjectlListForTimeTable(int.Parse(ViewData["ClassID"].ToString()), byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "SubjectNameL1";
+                comboBoxProperties.ValueField = "IdL1";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "FriFID";
+                column.Caption = "Friday Faculty Name";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.vClassTimeTableRepository()).GetTeachereList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "FullName";
+                comboBoxProperties.ValueField = "TeacherID";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "FriSID";
+                column.Caption = "Friday Subject Name";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.vClassTimeTableRepository()).GetSubjectlListForTimeTable(int.Parse(ViewData["ClassID"].ToString()), byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "SubjectNameL1";
+                comboBoxProperties.ValueField = "IdL1";
+                comboBoxProperties.ValueType = typeof(int);
+                
+                
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "SatFID";
+                column.Caption = "Saturday Faculty Name";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.vClassTimeTableRepository()).GetTeachereList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "FullName";
+                comboBoxProperties.ValueField = "TeacherID";
+                comboBoxProperties.ValueType = typeof(int);
+                
+                
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "SatSID";
+                column.Caption = "Saturday Subject Name";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.vClassTimeTableRepository()).GetSubjectlListForTimeTable(int.Parse(ViewData["ClassID"].ToString()), byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "SubjectNameL1";
+                comboBoxProperties.ValueField = "IdL1";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+
+            settings.Columns.Add(column =>
+                {
+                    column.FieldName = "IsBreak";
+                    column.Caption = "IsBreak";
+                    column.ToolTip = "Click to Sort";
+                    column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                    column.ColumnType = MVCxGridViewColumnType.CheckBox;
+                    column.Visible = false;
+                });
+
+
+            //settings.CellEditorInitialize = (sender, e) =>
+            //{
+            //    ASPxEdit editor = (ASPxEdit)e.Editor;
+            //    //editor.ValidationSettings.Display = Display.Dynamic;
+            //    //e.Editor.Enabled = false;
+            //    if (e.Column.FieldName == "MonFID")
+            //    {
+            //        MVCxGridView g = sender as MVCxGridView;
+            //         var a= e.Value;
+            //         if (a != null)
+            //         {
+            //             if (Convert.ToInt32(a.ToString()) == -1)
+            //             {
+            //                 e.Editor.ReadOnly = true;
+            //             }
+            //         }
+            //        //if (g.IsNewRowEditing)
+            //        //    e.Editor.ReadOnly = false;
+            //        //else
+            //        //    e.Editor.ReadOnly = true;
+            //    }
+
+            //};
+
+            //settings.HtmlRowPrepared = (sender, e) =>
+            //{
+            //    if (e.RowType != GridViewRowType.Data) return;
+
+            //    int MFID = Convert.ToInt32(e.GetValue("MonFID"));
+
+            //    if (MFID == -1)
+            //    {
+            //        e.Row.BackColor = System.Drawing.Color.FromArgb(240, 128, 128);
+            //        e.Row.Enabled = false;
+                
+            //    }
+            //};
+
+
+         
+
+
+            settings.HtmlDataCellPrepared = (sender, e) =>
+            {
+
+
+
+                if (e.DataColumn.FieldName == "MonFID" || e.DataColumn.FieldName == "TueFID" || e.DataColumn.FieldName == "WedFID" || e.DataColumn.FieldName == "ThuFID" || e.DataColumn.FieldName == "FriFID" || e.DataColumn.FieldName == "SatFID" || e.DataColumn.FieldName == "MonSID" || e.DataColumn.FieldName == "TueSID" || e.DataColumn.FieldName == "WedSID" || e.DataColumn.FieldName == "ThuSID" || e.DataColumn.FieldName == "FriSID" || e.DataColumn.FieldName == "SatSID")
+                {
+                    if (Convert.ToInt32(e.CellValue) == -1)
+                    {
+                        e.Cell.BackColor = System.Drawing.Color.Yellow;
+                        e.Cell.Visible = true;
+                        //e.DataColumn.ReadOnly = true;
+                        //e.DataColumn.EditFormSettings.Visible = DefaultBoolean.False;
+                     
+                         
+                    }
+                }
+
+            };
+
+
+
+
+            //settings.ClientSideEvents.BatchEditStartEditing = "OnBatchEditStartEditing";
+            //settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
+
+            
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            //settings.CommandColumn.Visible = true;
+            //settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.(10);
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) =>
+            {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+
+
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+           // settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+
+            // settings.SettingsBehavior.AllowFocusedRow = true;
+            // settings.ClientSideEvents.FocusedRowChanged = "studentSessionController.RowSelectionChange";
+        });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+    
+    
+}
+@grid.Bind(Model).GetHtml()

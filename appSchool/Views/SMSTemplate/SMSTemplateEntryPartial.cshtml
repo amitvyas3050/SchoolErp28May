@@ -1,0 +1,101 @@
+﻿@using appSchool.Repositories
+@model SMSTemplate
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    Html.EnableClientValidation(true);
+}
+<div style="width:100%;float:left;position:relative">
+@using (Ajax.BeginForm("AddNewSMSTemplate", "SendSMS",
+    new AjaxOptions {
+        HttpMethod = "POST",
+        UpdateTargetId = "divSmsTree",
+        InsertionMode = InsertionMode.Replace
+    },
+    new {
+        id = "frmAddTemplate",
+        @class = "edit_form",
+        style="height: 200px; position:relative; width: 100%;",
+        enctype = "multipart/form-data" 
+    }
+    )) {
+<div id="form_edit_controls" style="width:100%;height:auto;">
+<div class="line" >
+    @Html.DevExpress().LabelFor(
+            model=> model.TemplateName,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Name : ";
+                settings.AssociatedControlName = "TemplateName";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model=> model.TemplateName,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.None;
+            }).GetHtml()
+</div>
+
+<div class="line2" >
+    @Html.DevExpress().LabelFor(
+            model=> model.SMSTypeID,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Category : ";
+                settings.AssociatedControlName = "SMSTypeID";
+            }
+        ).GetHtml()
+
+   @Html.DevExpress().ComboBox(
+            settings => {
+                settings.Name = "SMSTypeID";
+                settings.ControlStyle.CssClass = "editor";
+                settings.Properties.TextField = "Description";
+                settings.Properties.ValueField = "Value";
+                settings.Properties.ValueType = typeof(int);
+            }
+        ).BindList((new SMSTypeRepository()).GetSMSTypesItems()).Bind(Model.SMSTypeID).GetHtml()
+</div>
+<div class="line2" >
+    @Html.DevExpress().LabelFor(
+            model=> model.TemplateMessage,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Message : ";
+                settings.AssociatedControlName = "TemplateMessage";
+            }
+        ).GetHtml()
+     @Html.DevExpress().MemoFor(
+            model=> model.TemplateMessage,
+                    settings => {
+                        settings.Name = "TemplateMessage";
+                        settings.ControlStyle.CssClass = "editor";
+                    }
+                ).GetHtml()
+   
+</div>
+
+</div>
+<div style="clear:both"></div>
+
+<div class="lineFooter" >
+   <div class="divSubmit">
+       @Html.DevExpress().Button(
+        settings => {
+            settings.Name = "btnUpdatePersonalInfo";
+            settings.ControlStyle.CssClass = "button";
+            settings.Text = "Update Info.";
+            settings.UseSubmitBehavior = true;
+        }).GetHtml()
+    </div>
+    <div class="divError" >
+
+        @Html.ValidationMessageFor(model=> model.SMSTypeID) 
+        @Html.ValidationMessageFor(model=> model.TemplateName)
+        @Html.ValidationMessageFor(model=> model.TemplateMessage)
+    </div>
+
+     
+</div>
+}
+</div>

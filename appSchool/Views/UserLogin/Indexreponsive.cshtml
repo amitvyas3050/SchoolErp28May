@@ -1,0 +1,84 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+@using appSchool.Controllers
+@model ModelUserLogin
+
+@{
+
+    ViewBag.Title = "Sign In";
+    Layout = "~/Views/Shared/_Layoutlogin.cshtml";
+}
+@section Head {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/loginpage.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css")" />
+
+
+}
+@if (ViewData["USerMessage"] == null)
+{
+    ViewData["USerMessage"] = "";
+}
+
+@{
+    var UserMessage = ViewData["USerMessage"];
+}
+
+
+<div class="loginbox">
+    <img src="~/Content/Images/PNG/school_logo.jpg" height="64" width="64"  class="avatar">
+    <h1>Nirmala</h1>
+    <form method="post" action="UserLogin/UserLoginCheck">
+        <p>Username</p> @Html.DevExpress().TextBoxFor(model => model.UserName, CommonDemoHelper.TextBoxSettingsMethod).GetHtml()
+        <p>Password</p> @Html.DevExpress().TextBoxFor(model => model.Password, s =>
+                   {
+                       s.Name = "Password";
+                       s.Properties.Password = true;
+                       s.ClientVisible = true;
+                       s.Height = System.Web.UI.WebControls.Unit.Pixel(10);
+                   }).GetHtml()
+
+
+        @Html.DevExpress().ComboBoxFor(
+                  model => model.BranchID,
+                          settingscbo =>
+                          {
+                              settingscbo.Name = "BranchID";
+                              //settingscbo.ControlStyle.CssClass = "editor1";
+                              settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                              settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                              settingscbo.Properties.TextField = "BranchName";
+                              settingscbo.Properties.ValueField = "BranchID";
+                              settingscbo.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                              settingscbo.Height = System.Web.UI.WebControls.Unit.Pixel(5);
+                              settingscbo.ControlStyle.ForeColor = System.Drawing.Color.Black;
+                              settingscbo.SelectedIndex = 0;
+                              //settings.ShowModelErrors = true;
+                              //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                          }
+                      ).BindList(new UnitOfWork().branchService.Get()).GetHtml()
+
+
+        @Html.DevExpress().ComboBoxFor(
+                 model => model.SessionID,
+                         settingscbo =>
+                         {
+                             settingscbo.Name = "SessionID";
+                             //settingscbo.ControlStyle.CssClass = "editor1";
+                             settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                             settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                             settingscbo.Properties.TextField = "SessionName";
+                             settingscbo.Properties.ValueField = "SessionID";
+                             settingscbo.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                             settingscbo.Height = System.Web.UI.WebControls.Unit.Pixel(10);
+                             settingscbo.ControlStyle.ForeColor = System.Drawing.Color.Black;
+                             settingscbo.SelectedIndex = 0;
+                             //settings.ShowModelErrors = true;
+                             //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                         }
+                     ).BindList(new UnitOfWork().academicYearService.Get()).GetHtml()
+
+        <input type="submit" name="" value="Login">
+
+        <a href="#">Lost your password?</a><br> <a href="#">Don't have an account?</a>
+    </form>
+</div>

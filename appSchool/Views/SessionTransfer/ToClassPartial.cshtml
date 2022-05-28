@@ -1,0 +1,28 @@
+﻿@using appSchool.Controllers
+@using appSchool.Repositories
+
+@model List<Class>
+
+
+   @Html.DevExpress().Label(settingslbl =>
+{
+    settingslbl.Name = "lblToClassID";
+    settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+    settingslbl.Text = "Select Class";
+    settingslbl.ClientVisible = true;
+}).GetHtml()
+
+              @Html.DevExpress().ComboBox(
+                  settingsClass =>
+                  {
+                      settingsClass.Name = "ToClassID";
+                      settingsClass.ControlStyle.CssClass = "form-control";
+                      settingsClass.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                      settingsClass.Properties.DropDownStyle = DropDownStyle.DropDown;
+                      settingsClass.Properties.TextField = "ClassName";
+                      settingsClass.Properties.ValueField = "ClassID";
+                      settingsClass.ClientVisible = true;
+                      settingsClass.Properties.ClientSideEvents.SelectedIndexChanged = "sessionTransferController.SelectedToClass";
+
+                  }
+              ).BindList(Model).GetHtml()

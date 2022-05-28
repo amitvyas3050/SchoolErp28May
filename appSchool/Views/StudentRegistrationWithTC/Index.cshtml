@@ -1,0 +1,83 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@{
+    ViewBag.Title = "TC Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Head {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/GridView.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap.css")" />
+    <script type="text/javascript" src="@Url.Content("~/Content/GridView.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/jsControllers/studentRegistrationWithTCController.js")"></script>
+}
+
+@section PageToolbar {
+
+
+}
+
+@section LeftPanelContent {
+    @{Html.RenderAction("ReturnLeftPanelView", "LeftAndRightPanel", new { moduleid = (int)appModule.appAcademicManager });}
+}
+
+@section RightPanelContent {
+    @{Html.RenderAction("ReturnRightPanelView", "LeftAndRightPanel");}
+
+}
+
+<div class="row">
+    <div class="col-sm-4">
+        @Html.DevExpress().Label(settingslbl =>
+                            {
+                                settingslbl.Name = "lb";
+                                settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+                                settingslbl.Text = "Select Session ";
+                            }).GetHtml()
+        @Html.DevExpress().ComboBox(
+
+                      settingscbo =>
+                      {
+                          settingscbo.Name = "CmbSessionID";
+                          settingscbo.ControlStyle.CssClass = "form-control";
+                          settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                          settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                          settingscbo.Properties.TextField = "SessionName";
+                          settingscbo.Properties.ValueField = "SessionId";
+                      }
+                  ).BindList(new UnitOfWork().studentSessionService.GetAllSessionList()).GetHtml()
+    </div>
+    <div class="col-sm-3">
+
+        @Html.DevExpress().Button(
+                    settingsBttn =>
+                    {
+                        settingsBttn.Name = "GetTCStudent";
+                        settingsBttn.ControlStyle.CssClass = "btnpaddingrow20px";
+                        settingsBttn.Text = "Get Student List";
+                        settingsBttn.ClientSideEvents.Click = "studentRegistrationWithTCController.GetTCRegiterList";
+                    }).GetHtml()
+    </div>
+
+</div>
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @*@Html.Partial("GridViewPartial")*@
+    ViewContext.Writer.Write("<div id=\"divstudregistrationwithtc\"> ");
+    Html.RenderPartial("ListRegistrationsWithTC", (new UnitOfWork()).studentRegistrationService.GetRegistrationGridDataWithTCAllotment(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()), byte.Parse(Session["SessionID"].ToString())));
+    ViewContext.Writer.Write("</div>");
+}
+
+@Html.DevExpress().LoadingPanel(
+        settings =>
+        {
+            settings.Name = "loadingPanelStudentRegistration";
+            settings.Modal = true;
+            settings.ContainerElementID = "";
+            settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+        }).GetHtml()

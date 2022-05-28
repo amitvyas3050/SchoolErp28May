@@ -1,0 +1,100 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+@{
+    ViewBag.Title = "SMS Housewise";
+}
+
+<script src="@Url.Content("~/jsControllers/sendHouseMessegeController.js")" type="text/javascript"></script>
+
+@if (PermissionFlag._AddFlag == false && PermissionFlag._DelFlag == false && PermissionFlag._ModFlag == false)
+     {
+     
+              @Html.DevExpress().PopupControl(settings => {
+                settings.Name = "popupclass";
+                settings.PopupElementID = "popupArea";
+                settings.AllowDragging = true;
+                settings.ShowOnPageLoad = true;
+                settings.Width=180;
+                settings.Height = 100;
+            
+                settings.PopupHorizontalAlign =PopupHorizontalAlign.WindowCenter;
+                settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                settings.CloseAction = CloseAction.CloseButton;
+                settings.HeaderText = "User Permission";
+                settings.SetContent(() => {
+                    ViewContext.Writer.Write(
+                        " <p style=\"color:red;\"> Permission not granted </p>"
+                    );
+                    ViewContext.Writer.Write(
+            "<div style=\"text-align:center;\" > <img   src=\"" + Url.Content("~/Images/permission.png") + "\" alt=\"Permission\" /> </div> "
+        );
+               });
+}).GetHtml()
+     }
+else
+{
+
+ @Html.DevExpress().Splitter(settings => {
+    settings.Name = "SendMessegeSplitter";
+        settings.AllowResize = true;
+        settings.Orientation = System.Web.UI.WebControls.Orientation.Vertical;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SeparatorVisible = true;
+        settings.ClientSideEvents.PaneResized = "sendHouseMessegeController.splitterResized";
+
+       settings.Panes.Add(subpane =>
+        {
+            subpane.Name = "SendMessegeBody";
+            subpane.PaneStyle.CssClass = "contentPane";
+            subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+            subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+            subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+            subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(50);
+            subpane.Size = System.Web.UI.WebControls.Unit.Percentage(52);
+            subpane.Separator.Visible = DefaultBoolean.False;
+            subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.SetContent(() =>
+            {
+                Html.RenderPartial("SendHouseMessegeHeadView");
+            });
+        });
+        settings.Panes.Add(subpane =>
+        {
+            subpane.Name = "SendMessegeFooter";
+            subpane.PaneStyle.CssClass = "contentPane";
+            subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+            subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+            subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+            subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(100);
+            subpane.Size = System.Web.UI.WebControls.Unit.Percentage(40);
+            subpane.Separator.Visible = DefaultBoolean.True;
+            subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.SetContent(() =>
+            {
+                Html.RenderPartial("SendHouseMessegeBottomView");
+            });
+        });
+    }).GetHtml()
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

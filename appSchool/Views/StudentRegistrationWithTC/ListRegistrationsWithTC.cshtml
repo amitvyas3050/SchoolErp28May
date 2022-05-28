@@ -1,0 +1,259 @@
+﻿@using appSchool.ViewModels
+@{
+    if (ViewBag.ShowFilter == null){
+        ViewBag.ShowFilter = false;
+    }
+
+    var grid = Html.DevExpress().GridView (
+        settings =>
+        {
+            settings.Name = "gridView";
+            settings.KeyFieldName = "StudentID";
+
+            //settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            settings.CallbackRouteValues = new { Controller = "StudentRegistrationWithTC", Action = "grdRegistredStudents", mShowFilter = ViewBag.ShowFilter };
+
+            settings.ControlStyle.CssClass = "grid-view"; //add this propert to new
+
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            //settings.Styles.Cell.Wrap = DefaultBoolean.False;
+            settings.Styles.PagerBottomPanel.CssClass = "pager";
+            settings.Styles.FocusedRow.CssClass = "focused";
+
+
+            settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+            settings.SettingsBehavior.ConfirmDelete = true;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "CompID";
+                column.Visible =false;
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "BranchID";
+                column.Visible = false;
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "EnrollmentNo";
+                column.Caption = "Registration#";
+                column.ToolTip = "Click to Sort";
+                column.EditFormSettings.ColumnSpan=1;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+                //var editProperties = (TextBoxProperties)column.PropertiesEdit;
+                //editProperties.MaskSettings.Mask = "(AAA)-000-0000";
+
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "EnrollmentDate";
+                column.Caption = "Date";
+                column.ToolTip = "Click to Sort";
+                column.ColumnType = MVCxGridViewColumnType.DateEdit;
+
+                var dateProperties = column.PropertiesEdit as DateEditProperties;
+                dateProperties.UseMaskBehavior = true;
+                dateProperties.EditFormat = EditFormat.Custom;
+                dateProperties.EditFormatString = "MMMM dd, yyyy";
+                dateProperties.DisplayFormatString = "MMMM dd, yyyy";
+                dateProperties.MaxDate = DateTime.Now;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(120);
+                column.EditFormSettings.ColumnSpan = 1;
+
+            });
+
+
+
+            settings.Columns.Add("FirstName").ToolTip = "Click to Sort";
+            settings.Columns.Add("LastName").ToolTip = "Click to Sort";
+
+            settings.Columns.Add("FatherName").ToolTip = "Click to Sort";
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "SMSMobileNo";
+                column.Caption = "Mobile No";
+                column.ToolTip = "Click to Sort";
+                column.EditFormSettings.ColumnSpan = 1;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+
+
+            });
+
+            settings.Columns.Add("TCNumber").ToolTip = "Click to Sort";
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "TCDate";
+                column.Caption = "Date";
+                column.ToolTip = "Click to Sort";
+                column.ColumnType = MVCxGridViewColumnType.DateEdit;
+
+                var dateProperties = column.PropertiesEdit as DateEditProperties;
+                dateProperties.UseMaskBehavior = true;
+                dateProperties.EditFormat = EditFormat.Custom;
+                dateProperties.EditFormatString = "MMMM dd, yyyy";
+                dateProperties.DisplayFormatString = "MMMM dd, yyyy";
+                dateProperties.MaxDate = DateTime.Now;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(120);
+                column.EditFormSettings.ColumnSpan = 1;
+
+            });
+
+
+
+            //settings.Columns.Add("FullName").Width = System.Web.UI.WebControls.Unit.Pixel(210);
+
+            //settings.CellEditorInitialize = (sender, e) =>
+            //{
+            //    if (e.Column.FieldName == "FullName")
+            //        e.Editor.Enabled = false;
+
+
+
+            //};
+
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ClassID";
+                column.Caption = "Class";
+                column.ToolTip = "Click to Sort";
+                //column.EditFormSettings.ColumnSpan = 1;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(60);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.ClassRepository()).GetClassList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "ClassName";
+                comboBoxProperties.ValueField = "ClassID";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+            //settings.Columns.Add("Rating");
+
+
+            //settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            //settings.SettingsPager.FirstPageButton.Visible = true;
+            //settings.SettingsPager.LastPageButton.Visible = true;
+            //settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            //settings.Settings.ShowFilterRow = settings.Settings.ShowFilterRowMenu = ViewBag.ShowFilter;
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            //settings.ClientSideEvents.FocusedRowChanged = "studentRegistrationWithTCController.RowSelectionChange";
+
+
+
+            settings.SettingsPager.PageSize = 15;
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+
+            //settings.Settings.VerticalScrollBarMode = ScrollBarMode.Hidden;
+            //settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+            //settings.Settings.ShowHeaderFilterButton = true;
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@model System.Collections.IEnumerable
+
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "GridView";
+        settings.CallbackRouteValues = new { Controller = "Masters", Action = "grdRegistredStudents" };
+        //settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.KeyFieldName = "RegistrationID";
+        //settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        //settings.Settings.VerticalScrollableHeight = 350;
+        settings.Settings.VerticalScrollBarStyle = GridViewVerticalScrollBarStyle.Standard;
+        settings.ControlStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(0);
+        settings.ControlStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+        settings.ControlStyle.BorderBottom.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(1);
+        
+        // DXCOMMENT: Configure grid's columns in accordance with data model fields
+        settings.Columns.Add("RegNo");
+        settings.Columns.Add("RegDate").PropertiesEdit.DisplayFormatString = "d";
+        settings.Columns.Add("FirstName");
+        settings.Columns.Add("LastName");
+        settings.Columns.Add("DOB").PropertiesEdit.DisplayFormatString = "d";
+        settings.Columns.Add("Gender");
+        //settings.Columns.Add("MobileNo");
+        //settings.Columns.Add("Address");
+        
+        //settings.Settings.ShowPreview = true;
+        //settings.PreviewFieldName = "Background";
+        
+        settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+        settings.SettingsPager.FirstPageButton.Visible = true;
+        settings.SettingsPager.LastPageButton.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30" };
+        settings.SettingsPager.Visible = true;
+        settings.SettingsPager.PageSize = 10;
+
+
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowFilterRowMenu = true;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.CommandColumn.ShowClearFilterButton = true;
+
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Masters", Action = "AddNewRegistration" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Masters", Action = "UpdateRegistration" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Masters", Action = "DeleteRegistration" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
+        settings.SettingsBehavior.ConfirmDelete = true;
+        settings.SettingsPopup.EditForm.Width = 600;
+        settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+        settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+        settings.SettingsPopup.EditForm.VerticalOffset = 50;
+        settings.SettingsPopup.EditForm.Height = 350;
+        settings.SettingsPopup.EditForm.Modal = true;
+        
+        
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Pixel(50);
+        settings.CommandColumn.ShowClearFilterButton = true;
+
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SettingsPager.PageSize = 30;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        //settings.Settings.VerticalScrollableHeight = 350;
+        settings.Settings.VerticalScrollBarStyle = GridViewVerticalScrollBarStyle.Virtual;
+        
+    }).Bind(Model).GetHtml()*@

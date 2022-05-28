@@ -1,0 +1,100 @@
+﻿@using appSchool.Repositories;
+@using appSchool.ViewModels
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridAccountMaster";
+            settings.KeyFieldName = "AcCode";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            //settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            settings.CallbackRouteValues = new { Controller = "FeesManager", Action = "PartialGridAccountMaster" };
+            settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "FeesManager", Action = "AddNewAccountMaster" };
+            settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "FeesManager", Action = "UpdateAccountMaster" };
+            settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "FeesManager", Action = "DeleteAccountMaster" };
+            settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+            settings.SettingsBehavior.ConfirmDelete = true;
+
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+            settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+           
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.Caption = "Accounts";
+
+            settings.CommandColumn.ButtonType = GridViewCommandButtonType.Default;
+            settings.CommandColumn.ShowNewButton = false;
+            if (PermissionFlag._AddFlag == true)
+                settings.CommandColumn.ShowNewButtonInHeader = true;
+
+            if (PermissionFlag._ModFlag == true)
+                settings.CommandColumn.ShowEditButton = true;
+            if (PermissionFlag._DelFlag == true)
+                settings.CommandColumn.ShowDeleteButton = true;
+
+
+            settings.Columns.Add("Name").EditFormSettings.ColumnSpan = 3;
+            settings.Columns.Add("Address").EditFormSettings.ColumnSpan = 3;
+            settings.Columns.Add("City").EditFormSettings.ColumnSpan = 3;
+            settings.Columns.Add("Pin").EditFormSettings.ColumnSpan = 3;
+            settings.Columns.Add("Phone1").EditFormSettings.ColumnSpan = 3;
+            settings.Columns.Add("Phone2").EditFormSettings.ColumnSpan = 3;
+            settings.Columns.Add("Mobile1").EditFormSettings.ColumnSpan = 3;
+            settings.Columns.Add("Mobile2").EditFormSettings.ColumnSpan = 3;
+            settings.Columns.Add("Email").EditFormSettings.ColumnSpan = 3;
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "FeesCategoryID";
+                column.Caption = "FeesCategoryName";
+
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new FeesCategoryRepository()).GetFeesCategoryList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "FeesCategoryName";
+                comboBoxProperties.ValueField = "FeesCategoryID";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+            settings.Columns.Add("OpBalance").EditFormSettings.ColumnSpan = 3;
+            settings.Columns.Add("DrAmount").EditFormSettings.ColumnSpan = 3;
+            settings.Columns.Add("Balance").EditFormSettings.ColumnSpan = 3;
+            settings.Columns.Add("CreateDate").EditFormSettings.ColumnSpan = 3;
+            settings.Columns.Add("PanNo").EditFormSettings.ColumnSpan = 3;
+            
+          
+          
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(10);
+            
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            settings.Settings.ShowHeaderFilterButton = true;
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.SettingsPager.PageSize = 30;
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            settings.ClientSideEvents.FocusedRowChanged = "accountMasterController.RowSelectionChange";
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+

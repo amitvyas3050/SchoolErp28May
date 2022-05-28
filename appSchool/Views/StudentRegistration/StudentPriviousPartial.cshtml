@@ -1,0 +1,72 @@
+﻿@using appSchool.Repositories
+@model StudentPreviousDetail
+
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    Html.EnableClientValidation(true);
+}
+
+<script>
+
+    function UpdateSuccessfull(data) {
+
+        alert(data.Resultmsg);
+      //  $("#RegistrationSplitter_3_CC").html(data.ResultData);
+        var mStudentIDs = StudentIDs.GetText();
+        if (mStudentIDs.toString() == "") {
+            alert("Please Select Students");
+            return;
+
+        }
+
+        $.ajax({
+            url: "/StudentRegistration/EditPreviousDetail",
+            type: "POST",
+            data: { mStudentID: mStudentIDs },
+            datatype: "json",
+            beforeSend: (function (data) {
+              //  loadingPanelStudentRegistration.Show();
+            }),
+            success: function (data) {
+                $("#RegistrationSplitter_3_CC").html(data.ResultData);
+                var winHeight = document.getElementById('RegistrationSplitter_3_CC').offsetHeight;
+
+            },
+            error: function () {
+            }
+        }).done(function (data) {
+           // loadingPanelStudentRegistration.Hide();
+        });
+
+    }
+
+</script>
+
+@using (Ajax.BeginForm("StudentPriviousInfoSaveANDUpdate", "StudentRegistration",
+    new AjaxOptions {
+        HttpMethod = "POST",
+        OnBegin = "loadingPanelPreviousDetail.Show();",
+        OnComplete = "loadingPanelPreviousDetail.Hide();",
+        UpdateTargetId = "contentPriviousDetails",
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "UpdateSuccessfull(data)"
+    },
+    new {
+        id = "validationForm2",
+        @class = "edit_form",
+        style = "height: 200px; position:relative; width: 100%;"
+    })) {
+    <div id="contentPriviousDetails">
+        @Html.Partial("StudentPriviousEditPartial", Model)
+    </div>
+}
+
+
+
+@Html.DevExpress().LoadingPanel(
+    settings => {
+        settings.Name = "loadingPanelPreviousDetail";
+        settings.Modal = true;
+        settings.ContainerElementID = "";
+        settings.Styles.LoadingDiv.BackColor =System.Drawing.Color.White;
+    }).GetHtml()

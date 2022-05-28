@@ -1,0 +1,271 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@if (ViewData["ClassIDForSessionTransfer"] == null)
+{
+    ViewData["ClassIDForSessionTransfer"] = 0;
+}
+
+@if (ViewData["SectionIDForSessionTransfer"] == null)
+{
+    ViewData["SectionIDForSessionTransfer"] = 0;
+}
+
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridSessionTransfer";
+            settings.KeyFieldName = "StudentSessionID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(99);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+           // settings.Caption="Students List for Current Session";
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Pixel(40);
+            settings.CommandColumn.ShowSelectCheckbox = true;
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.SettingsPager.PageSize = 200;
+
+            settings.CommandColumn.Caption = "Select";
+            settings.CommandColumn.SetHeaderTemplateContent(c =>
+            {
+                Html.DevExpress().CheckBox(settingsCheckBox =>
+                {
+                    settingsCheckBox.Name = "cbSelectAllSS";
+                    // settingsCheckBox.Text = "Select";
+                    settingsCheckBox.Properties.ClientSideEvents.CheckedChanged = string.Format("function(s, e) {{ if(s.GetChecked()) {0}.SelectRows(); else {0}.UnselectRows(); }}", settings.Name);
+                    settingsCheckBox.Checked = c.Grid.VisibleRowCount == c.Grid.Selection.Count;
+                }).Render();
+            });
+
+            settings.ClientSideEvents.SelectionChanged = "sessionTransferController.SelectionChanged";
+            
+            settings.CallbackRouteValues = new { Controller = "SessionTransfer", Action = "PartialSessionTransferView", PclassID = ViewData["ClassIDForSessionTransfer"] ,PSectionID=ViewData["SectionIDForSessionTransfer"]};
+
+           // settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "SessionTransfer", Action = "updateSessionTransferAll", PclassSetupID = ViewData["ClassIDForSessionTransfer"] };
+            
+            //settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+            //settings.SettingsEditing.BatchEditSettings.EditMode = appSchool.Controllers.GridViewEditingDemosHelper.BatchEditMode;
+            //settings.SettingsEditing.BatchEditSettings.StartEditAction = appSchool.Controllers.GridViewEditingDemosHelper.BatchStartEditAction;
+            //settings.SettingsCommandButton.EditButton.ButtonType = GridViewCommandButtonType.Button;
+            
+            settings.SettingsBehavior.ConfirmDelete = true;
+
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+           
+       
+
+            settings.Columns.Add("StudentSessionID").Visible=false;
+            settings.Columns.Add("StudentID").Visible = false;
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "EnrollmentNo";
+                column.Caption = "EnrollmentNo";
+                column.ColumnType = MVCxGridViewColumnType.TextBox;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                column.ReadOnly = true;
+            });
+            
+            settings.Columns.Add("FullName").ReadOnly = true;
+            settings.Columns.Add("FatherName").ReadOnly = true;
+            
+          //  settings.Columns.Add("StudentID").Visible = true;
+          //  settings.Columns.Add("ClassID").Visible = true;
+            //settings.Columns.Add(column =>
+            //{
+            //    column.FieldName = "StudentID";
+            //    column.Caption = "Enrollment No";
+            //   // column.ReadOnly = true;        
+             
+
+            //    column.ColumnType = MVCxGridViewColumnType.ComboBox;
+            //    var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+            //    comboBoxProperties.DataSource = (new appSchool.Repositories.StudentRegistrationRepository()).GetRegistrationGridData();
+            //    comboBoxProperties.TextField = "EnrollmentNo";
+            //    comboBoxProperties.ValueField = "StudentID";
+            //    comboBoxProperties.ValueType = typeof(int);
+               
+              
+            //});
+          
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ClassSetupID";
+                column.Caption = "ClassDescription";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(120);
+                //column.EditFormSettings.ColumnSpan = 1;
+
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+               
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.ClassSetupRepository()).GetAllClassNameByClassID(int.Parse(ViewData["ClassIDForSessionTransfer"].ToString()));
+                comboBoxProperties.TextField = "ClassDescription";
+                comboBoxProperties.ValueField = "ClassSetupID";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "HouseID";
+                column.Caption = "HouseName";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                //column.EditFormSettings.ColumnSpan = 1;
+
+
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.HouseRepository()).GetHouseList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "HouseName";
+                comboBoxProperties.ValueField = "HouseID";
+
+                comboBoxProperties.ValueType = typeof(int);
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "HouseColor";
+                column.Caption = "Color";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(60);
+                //column.EditFormSettings.ColumnSpan = 1;
+                column.ReadOnly = true;
+
+                //column.ColumnType = MVCxGridViewColumnType.ColorEdit;
+                //var comboBoxProperties = column.PropertiesEdit as ColorEditProperties;
+                column.Visible = true;
+                
+            });
+            
+            
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "DateOfBirth";
+                column.Caption = "DateOfBirth";
+                column.ColumnType = MVCxGridViewColumnType.TextBox;
+                column.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                column.ReadOnly = true;
+            });
+            
+          
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "BusID";
+                column.Caption = "BusNo";
+
+                column.Visible = SchoolSetupStaticClass._BusFacility;
+                //column.EditFormSettings.ColumnSpan = 1;
+
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.BusMasterRepository()).GetBusMasterGridData(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "BusNo";
+                comboBoxProperties.ValueField = "BusID";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+           
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "SMSInHindi";
+                column.Caption = "SMSInHindi";
+                //column.Visible = SchoolSetupStaticClass._BusFacility;
+                column.ColumnType = MVCxGridViewColumnType.CheckBox;
+                column.Visible = true;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+            });
+            
+            
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "IsNewStudent";
+                column.Caption = "IsNewStudent";
+                column.Visible = SchoolSetupStaticClass._BusFacility;
+                column.ColumnType = MVCxGridViewColumnType.CheckBox;
+                column.Visible = true;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(85);
+            });
+            
+            
+            //settings.Columns.Add("HostelFacility", MVCxGridViewColumnType.CheckBox);
+            //settings.Columns.Add("BusFacility", MVCxGridViewColumnType.CheckBox);
+
+            //settings.CellEditorInitialize = (s, e) =>
+            //{
+            //    ASPxEdit editor = (ASPxEdit)e.Editor;
+            //    editor.ValidationSettings.Display = Display.Dynamic;
+            //};
+            //settings.HtmlRowPrepared = (s, e) =>
+            //{
+            //    if (e.RowType != GridViewRowType.Data) return;
+
+            //    int name = Convert.ToInt32(e.GetValue("HouseColor"));
+            //    //if (name == "Student3")
+            //    e.Row.ForeColor = System.Drawing.Color.FromArgb(Convert.ToInt32(name));
+            //};
+
+            settings.HtmlDataCellPrepared = (sender, e) =>
+            {
+                //  int a = -1;
+                if (e.DataColumn.FieldName == "HouseColor")
+                {
+
+                    if (e.CellValue != null)
+                    {
+                        e.Cell.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(e.CellValue));
+                        //SchoolSetupStaticClass._HouseColor = Convert.ToInt32(e.CellValue);
+                        e.Cell.ForeColor = System.Drawing.Color.Black;
+                        e.Cell.Text = System.Drawing.ColorTranslator.ToHtml(System.Drawing.Color.FromArgb(Convert.ToInt32(e.CellValue)));
+                        //e.Cell.Text = string.Empty;
+
+                    }
+                }
+
+                //if (e.DataColumn.FieldName == "HouseID")
+                //{
+
+                //    if (e.CellValue != null)
+                //    {
+                //        //e.Cell.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(e.CellValue));
+                //        e.Cell.ForeColor = System.Drawing.Color.FromArgb(SchoolSetupStaticClass._HouseColor);
+                //        //e.Cell.Text = System.Drawing.ColorTranslator.ToHtml(System.Drawing.Color.FromArgb(Convert.ToInt32(e.CellValue)));
+
+                //    }
+                //}
+
+
+
+
+            };
+            
+            
+         
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+          //settings.CommandColumn.Visible = true;
+          //settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.(10);
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+          //((MVCxGridView)sender).StartEdit(1);
+            };
+
+
+         
+              settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            
+           // settings.SettingsBehavior.AllowFocusedRow = true;
+           // settings.ClientSideEvents.FocusedRowChanged = "studentSessionController.RowSelectionChange";
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+
+

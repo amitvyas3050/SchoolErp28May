@@ -1,0 +1,98 @@
+﻿@using appSchool.ViewModels
+
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridFeesHead";
+            settings.KeyFieldName = "FeesHeadID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            settings.CallbackRouteValues = new { Controller = "FeesHead", Action = "ListFeesHeadView" };
+            settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "FeesHead", Action = "AddNewFeesHead" };
+            settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "FeesHead", Action = "UpdateFeesHead" };
+            settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "FeesHead", Action = "DeleteFeesHead" };
+            settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+            settings.SettingsBehavior.ConfirmDelete = true;
+           
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+            settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            //settings.SettingsPopup.EditForm.Height = 150;
+            //settings.SettingsPopup.EditForm.Modal = true;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+            settings.CommandColumn.Visible = true;
+           // settings.CommandColumn.Caption = "FeesHeadName";
+            settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(10);
+            settings.CommandColumn.ButtonType = GridViewCommandButtonType.Default;
+            if (PermissionFlag._AddFlag == true)
+                settings.CommandColumn.ShowNewButtonInHeader = true;
+
+            if (PermissionFlag._ModFlag == true)
+                settings.CommandColumn.ShowEditButton = true;
+            if (PermissionFlag._DelFlag == true)
+                settings.CommandColumn.ShowDeleteButton = true;
+            settings.Columns.Add("FeesHeadName").EditFormSettings.ColumnSpan = 1;
+
+            settings.Columns.Add("PrintHeadName").EditFormSettings.ColumnSpan = 1;
+            settings.Columns.Add("DefaultAmount").EditFormSettings.ColumnSpan = 1;
+           // settings.Columns.Add("Accode").EditFormSettings.ColumnSpan = 1;
+           // settings.Columns.Add("CategoryID").EditFormSettings.ColumnSpan = 1;
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "FeesHeadType";
+                column.Caption = "FeesHeadType";
+
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = cCommon.GetFeesHeadType();
+                comboBoxProperties.TextField = "Value";
+                comboBoxProperties.ValueField = "Key";
+                //comboBoxProperties.ValueType = typeof(int);
+            });
+            settings.Columns.Add("ISRebate", MVCxGridViewColumnType.CheckBox).EditFormSettings.ColumnSpan = 1;
+
+
+
+           
+            
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            settings.Settings.ShowHeaderFilterButton = true;
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            settings.Settings.VerticalScrollableHeight = 350;
+            settings.Settings.VerticalScrollBarStyle = GridViewVerticalScrollBarStyle.Virtual;
+
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            settings.ClientSideEvents.FocusedRowChanged = "feesHeadController.RowSelectionChange";
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+
+
+
+
+
+

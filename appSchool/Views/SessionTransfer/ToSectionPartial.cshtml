@@ -1,0 +1,27 @@
+﻿@using appSchool.Controllers
+@using appSchool.Repositories
+
+@model List<ClassSetup>
+
+
+   @Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lblToClassSetupID";
+                    settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+                    settingslbl.Text = "Select Section";
+                    settingslbl.ClientVisible = true;
+                }).GetHtml()
+
+              @Html.DevExpress().ComboBox(
+                  settingsClass =>
+                  {
+                      settingsClass.Name = "ToSectionID";
+                      settingsClass.ControlStyle.CssClass = "form-control";
+                      settingsClass.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                      settingsClass.Properties.DropDownStyle = DropDownStyle.DropDown;
+                      settingsClass.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                      settingsClass.Properties.TextField = "ClassDescription";
+                      settingsClass.Properties.ValueField = "ClassSetupID";
+                      settingsClass.ClientVisible = true;
+                  }
+              ).BindList(Model).GetHtml()

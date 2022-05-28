@@ -1,0 +1,165 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@if(ViewData["ClassSetupID"]==null)
+{
+    ViewData["ClassSetupID"] = 0;
+}
+
+@if (ViewData["AttanndanceDate"] == null)
+{
+    ViewData["AttanndanceDate"] = "01-01-2000";
+}
+
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridAttendance";
+            settings.KeyFieldName = "ClassAttendanceID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Height = System.Web.UI.WebControls.Unit.Pixel(500);
+          
+           // settings.CommandColumn.Visible = false;
+            //settings.CommandColumn.ShowSelectCheckbox = true;
+           // settings.CommandColumn.ShowClearFilterButton = true;
+            
+            //settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            settings.CallbackRouteValues = new { Controller = "AttendanceDatewise", Action = "PartialAllDatewiseAttendance", mClassAttendenceID = ViewData["ClassSetupID"], AttandanceDate = ViewData["AttanndanceDate"] };
+          
+
+          //  settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "AttendanceDaily", Action = "updateStudentAttendanceAll", mClassAttendenceID1 = ViewData["ClassAttendanceID"] };
+            
+           // settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+            //settings.SettingsEditing.BatchEditSettings.EditMode = appSchool.Controllers.GridViewEditingDemosHelper.BatchEditMode;
+            //settings.SettingsEditing.BatchEditSettings.StartEditAction = appSchool.Controllers.GridViewEditingDemosHelper.BatchStartEditAction;
+            
+            
+            settings.SettingsBehavior.ConfirmDelete = true;
+
+            //settings.SettingsPopup.EditForm.ShowHeader = true;
+            //settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            //settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            //settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+            //settings.CommandColumn.Visible = true;
+          //  settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(2);
+            //settings.CommandColumn.ButtonType = GridViewCommandButtonType.Default;
+            //settings.CommandColumn.ShowEditButton = true;
+            //settings.CommandColumn.ShowNewButtonInHeader = true;
+            //settings.CommandColumn.ShowDeleteButton = true;
+
+
+
+            //settings.Columns.Add("StudentAttendancID").Visible=false;
+            //settings.Columns.Add("ClassAttendanceID").Visible=true;
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ClassAttendanceID";
+                column.Caption = "ClassAttendanceID";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(120);
+                column.Visible = false;
+
+            });
+            //settings.Columns.Add(column =>
+            //{
+            //    column.FieldName = "StudentID";
+            //    column.Caption = "Student Name";
+              
+
+            //    column.ColumnType = MVCxGridViewColumnType.ComboBox;
+            //    var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+            //    comboBoxProperties.DataSource = (new appSchool.Repositories.StudentRegistrationRepository()).GetRegistrationGridData();
+            //    comboBoxProperties.TextField = "FullName";
+            //    comboBoxProperties.ValueField = "StudentID";
+            //    comboBoxProperties.ValueType = typeof(int);
+               
+              
+            //});
+
+            //settings.Columns.Add(column =>
+            //{
+
+            //    column.FieldName = "Attendance";
+            //    column.Caption = "Attendance";
+
+            //    column.ColumnType = MVCxGridViewColumnType.ComboBox;
+            //    var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+            //    comboBoxProperties.DataSource = cCommon.GetAttendanceTypeList();
+            //    comboBoxProperties.TextField = "Value";
+            //    comboBoxProperties.ValueField = "Key";
+            //  //  comboBoxProperties.ValueType = typeof(int);
+              
+
+            //});
+            //settings.Columns.Add("ClassDescription");
+           
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "AttendanceDate";
+                column.Caption = "Date";
+                column.ColumnType = MVCxGridViewColumnType.DateEdit;
+
+                var dateProperties = column.PropertiesEdit as DateEditProperties;
+                dateProperties.UseMaskBehavior = true;
+                dateProperties.EditFormat = EditFormat.Custom;
+                dateProperties.EditFormatString = "dd MMMM, yyyy";
+                dateProperties.DisplayFormatString = "dd MMMM, yyyy";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(130);
+                //column.EditFormSettings.ColumnSpan = 1;
+
+            });
+          
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Present";
+                column.Caption = "Present";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(120);
+              
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Absent";
+                column.Caption = "Absent";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(120);
+              
+            });
+            
+            settings.CellEditorInitialize = (s, e) =>
+            {
+                ASPxEdit editor = (ASPxEdit)e.Editor;
+                editor.ValidationSettings.Display = Display.Dynamic;
+            };
+            
+            
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            settings.CommandColumn.Visible = false;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+           
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            settings.SettingsPager.PageSize = 200;
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            settings.ClientSideEvents.FocusedRowChanged = "attendanceDatewiseController.RowSelectionChangebyAttandanceID";
+            
+          
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+

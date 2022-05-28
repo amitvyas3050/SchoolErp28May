@@ -1,0 +1,250 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@if (ViewData["ClassID"]==null)
+{
+    ViewData["ClassID"] = 0;
+}
+@if (ViewData["ClassSetupID"]==null)
+{
+    ViewData["ClassSetupID"] = 0;
+}
+@if (ViewData["ExamID"]==null)
+{
+    ViewData["ExamID"] = 0;
+}
+@if (ViewData["SubjectID"]==null)
+{
+    ViewData["SubjectID"] = 0;
+}
+@if (ViewData["ExamOrder"] == null)
+{
+    ViewData["ExamOrder"] =0;
+}
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridStudent";
+            settings.KeyFieldName = "StudentID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(99);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+           // settings.Caption="Students List for Current Session";
+            settings.CommandColumn.Visible = false;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Pixel(40);
+            settings.CommandColumn.ShowSelectCheckbox = true;
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.SettingsPager.PageSize = 200;
+
+            //settings.CommandColumn.Caption = "Select";
+            //settings.CommandColumn.SetHeaderTemplateContent(c =>
+            //{
+            //    Html.DevExpress().CheckBox(settingsCheckBox =>
+            //    {
+            //        settingsCheckBox.Name = "cbSelectAllSS";
+            //        // settingsCheckBox.Text = "Select";
+            //        settingsCheckBox.Properties.ClientSideEvents.CheckedChanged = string.Format("function(s, e) {{ if(s.GetChecked()) {0}.SelectRows(); else {0}.UnselectRows(); }}", settings.Name);
+            //        settingsCheckBox.Checked = c.Grid.VisibleRowCount == c.Grid.Selection.Count;
+            //    }).Render();
+            //});
+            
+         //   settings.ClientSideEvents.SelectionChanged = "studentSessionController.SelectionChanged";
+            
+            settings.CallbackRouteValues = new { Controller = "ExamMarkEntry", Action = "PartialStudentMarkList",PClassID=ViewData["ClassID"], PClassSetupID = ViewData["ClassSetupID"],PExamID=ViewData["ExamID"], PSubjectID=ViewData["SubjectID"], PExamOrder= ViewData["ExamOrder"] };
+
+            settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "ExamMarkEntry", Action = "updateStudentMarkAll", PClassID = ViewData["ClassID"], PClassSetupID = ViewData["ClassSetupID"], PExamID = ViewData["ExamID"], PSubjectID = ViewData["SubjectID"], PExamOrder = ViewData["ExamOrder"] };
+            
+            settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+            settings.SettingsEditing.BatchEditSettings.EditMode = appSchool.Controllers.GridViewEditingDemosHelper.BatchEditMode;
+            settings.SettingsEditing.BatchEditSettings.StartEditAction = appSchool.Controllers.GridViewEditingDemosHelper.BatchStartEditAction;
+            settings.SettingsCommandButton.EditButton.ButtonType = GridViewCommandButtonType.Button;
+            
+            settings.SettingsBehavior.ConfirmDelete = true;
+
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+           
+            
+            //settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            //settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            //settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+            //settings.CommandColumn.Visible = true;
+        //    settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(2);
+            //settings.CommandColumn.ButtonType = GridViewCommandButtonType.Default;
+            //settings.CommandColumn.ShowEditButton = true;
+            //settings.CommandColumn.ShowNewButtonInHeader = true;
+            //settings.CommandColumn.ShowDeleteButton = true;
+
+
+
+            settings.Columns.Add("StudentID").Visible=false;
+           
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "RollNo";
+                column.Caption = "RollNo";
+                column.ColumnType = MVCxGridViewColumnType.TextBox;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                column.ReadOnly = true;
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "FullName";
+                column.Caption = "Student Name";
+                column.ColumnType = MVCxGridViewColumnType.TextBox;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                column.ReadOnly = true;
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "MaxMark";
+                column.Caption = "MaxMark";
+                column.ColumnType = MVCxGridViewColumnType.TextBox;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                column.ReadOnly = true;
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "MinMark";
+                column.Caption = "MinMark";
+                column.ColumnType = MVCxGridViewColumnType.TextBox;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                column.ReadOnly = true;
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "IsAbsent";
+                column.Caption = "IsAbsent";
+                column.ColumnType = MVCxGridViewColumnType.CheckBox;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+
+            });
+            
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ObtainMark";
+                column.Caption = "Obtained";
+                column.ColumnType = MVCxGridViewColumnType.TextBox;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                var prop = (TextEditProperties)column.PropertiesEdit;
+                prop.ValidationSettings.RequiredField.IsRequired = false;
+                prop.ValidationSettings.CausesValidation = true;
+               
+                
+                
+            });
+
+            settings.ClientSideEvents.BatchEditStartEditing = "OnBatchEditStartEditing";
+            settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
+
+
+
+            //settings.CustomUnboundColumnData = (Sender, e) =>
+            //    {
+            //        if (e.Column.FieldName == "ObtaintedMark")
+            //        {
+            //            e.Value = "abs";
+            //        }
+                    
+            //    };
+    
+          
+           
+          
+         
+            
+            //settings.Columns.Add("HostelFacility", MVCxGridViewColumnType.CheckBox);
+            //settings.Columns.Add("BusFacility", MVCxGridViewColumnType.CheckBox);
+
+            settings.CellEditorInitialize = (s, e) =>
+            {
+                ASPxEdit editor = (ASPxEdit)e.Editor;
+                editor.ValidationSettings.Display = Display.Dynamic;
+            };
+            //settings.HtmlRowPrepared = (s, e) =>
+            //{
+            //    if (e.RowType != GridViewRowType.Data) return;
+
+            //    int name = Convert.ToInt32(e.GetValue("HouseColor"));
+            //    //if (name == "Student3")
+            //    e.Row.ForeColor = System.Drawing.Color.FromArgb(Convert.ToInt32(name));
+            //};
+
+            //settings.HtmlDataCellPrepared = (sender, e) =>
+            //{
+            //    int a = -1;
+            //    bool IsAbsentFlag = false;
+              
+            //    if (e.DataColumn.FieldName == "IsAbsent")
+            //    {
+            //        if (e.CellValue!= null)
+            //        {
+            //            IsAbsentFlag = (bool)e.CellValue;
+            //        }
+                  
+            //    }
+            //    if (e.DataColumn.FieldName == "ObtainMark")
+            //    {
+            //        if (IsAbsentFlag == true)
+            //        {
+                       
+            //        }
+            //    }
+                
+
+            //    //if (e.DataColumn.FieldName == "HouseID")
+            //    //{
+
+            //    //    if (e.CellValue != null)
+            //    //    {
+            //    //        //e.Cell.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(e.CellValue));
+            //    //        e.Cell.ForeColor = System.Drawing.Color.FromArgb(SchoolSetupStaticClass._HouseColor);
+            //    //        //e.Cell.Text = System.Drawing.ColorTranslator.ToHtml(System.Drawing.Color.FromArgb(Convert.ToInt32(e.CellValue)));
+
+            //    //    }
+            //    //}
+
+
+
+
+            //};
+            
+            
+         
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+          //settings.CommandColumn.Visible = true;
+          //settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.(10);
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+          //((MVCxGridView)sender).StartEdit(1);
+            };
+
+
+         
+              settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+          
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+
+
+
+

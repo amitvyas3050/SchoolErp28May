@@ -1,0 +1,61 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@{
+    ViewBag.Title = "Session Transfer Info.";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewData["ClassIDForSessionTransfer"] == null)
+{
+    ViewData["ClassIDForSessionTransfer"] = 0;
+}
+
+@section Head {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/GridView.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap.css")" />
+    <script type="text/javascript" src="@Url.Content("~/Content/GridView.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/jsControllers/sessionTransferController.js")"></script>
+}
+
+@section PageToolbar {
+
+}
+
+@section LeftPanelContent {
+    @{Html.RenderAction("ReturnLeftPanelView", "LeftAndRightPanel", new { moduleid = (int)appModule.appAcademicManager });}
+}
+
+@section RightPanelContent {
+    @{Html.RenderAction("ReturnRightPanelView", "LeftAndRightPanel");}
+
+}
+
+
+<div class="row" style="margin-right:0">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-10">
+        @Html.DevExpress().PopupControl(settings =>
+        {
+                settings.Name = "popupclass";
+                settings.PopupElementID = "popupArea";
+                settings.AllowDragging = true;
+                settings.ShowOnPageLoad = true;
+                settings.Width = 180;
+                settings.Height = 100;
+
+                settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+                settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                settings.CloseAction = CloseAction.CloseButton;
+                settings.HeaderText = "Under Construction";
+                settings.SetContent(() =>
+            {
+                    ViewContext.Writer.Write(
+                        " <p style=\"color:red;\"> This form is Under Construction </p>"
+                    );
+                    ViewContext.Writer.Write(
+            "<div style=\"text-align:center;\" > <img   src=\"" + Url.Content("~/Images/underconstruction.png") + "\" alt=\"Permission\" /> </div> ");
+            });
+         }).GetHtml()
+
+    </div>

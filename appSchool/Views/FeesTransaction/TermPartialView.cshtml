@@ -1,0 +1,22 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Repositories
+
+@model List<vTermListStudentFeeMaster>
+
+
+  @Html.DevExpress().ComboBox(
+
+                  settingscbo =>
+                  {
+                      settingscbo.Name = "FeeTermID";
+                      settingscbo.ControlStyle.CssClass = "editor";
+                      settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                      settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                      settingscbo.Properties.TextField = "FeeTermName";
+                      settingscbo.Properties.ValueField = "FeeTermID";
+                      settingscbo.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                      //settingscbo.ShowModelErrors = true;
+                      //settingscbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                     settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "feesTransactionController.SelectedFeeTerm";
+                  }
+              ).BindList(Model).GetHtml()

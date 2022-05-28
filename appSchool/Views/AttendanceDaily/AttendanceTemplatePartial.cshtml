@@ -1,0 +1,160 @@
+﻿    @using appSchool.Repositories
+@using appSchool.ViewModels
+
+@model  AttendanceClass
+
+
+<div class="attendanceTop">
+  
+   <div style="width:400px;" class="div1">
+       
+          
+@Html.DevExpress().TextBoxFor(
+         model=> model.ClassSetupName,
+                settings => {
+                    settings.Name = "ClassSetupName";
+                    
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settings.ControlStyle.VerticalAlign = System.Web.UI.WebControls.VerticalAlign.Top;
+                    settings.Properties.MaxLength = 180;
+                    settings.ControlStyle.Font.Bold = true;
+                    
+                    settings.ReadOnly = true;
+                    settings.Properties.NullText = "No Selected Class......";
+                    settings.Properties.Size = 180;
+                }
+            ).GetHtml()
+ 
+
+
+ </div>
+
+ <div style="margin-left:5px;" class="div1"  >
+   
+    @Html.DevExpress().DateEditFor(
+            model => model.AttendanceDate,
+            settings => {
+                settings.Name = "AttendanceDate";
+                settings.ControlStyle.CssClass = "editor";
+                settings.Properties.NullText = "dd MMM yyyy";
+                settings.Properties.EditFormat = EditFormat.Custom;
+                settings.Properties.EditFormatString = "dd MMM yyyy";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+
+    </div>
+
+
+ <div  class="div1" >
+
+     @if(PermissionFlag._AddFlag==true)
+     {
+          @Html.DevExpress().Button(
+        settings => {
+            settings.Name = "btnUpdatePersonalInfo";
+            settings.ControlStyle.CssClass = "button";
+            settings.Text = "Get List";
+            settings.UseSubmitBehavior = true;
+            settings.Width = 150;
+          //  settings. = false;
+           // settings.ClientSideEvents.Click = "function(s, e) { CallbackPanel.PerformCallback(); }";
+            //settings.ClientSideEvents.Click = "attendanceDailyController.FilterClicked";
+        }).GetHtml()
+     }
+
+      
+
+
+</div>
+   
+     <div class="div1" >
+      
+       @Html.DevExpress().TextBoxFor(
+            model=> model.ClassSetupID,
+                    settings => {
+                        settings.Name = "ClassSetupID";
+                        settings.ControlStyle.CssClass = "editor";
+                        settings.ClientVisible = false;
+                        //settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        //settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        //settings.Properties.TextField = "ClassDescription";
+                        //settings.Properties.ValueField = "ClassSetupID";
+                        //settings.ShowModelErrors = true;
+                        //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                    }
+                ).GetHtml()
+
+
+
+
+
+    </div>
+     <div class="div1" >
+      
+       @Html.DevExpress().TextBoxFor(
+            model=> model.SessionID,
+                    settings => {
+                        settings.Name = "SessionID";
+                        settings.ControlStyle.CssClass = "editor";
+                        settings.ClientVisible = false;
+                        //settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        //settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        //settings.Properties.TextField = "ClassDescription";
+                        //settings.Properties.ValueField = "ClassSetupID";
+                        //settings.ShowModelErrors = true;
+                        //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                    }
+                ).Bind(Session["SessionID"]).GetHtml()
+
+
+
+
+
+    </div>
+
+
+
+
+     </div>   
+@*<div class="attendanceBottom" id="attendanceBottomID">
+
+@{
+    Html.RenderPartial("ListStudentAttendance", ViewData["AttendanceStudent"]);
+    
+}
+
+    </div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

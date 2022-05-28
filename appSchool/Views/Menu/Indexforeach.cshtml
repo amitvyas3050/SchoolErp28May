@@ -1,0 +1,125 @@
+﻿@model List<appSchool.ViewModels.ModulesAndFeatures>
+
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Head {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css")" />
+    @*<link rel="stylesheet" type="text/css" href="@Url.Content("https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/colors.min.css")" />*@
+    @*<link rel="stylesheet" type="text/css" href="@Url.Content("https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css")" />*@
+    <link rel="stylesheet" type="text/css" href="@Url.Content("https://fonts.googleapis.com/css?family=Montserrat&display=swap")" />
+    @*<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/cardview.css")" />*@
+}
+
+
+
+
+
+<div class="grey-bg container-fluid">
+
+
+    <section id="minimal-statistics" style="background-color:antiquewhite">
+        <div class="row" style="background-color:antiquewhite">
+            <div class="col-12 mt-3 mb-1">
+                <h4 class="text-uppercase">Data manager</h4>
+
+            </div>
+        </div>
+        <div class="row" style="height: 100px; width:100%; background-color: antiquewhite">
+
+            @foreach (var item in Model)
+            {
+                if (@item.ModuleID == 1)
+                {
+                    <div class="col-xl-2 col-sm-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body" style="background-color:@item.BgColor2">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            @*<i class="icon-speech warning font-large-2 float-left"></i>*@
+                                            <a href=@item.NavUrl>
+                                                <img src="~/Content/Images/Menuicon/graduationhat.png" alt="...">
+                                            </a>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <a href=@item.NavUrl>
+                                                <span>@item.MenuName</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+
+        </div>
+    </section>
+
+    <section id="minimal-statistics">
+        <div class="row">
+            <div class="col-12 mt-3 mb-1">
+                <h4 class="text-uppercase">Admission</h4>
+
+            </div>
+        </div>
+        <div class="row">
+
+            @foreach (var item in Model)
+            {
+                if (@item.ModuleID == 2)
+                {
+                      <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body" style="background-color:@item.BgColor2">
+                            <div class="media d-flex">
+                                <div class="align-self-center">
+                                    @*<i class="icon-speech warning font-large-2 float-left"></i>*@
+                                    <a href=@item.NavUrl>
+                                        <img src="~/Content/Images/Menuicon/graduationhat.png" alt="...">
+                                    </a>
+                                </div>
+                                <div class="media-body text-right">
+                                    <a href=@item.NavUrl>
+                                        <span>@item.MenuName</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                }
+
+            }
+
+
+
+
+        </div>
+    </section>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

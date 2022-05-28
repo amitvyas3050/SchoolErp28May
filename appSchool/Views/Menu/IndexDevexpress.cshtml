@@ -1,0 +1,49 @@
+﻿@model List<appSchool.ViewModels.ModulesAndFeatures>
+
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*@section Head {
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/loginpage.css")" />
+
+    }*@
+
+
+
+
+
+@Html.Partial("CardViewPartial1", Model)
+
+@*@Html.Partial("CardViewPartial2", Model)
+
+    @Html.Partial("CardViewPartial3", Model)*@
+
+@*@Html.DevExpress().RoundPanel(settings =>
+{
+    settings.Name = "roundPanel";
+    settings.AllowCollapsingByHeaderClick = true;
+    settings.ShowCollapseButton = true;
+    settings.HeaderText = "Contact Information dsd";
+    settings.Collapsed = true;
+    settings.ControlStyle.CssClass = "wrapper";
+    //settings.CallbackRouteValues = new
+    //{
+    //    Controller = "RoundPanel",
+    //    Action = "LoadOnDemandPartial"
+    //};
+    //settings.SetContent(() =>
+    //{
+    //    Html.RenderAction("RoundPanelContent");
+    //});
+    settings.SetContent(() =>
+    {
+        Html.Partial("MenuViewPartial");
+    });
+}).GetHtml()*@
+
+
+
+

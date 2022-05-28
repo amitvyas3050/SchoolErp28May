@@ -1,0 +1,213 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@{
+    var gridView = Html.DevExpress().GridView(gridViewSettings =>
+    {
+        gridViewSettings.Name = "gridView";
+        gridViewSettings.KeyFieldName = "StudentID";
+
+        gridViewSettings.CallbackRouteValues = new { Controller = "StudentRegistration", Action = "ListRegistrations" };
+        //gridViewSettings.CustomActionRouteValues = new { Controller = "StudentRegistration", Action = "GridViewCustomActionPartial" };
+        gridViewSettings.SettingsEditing.AddNewRowRouteValues = new { Controller = "StudentRegistration", Action = "AddNewRegistration" };
+        gridViewSettings.SettingsEditing.UpdateRowRouteValues = new { Controller = "StudentRegistration", Action = "UpdateRegistration" };
+
+        gridViewSettings.EnablePagingGestures = AutoBoolean.False;
+
+        gridViewSettings.ControlStyle.CssClass = "grid-view";
+        gridViewSettings.Width = Unit.Percentage(100);
+
+        gridViewSettings.Styles.Cell.Wrap = DefaultBoolean.False;
+        gridViewSettings.Styles.PagerBottomPanel.CssClass = "pager";
+        gridViewSettings.Styles.FocusedRow.CssClass = "focused";
+
+        gridViewSettings.SettingsBehavior.AllowFocusedRow = true;
+        gridViewSettings.SettingsBehavior.AllowSelectByRowClick = true;
+        gridViewSettings.SettingsBehavior.AllowEllipsisInText = true;
+        gridViewSettings.SettingsBehavior.AllowDragDrop = false;
+
+        gridViewSettings.SettingsSearchPanel.CustomEditorName = "searchButtonEdit";
+
+        gridViewSettings.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
+        gridViewSettings.SettingsEditing.EditFormColumnCount = 2;
+
+        gridViewSettings.SettingsSearchPanel.CustomEditorName = "searchButtonEdit";
+
+        gridViewSettings.Settings.VerticalScrollBarMode = ScrollBarMode.Hidden;
+        gridViewSettings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+        gridViewSettings.Settings.ShowHeaderFilterButton = true;
+
+        gridViewSettings.SettingsPager.PageSize = 15;
+        gridViewSettings.SettingsPager.EnableAdaptivity = true;
+        gridViewSettings.SettingsPager.PageSizeItemSettings.Visible = true;
+
+        gridViewSettings.SettingsExport.EnableClientSideExportAPI = true;
+        gridViewSettings.SettingsExport.ExportSelectedRowsOnly = true;
+
+        gridViewSettings.SettingsPopup.EditForm.SettingsAdaptivity.MaxWidth = 800;
+        gridViewSettings.SettingsPopup.EditForm.SettingsAdaptivity.Mode = PopupControlAdaptivityMode.Always;
+        gridViewSettings.SettingsPopup.EditForm.SettingsAdaptivity.VerticalAlign = PopupAdaptiveVerticalAlign.WindowCenter;
+
+        gridViewSettings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        gridViewSettings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        gridViewSettings.EditFormLayoutProperties.ColCount = 2;
+        gridViewSettings.EditFormLayoutProperties.Items.Add("EnrollmentNo").RequiredMarkDisplayMode = FieldRequiredMarkMode.Required;
+        gridViewSettings.EditFormLayoutProperties.Items.Add("EnrollmentDate");
+        gridViewSettings.EditFormLayoutProperties.Items.Add("FirstName");
+        gridViewSettings.EditFormLayoutProperties.Items.Add("LastName");
+        gridViewSettings.EditFormLayoutProperties.Items.Add("DateOfBirth");
+        gridViewSettings.EditFormLayoutProperties.Items.Add("FatherName");
+        gridViewSettings.EditFormLayoutProperties.Items.Add("SMSMobileNo");
+        gridViewSettings.EditFormLayoutProperties.Items.Add("ClassID");
+
+        gridViewSettings.EditFormLayoutProperties.Items.Add(itemSettings =>
+        {
+            itemSettings.ColumnName = "DisplayOrder";
+            itemSettings.ColumnSpan = 2;
+        });
+
+        gridViewSettings.EditFormLayoutProperties.Items.AddCommandItem(itemSettings =>
+        {
+            itemSettings.ColumnSpan = 2;
+            itemSettings.HorizontalAlign = FormLayoutHorizontalAlign.Right;
+        });
+
+        gridViewSettings.CommandColumn.Visible = true;
+        gridViewSettings.CommandColumn.ShowSelectCheckbox = true;
+        gridViewSettings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+        gridViewSettings.CommandColumn.VisibleIndex = 0;
+        gridViewSettings.CommandColumn.Width = Unit.Pixel(52);
+
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "CompID";
+            column.Visible = false;
+        });
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "BranchID";
+            column.Visible = false;
+        });
+
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "EnrollmentNo";
+            column.Caption = "Registration#";
+
+            //column.EditFormSettings.ColumnSpan = 1;
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+            //var editProperties = (TextBoxProperties)column.PropertiesEdit;
+            //editProperties.MaskSettings.Mask = "(AAA)-000-0000";
+
+        });
+
+
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "EnrollmentDate";
+            column.Caption = "Date";
+            //column.ToolTip = "Click to Sort";
+            column.ColumnType = MVCxGridViewColumnType.DateEdit;
+
+            var dateProperties = column.PropertiesEdit as DateEditProperties;
+            dateProperties.UseMaskBehavior = true;
+            dateProperties.EditFormat = EditFormat.Custom;
+            dateProperties.EditFormatString = "MMMM dd, yyyy";
+            dateProperties.DisplayFormatString = "MMMM dd, yyyy";
+            dateProperties.MaxDate = DateTime.Now;
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+            //column.EditFormSettings.ColumnSpan = 1;
+
+        });
+
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "FirstName";
+            column.Caption = "First Name";
+            //column.ToolTip = "Click to Sort";
+            column.Width = Unit.Pixel(150);
+        });
+
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "LastName";
+            column.Caption = "Last Name";
+            //column.ToolTip = "Click to Sort";
+            column.Width = Unit.Pixel(150);
+        });
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "FatherName";
+            column.Caption = "Father Name";
+            //column.ToolTip = "Click to Sort";
+            column.Width = Unit.Pixel(150);
+        });
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "DateOfBirth";
+            column.Caption = "Birth Date";
+            //column.ToolTip = "Click to Sort";
+            column.ColumnType = MVCxGridViewColumnType.DateEdit;
+
+            var dateProperties = column.PropertiesEdit as DateEditProperties;
+            dateProperties.UseMaskBehavior = true;
+            dateProperties.EditFormat = EditFormat.Custom;
+            dateProperties.EditFormatString = "MMMM dd, yyyy";
+            dateProperties.DisplayFormatString = "MMMM dd, yyyy";
+            dateProperties.MaxDate = DateTime.Now;
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+            //column.EditFormSettings.ColumnSpan = 1;
+
+        });
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "SMSMobileNo";
+            column.Caption = "Mobile No";
+            //column.ToolTip = "Click to Sort";
+            //column.EditFormSettings.ColumnSpan = 1;
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+
+
+        });
+
+        gridViewSettings.Columns.Add(column =>
+            {
+                column.FieldName = "ClassID";
+                column.Caption = "Class";
+               
+                //column.EditFormSettings.ColumnSpan = 1;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(110);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.ClassRepository()).GetClassList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "ClassName";
+                comboBoxProperties.ValueField = "ClassID";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+
+        gridViewSettings.ClientSideEvents.Init = "onGridViewInit";
+        gridViewSettings.ClientSideEvents.SelectionChanged = "onGridViewSelectionChanged";
+        gridViewSettings.ClientSideEvents.BeginCallback = "onGridViewBeginCallback";
+        gridViewSettings.ClientSideEvents.FocusedRowChanged = "studentRegistrationController.RowSelectionChange";
+
+        gridViewSettings.InitNewRow += (s, e) =>
+        {
+            // e.NewValues["ClassDescription"] = 1;
+            // e.NewValues["DisplayOrder"] = 2;
+            //e.NewValues["Status"] = 1;
+            //e.NewValues["IsDraft"] = true;
+            //e.NewValues["IsArchived"] = false;
+        };
+        gridViewSettings.CellEditorInitialize = (s, e) =>
+        {
+            ((ASPxEdit)e.Editor).ValidationSettings.Display = Display.Dynamic;
+        };
+    });
+    if (ViewBag.GeneralError != null)
+    {
+        gridView.SetEditErrorText(ViewBag.GeneralError);
+    }
+}
+
+@gridView.Bind(Model).GetHtml()

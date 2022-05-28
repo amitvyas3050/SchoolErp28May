@@ -1,0 +1,70 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+
+@{
+    ViewBag.Title = "Student List Fee Structure";
+    if (ViewData["errorFeestructure"] == null)
+    {
+        ViewData["errorFeestructure"] = "";
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@section Head {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/GridView.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap.css")" />
+    <script type="text/javascript" src="@Url.Content("~/Content/GridView.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/jsControllers/studentListfeesStructureController.js")"></script>
+
+}
+
+
+@section LeftPanelContent {
+
+    @{Html.RenderAction("ReturnLeftPanelView", "LeftAndRightPanel", new { moduleid = (int)appModule.appFeesManager });}
+
+
+}
+
+@section RightPanelContent {
+    @{Html.RenderAction("ReturnRightPanelView", "LeftAndRightPanel");}
+
+}
+
+
+<div class="row" style="margin-right:0">
+
+    <div class="col-sm-6">
+        @{Html.RenderPartial("GridStudentList", new UnitOfWork().vstudentListFromStudFeesStructureService.GetStudentListFromFeesStructure(int.Parse(Session["SessionID"].ToString()), byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString())));}
+
+    </div>
+
+    <div class="col-sm-6">
+        @{Html.RenderPartial("ListFeesStructureForEdit");}
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

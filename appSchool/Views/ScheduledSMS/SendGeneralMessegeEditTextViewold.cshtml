@@ -1,0 +1,253 @@
+﻿@using appSchool.Repositories
+@using appSchool.Model
+@using appSchool.ViewModels
+
+@model modelSendSms
+
+<div class="SMSTempForm">
+    <div class="Line100"> 
+        <div style="float:left;">
+         @Html.DevExpress().Label(
+            settings =>{
+                settings.Text = "SMS Language";
+                settings.ControlStyle.CssClass = "label";
+                //settings.AssociatedControlName = "SMSLanguage";
+             }).GetHtml()
+             </div>
+        <div style="float:left;">
+      @Html.DevExpress().ComboBoxFor(  
+      model=> model.SMSLanguage,
+      settings => {
+               
+                settings.ControlStyle.CssClass = "combo";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Name = "SMSLanguage";
+                settings.Properties.TextField = "Value";
+                settings.Properties.ValueField = "Key";
+                settings.SelectedIndex = 0;
+                //settings.Properties.RequireDataBinding();
+                settings.Properties.EnableClientSideAPI = true;
+                settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                settings.Properties.ClientSideEvents.SelectedIndexChanged = "schedularSMSController.SelectedIdexChangeForLanguage";
+          
+      }).BindList(cCommon.GetLanguageList()).GetHtml()
+
+        </div>
+        <div style="float:left;">
+@Html.DevExpress().Label(
+    settings =>{
+        settings.Text = "Ordered By";
+        settings.ControlStyle.CssClass = "label";
+       // settings.AssociatedControlName = "OrderedBy";
+     }).GetHtml()
+              
+            </div>
+        <div style="float:left;" >
+      @Html.DevExpress().ComboBoxFor(  
+      model=> model.OrderedBy,
+      settings => {
+               
+                settings.ControlStyle.CssClass = "combo";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                settings.Name = "OrderedBy";
+                settings.Properties.TextField = "FirstName";
+                settings.Properties.ValueField = "TeacherID";
+                settings.SelectedIndex = 0;
+                //settings.Properties.RequireDataBinding();
+               // settings.Properties.EnableClientSideAPI = true;
+                settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+      }).BindList((new TeacherRegistrationRepository()).GetTeacherRegistrationDataForList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))).GetHtml()
+</div>
+        <div style="float:left;"> 
+
+            @Html.DevExpress().CheckBoxFor(
+            model=>model.smsCopy,
+         settings => {
+             settings.Name = "smsCopy";
+        settings.Checked = true;
+        settings.Text = "Send SMS Copy";
+        //settings.Properties.ClientSideEvents.CheckedChanged = "function (s, e){ myButton.SetVisible(!myButton.GetVisible());}";
+    }
+).GetHtml()
+        </div>
+      
+    </div>
+   <div class="Line50">
+          @Html.DevExpress().LabelFor(
+            model=>model.PrefixHindi,
+    settings =>{
+        settings.Text = "For Hindi";
+        settings.ControlStyle.CssClass = "lblHindi";
+       // settings.AssociatedControlName = "";
+     }).GetHtml()
+ @Html.DevExpress().TextBoxFor(
+            model=> model.PrefixHindi,
+            settings => {
+                settings.ShowModelErrors = true;
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                //settings.Name = "txtMessege";
+                settings.Name = "PrefixHindi";
+                settings.Width = 200;
+              //  settings.ReadOnly = true;
+            }).GetHtml()
+ @Html.DevExpress().MemoFor(
+            model=> model.smsTextHindi,
+            settings => {
+                settings.ShowModelErrors = true;
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                //settings.Name = "txtMessege";
+                settings.Name = "smsTextHindi";
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                settings.Properties.ClientSideEvents.KeyUp = "schedularSMSController.keyPressForWordCountHindi";
+            }).GetHtml()
+    
+        @Html.DevExpress().TextBox(
+    settings =>{
+        settings.Text = "0";
+        settings.ClientVisible = true;
+        settings.Name = "lblCharCountHindi";
+        //settings.AssociatedControlName = "OrderedBy";
+     }).GetHtml()
+
+    </div>
+
+    <div class="Line50">
+        @Html.DevExpress().LabelFor(
+        model=>model.PrefixEnglish,
+    settings =>{
+        
+        settings.Text = "For English";
+        settings.ControlStyle.CssClass = "editor";
+       // settings.AssociatedControlName = "";
+     }).GetHtml()
+
+         @Html.DevExpress().TextBoxFor(
+            model=> model.PrefixEnglish,
+            settings => {
+                settings.ShowModelErrors = true;
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                //settings.Name = "txtMessege";
+                settings.Name = "PrefixEnglish";
+                settings.Width = 200;
+                //settings.ReadOnly = true;
+            }).GetHtml()
+
+
+    @Html.DevExpress().MemoFor(
+            model=> model.smsTextEnglish,
+            settings => {
+                settings.ShowModelErrors = true;
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                //settings.Name = "txtMessege";
+                settings.Name = "smsTextEnglish";
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                settings.Properties.ClientSideEvents.KeyUp = "schedularSMSController.keyPressForWordCountEnglish";
+            }).GetHtml()
+
+
+        @Html.DevExpress().TextBox(
+    settings =>{
+        settings.Text = "0";
+        settings.ClientVisible = true;
+        settings.Name = "lblCharCount";
+        //settings.AssociatedControlName = "OrderedBy";
+     }).GetHtml()
+
+    </div>
+
+   
+
+
+</div>
+
+
+
+@Html.DevExpress().MemoFor(
+             model=> model.smsMobileNo,
+            settings =>{
+                settings.ShowModelErrors = true;
+                settings.ControlStyle.CssClass = "editor";
+             
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Name = "smsMobileNo";
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                settings.ClientVisible = true ;
+                settings.Properties.EnableClientSideAPI = true;
+          
+            }).GetHtml()
+       
+
+@Html.DevExpress().MemoFor(
+             model=> model.smsStudentID,
+            settings =>{
+                settings.ShowModelErrors = true;
+                settings.ControlStyle.CssClass = "editor";
+             
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Name = "smsStudentID";
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                settings.ClientVisible = false ;
+                settings.Properties.EnableClientSideAPI = true;
+          
+            }).GetHtml()
+       
+
+
+
+<div class="SMSTempForm">
+<div class="Line100" >
+
+    <div style="float:left">
+         @Html.DevExpress().DateEditFor(
+            model => model.ScheduledDate,
+            settings => {
+                settings.Name = "ScheduledDate";
+                settings.ControlStyle.CssClass = "editor";
+                settings.Properties.NullText = "dd MMM yyyy";
+                settings.Properties.EditFormat = EditFormat.Custom;
+                settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
+                settings.Properties.TimeSectionProperties.Visible = true;
+               
+                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.DateTime;
+                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                settings.Date = DateTime.Now;
+                //settings.Properties.MaxDate = DateTime.Now;
+                settings.Properties.MinDate = DateTime.Now.Date;
+                settings.Properties.ClientSideEvents.DateChanged = "schedularSMSController.CheckDate";
+              
+                
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+
+
+    </div>
+
+      <div style="float:left">
+  @Html.DevExpress().Button(
+     settings => {
+                //settings.ControlStyle.CssClass = "button";
+                settings.Name = "btnSendSms";
+                settings.Text = "Send Scheduler SMS";
+        
+                settings.UseSubmitBehavior = true;
+            }).GetHtml()
+
+
+    </div>
+          
+        </div>
+
+</div>

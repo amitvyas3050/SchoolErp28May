@@ -1,0 +1,356 @@
+﻿@using appSchool.Repositories
+@using appSchool.Model
+@using appSchool.ViewModels
+
+@model modelSendSms
+
+
+<div class="SMSTempForm">
+    <div class="row">
+        <div class="col-sm-2">
+            @Html.DevExpress().LabelFor(
+                model => model.SMSLanguage,
+                settings =>
+                 {
+                   settings.Text = "SMS Language";
+                   settings.ControlStyle.CssClass = "col-form-label-sm";
+                   settings.AssociatedControlName = "SMSLanguage";
+                }).GetHtml()
+
+            @Html.DevExpress().ComboBoxFor(
+            model => model.SMSLanguage,
+            settings =>
+                 {
+
+                settings.ControlStyle.CssClass = "form-control";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                settings.Name = "SMSLanguage";
+                settings.Properties.TextField = "Value";
+                settings.Properties.ValueField = "Key";
+                settings.SelectedIndex = 0;
+                settings.Properties.ClientSideEvents.SelectedIndexChanged = "sendMessegeWishesTeacherController.SelectedIdexChangeForLanguage";
+            }).BindList(cCommon.GetLanguageList()).GetHtml()
+
+        </div>
+        <div class="col-sm-2">
+            @Html.DevExpress().LabelFor(
+                  model => model.OrderedBy,
+                  settings =>
+                  {
+                      settings.Text = "Ordered By";
+                      settings.ControlStyle.CssClass = "col-form-label-sm";
+                      settings.AssociatedControlName = "OrderedBy";
+                  }).GetHtml()
+
+            @Html.DevExpress().ComboBoxFor(
+            model => model.OrderedBy,
+            settings =>
+                 {
+
+                settings.ControlStyle.CssClass = "form-control";
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                settings.Name = "OrderedBy";
+                settings.Properties.TextField = "FullName";
+                settings.Properties.ValueField = "TeacherID";
+                settings.SelectedIndex = 0;
+                settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+            }).BindList((new TeacherRegistrationRepository()).GetTeacherRegistrationGridData(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))).GetHtml()
+        </div>
+        <div class="col-sm-2">
+            @Html.DevExpress().CheckBoxFor(
+                       model => model.smsCopy,
+                       settings =>
+                       {
+                       settings.Name = "smsCopy";
+                       settings.Checked = true;
+                       settings.Text = "Send SMS Copy";
+                       settings.ControlStyle.CssClass = "chkboxpaddingtoprow";
+                       }).GetHtml()
+        </div>
+
+        <div class="col-sm-2">
+            @Html.DevExpress().Label(settingslbl =>
+        {
+        settingslbl.Name = "lbltemplate";
+        settingslbl.Width = Unit.Percentage(100);
+        settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+        settingslbl.Text = "Select Template Name";
+
+    }).GetHtml()
+
+            @Html.DevExpress().ComboBox(
+         settingscbo =>
+         {
+             settingscbo.Name = "TemplateID";
+             settingscbo.ControlStyle.CssClass = "form-control";
+             settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+             settingscbo.Properties.DropDownStyle = DropDownStyle.DropDownList;
+
+             settingscbo.Properties.TextField = "TemplateName";
+             settingscbo.Properties.ValueField = "TemplateID";
+             settingscbo.SelectedIndex = 0;
+             settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "sendMessegeWishesTeacherController.SelectedTemplate";
+         }).BindList(new UnitOfWork().smsTemplateService.GetSMSTemplateListForTeacher(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))).GetHtml()
+        </div>
+
+        <div class="col-sm-2">
+            @Html.DevExpress().Label(settingslbl =>
+       {
+           settingslbl.Name = "lb";
+           settingslbl.Width = Unit.Percentage(100);
+           settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+           settingslbl.Text = "Select Wishes";
+       }).GetHtml()
+
+            @Html.DevExpress().ComboBox(
+               settingscbo =>
+               {
+                   settingscbo.Name = "WishesType";
+                   settingscbo.ControlStyle.CssClass = "form-control";
+                   settingscbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                   settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                   settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settingscbo.Properties.TextField = "value";
+                   settingscbo.Properties.ValueField = "Key";
+                   settingscbo.Properties.ValueType = typeof(int);
+                   settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "sendMessegeWishesTeacherController.SelectedWishType";
+               }
+           ).BindList(cCommon.GetWishesTypeListForTeacher()).GetHtml()
+            </div>
+            <div class="col-sm-2">
+                @Html.DevExpress().Button(
+                settingsbtn =>
+                {
+                    settingsbtn.Name = "btnLoad";
+                    settingsbtn.ControlStyle.CssClass = "btnpaddingrow15px";
+                    settingsbtn.Width = System.Web.UI.WebControls.Unit.Percentage(27);
+                    settingsbtn.Height = 30;
+                    settingsbtn.RenderMode = ButtonRenderMode.Button;
+                    settingsbtn.Text = "Get List";
+                    settingsbtn.ImagePosition = ImagePosition.Right;
+                    settingsbtn.Images.Image.IconID = "actions_refresh_16x16gray";
+                    settingsbtn.ClientSideEvents.Click = "sendMessegeWishesTeacherController.ClickLoadGrid";
+                }).GetHtml()
+
+                @Html.DevExpress().TextBox(
+                settingstxt =>
+                {
+                settingstxt.Name = "txtwishesType";
+                settingstxt.ClientVisible = false;
+                }).GetHtml()
+
+            </div>
+        </div>
+
+
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.DevExpress().LabelFor(
+            model => model.PrefixHindi,
+      settings =>
+           {
+          settings.Text = "For Hindi";
+          settings.ControlStyle.CssClass = "lblHindi";
+         // settings.AssociatedControlName = "";
+       }).GetHtml()
+            @Html.DevExpress().TextBoxFor(
+                       model => model.PrefixHindi,
+                       settings =>
+                        {
+                           settings.ShowModelErrors = true;
+                           settings.ControlStyle.CssClass = "editor";
+                           settings.ShowModelErrors = true;
+                           settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                           //settings.Name = "txtMessege";
+                           settings.Name = "PrefixHindi";
+                           settings.Width = 200;
+                         //  settings.ReadOnly = true;
+                       }).GetHtml()
+            @Html.DevExpress().MemoFor(
+                       model => model.smsTextHindi,
+                       settings =>
+                        {
+                           settings.ShowModelErrors = true;
+                           settings.ControlStyle.CssClass = "editor";
+                           settings.ShowModelErrors = true;
+                           settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                           //settings.Name = "txtMessege";
+                           settings.Name = "smsTextHindi";
+                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           settings.Properties.ClientSideEvents.KeyUp = "sendMessegeWishesTeacherController.keyPressForWordCountHindi";
+                       }).GetHtml()
+            @Html.DevExpress().TextBox(
+         settings =>
+              {
+             settings.Text = "0";
+             settings.ClientVisible = true;
+             settings.Name = "lblCharCountHindi";
+             //settings.AssociatedControlName = "OrderedBy";
+          }).GetHtml()
+
+
+        </div>
+
+        <div class="col-sm-9">
+            @Html.DevExpress().LabelFor(
+              model => model.PrefixEnglish,
+        settings =>
+             {
+            settings.Text = "For English";
+            settings.ControlStyle.CssClass = "editor";
+           // settings.AssociatedControlName = "";
+         }).GetHtml()
+
+            @Html.DevExpress().TextBoxFor(
+               model => model.PrefixEnglish,
+               settings =>
+                    {
+                   settings.ShowModelErrors = true;
+                   settings.ControlStyle.CssClass = "editor";
+                   settings.ShowModelErrors = true;
+                   settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                   //settings.Name = "txtMessege";
+                   settings.Name = "PrefixEnglish";
+                   settings.Width = 200;
+                   //settings.ReadOnly = true;
+               }).GetHtml()
+
+
+            @Html.DevExpress().MemoFor(
+                    model => model.smsTextEnglish,
+                    settings =>
+                        {
+                            settings.ShowModelErrors = true;
+                        settings.ControlStyle.CssClass = "editor";
+                        settings.ShowModelErrors = true;
+                        settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                        //settings.Name = "txtMessege";
+                        settings.Name = "smsTextEnglish";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.ClientSideEvents.KeyUp = "sendMessegeWishesTeacherController.keyPressForWordCountEnglish";
+                    }).GetHtml()
+
+            @Html.DevExpress().TextBox(
+        settings =>
+             {
+            settings.Text = "0";
+            settings.ClientVisible = true;
+            settings.Name = "lblCharCount";
+            //settings.AssociatedControlName = "OrderedBy";
+         }).GetHtml()
+
+
+
+
+            @Html.DevExpress().MemoFor(
+                         model => model.smsMobileNo,
+                        settings =>
+                        {
+                            settings.ShowModelErrors = true;
+                            settings.ControlStyle.CssClass = "editor";
+                            settings.ShowModelErrors = true;
+                            settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                            settings.Name = "smsMobileNo";
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.ClientVisible = false;
+                            settings.Properties.EnableClientSideAPI = true;
+
+                        }).GetHtml()
+
+            @Html.DevExpress().MemoFor(
+                         model => model.smsStudentID,
+                        settings =>
+                        {
+                            settings.ShowModelErrors = true;
+                            settings.ControlStyle.CssClass = "editor";
+                            settings.ShowModelErrors = true;
+                            settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                            settings.Name = "smsStudentID";
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.ClientVisible = false;
+                            settings.Properties.EnableClientSideAPI = true;
+
+                        }).GetHtml()
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            @Html.DevExpress().CheckBoxFor(
+         model => model.includeName,
+         settings =>
+         {
+             settings.Name = "inCludeName";
+             settings.Checked = true;
+             settings.Text = "Select to Include Teacher Name in Message / Use $Name$ ";
+             settings.ControlStyle.ForeColor = System.Drawing.Color.Maroon;
+             settings.ControlStyle.Font.Size = 12;
+             settings.Properties.ClientSideEvents.CheckedChanged = "sendMessegeWishesTeacherController.IncludeTeacherName";
+             if (SettingMasterStaticClass._IncludeNameInSMS == true)
+             {
+
+                 //settings.ReadOnly = true;
+                 settings.Checked = true;
+             }
+             else
+             {
+
+                 settings.Checked = false;
+                 //settings.ReadOnly = false;
+             }
+         }
+         ).GetHtml()
+        </div>
+        <div class="col-sm-12">
+
+            @Html.DevExpress().Button(
+             settings =>
+             {
+                 settings.ControlStyle.CssClass = "btnpaddingrow15px";
+                 settings.Name = "btnSendSms";
+                 settings.Text = "Send SMS";
+                 settings.Images.Image.IconID = IconID.MailMail16x16;
+                 settings.UseSubmitBehavior = true;
+             }).GetHtml()
+
+        </div>
+    </div>
+</div>
+
+
+    @*
+        @Html.DevExpress().MemoFor(
+                     model=> model.smsMobileNo,
+                    settings => {
+                        settings.ShowModelErrors = true;
+                        settings.ControlStyle.CssClass = "editor";
+                        settings.ShowModelErrors = true;
+                        settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                        settings.Name = "smsMobileNo";
+                          settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.EnableClientSideAPI = true;
+                    }).GetHtml()*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,91 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@model modelFlyerVoiceMasterPhotoUploadInfo
+
+
+
+<div class="imageContainer" style="width:100%;height:100%" >
+        @{
+           
+             <div style=" position:relative; padding:10px;  width:500px; height:120px;  ">
+
+    
+       @Html.DevExpress().Image(settingsimg =>
+                {
+                    settingsimg.Name = "profileimg";
+
+                    if (Model.ImageName != null)
+                        settingsimg.ImageUrl = @Url.Content("~//Images/FlyerVoice/" + Model.ImageName);
+                    else
+                        settingsimg.ImageUrl = @Url.Content("~//Images/FlyerVoice/" + "blank.png");
+                    settingsimg.ControlStyle.CssClass = "editor";
+                    settingsimg.Height = System.Web.UI.WebControls.Unit.Pixel(120);
+                    settingsimg.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+                    settingsimg.ControlStyle.Border.BorderWidth = 1;
+                    settingsimg.ControlStyle.Border.BorderStyle = System.Web.UI.WebControls.BorderStyle.Solid;
+                    settingsimg.ControlStyle.Border.BorderColor = System.Drawing.Color.Black;
+                }).GetHtml()
+    
+    
+                  <p> Allowed file extensions: .jpg, .jpeg, .png.  </p>
+     @*<p>Maximum file size: 20 MB.</p>*@
+
+
+                      </div>
+            }
+
+   
+    
+
+    </div>
+
+
+@Html.Hidden("AchievementID")
+
+   @Html.DevExpress().TextBoxFor(
+            model=> model.FlyerVoiceID,
+            settings => {
+                settings.Name = "FlyerVoiceIDPhoto";    
+                settings.ControlStyle.CssClass = "editor";
+                settings.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+                settings.ClientVisible = false;
+                //settings.Properties.MaskSettings.Mask = "(AAA)-000-0000";
+                // settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.None;
+             
+                
+                
+            }).GetHtml()
+
+ <table>
+    <tr>
+        <td style="padding:10px;">
+
+   @Html.DevExpress().UploadControl(settings =>
+{
+    settings.Name = "uc";
+
+    settings.CallbackRouteValues = new { Controller = "FlyerVoiceMaster", Action = "UploadFlyerVoiceMasterImage" };
+    settings.ClientSideEvents.FileUploadComplete = "RefreshStudentPhoto";
+    settings.ValidationSettings.Assign(appSchool.Controllers.UploadControlDemoAchievement.ValidationSettings);
+    settings.Width = System.Web.UI.WebControls.Unit.Pixel(300);
+}).GetHtml()
+        </td>
+
+        <td style="padding:10px;">
+
+@if(PermissionFlag._ModFlag==true)
+{
+    @Html.DevExpress().Button(button =>
+{
+    button.Name = "btnUploadFile";
+    button.Text = "Upload File";
+    button.ClientSideEvents.Click = "OnClick";
+    button.Images.Image.IconID = IconID.SaveSave16x16;
+}).GetHtml()
+}
+        </td>
+    </tr>
+
+
+</table>

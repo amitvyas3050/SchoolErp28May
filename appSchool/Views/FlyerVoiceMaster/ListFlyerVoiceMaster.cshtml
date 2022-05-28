@@ -1,0 +1,116 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Repositories
+ 
+@if (ViewBag.ShowFilter == null){
+        ViewBag.ShowFilter = false;
+    }
+
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridFlyerVoiceMaster";
+            settings.KeyFieldName = "FlyerVoiceID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(99);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+
+            settings.CallbackRouteValues = new { Controller = "FlyerVoiceMaster", Action = "PartialGridFlyerVoiceMaster", mGalleryID = ViewData["pGalleryID"]};
+
+            settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "FlyerVoiceMaster", Action = "UpdatePartialFileActivation" };
+
+            if (PermissionFlag._ModFlag == true)
+            {
+                settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+                settings.SettingsEditing.BatchEditSettings.EditMode = appSchool.Controllers.GridViewEditingDemosHelper.BatchEditMode;
+                settings.SettingsEditing.BatchEditSettings.StartEditAction = appSchool.Controllers.GridViewEditingDemosHelper.BatchStartEditAction;
+            }
+
+            settings.SettingsBehavior.ConfirmDelete = true;
+
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+            settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+            //settings.CommandColumn.Visible = true;
+            settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(2);
+            settings.CommandColumn.ButtonType = GridViewCommandButtonType.Default;
+            //settings.CommandColumn.ShowEditButton = true;
+            if (PermissionFlag._ModFlag == true)
+                settings.CommandColumn.ShowNewButtonInHeader = true;
+            if (PermissionFlag._DelFlag == true)
+                settings.CommandColumn.ShowDeleteButton = true;
+           settings.Columns.Add(column =>
+           {
+               column.FieldName = "FlyerVoiceID";
+               column.Caption = "FlyerVoiceID";
+               column.Visible = false;
+           });
+
+
+
+           settings.Columns.Add(column =>
+           {
+               column.FieldName = "FlyerVoiceName";
+               column.Caption = "FlyerVoice Name";
+               //column.ToolTip = "Click to Sort";
+               //column.Width = System.Web.UI.WebControls.Unit.Pixel(120);
+               column.ColumnType = MVCxGridViewColumnType.Memo;
+               var MemoProperties = column.PropertiesEdit as MemoProperties;
+               column.ReadOnly = true;
+               MemoProperties.Columns = 40;
+               MemoProperties.Rows = 6;
+               MemoProperties.Height = System.Web.UI.WebControls.Unit.Percentage(200);
+               MemoProperties.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+           });
+
+          
+           settings.Columns.Add(column =>
+           {
+               column.FieldName = "Isactive";
+               column.Caption = "Active";
+               column.ColumnType = MVCxGridViewColumnType.CheckBox;
+               column.ToolTip = "Click to Sort";
+               column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+           });
+           
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(10);
+            
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            settings.Settings.ShowHeaderFilterButton = true;
+            settings.CommandColumn.Visible = false;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            //settings.CommandColumn.ShowClearFilterButton = true;
+          
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            //settings.ClientSideEvents.FocusedRowChanged = "flyervoiceMasterController.RowSelectionChange";
+        
+            
+            settings.PreRender = (sender, e) =>
+            {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+            //settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            
+        });
+       
+        
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

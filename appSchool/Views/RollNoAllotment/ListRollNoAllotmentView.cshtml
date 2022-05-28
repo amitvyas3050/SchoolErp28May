@@ -1,0 +1,174 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@if (ViewData["ClassSetupID"]==null)
+{
+    ViewData["ClassSetupID"] = 0;
+}
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "gridView";
+            settings.KeyFieldName = "StudentSessionID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            // settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.ControlStyle.CssClass = "grid-view";
+            settings.Styles.PagerBottomPanel.CssClass = "pager";
+            settings.Styles.FocusedRow.CssClass = "focused";
+
+            settings.CallbackRouteValues = new { Controller = "RollNoAllotment", Action = "PartialRollNoView", PclassSetupID = ViewData["ClassSetupID"] };
+
+            settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "RollNoAllotment", Action = "updateRollNoAll", PclassSetupID = ViewData["ClassSetupID"] };
+
+            settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+            settings.SettingsEditing.BatchEditSettings.EditMode = appSchool.Controllers.GridViewEditingDemosHelper.BatchEditMode;
+            settings.SettingsEditing.BatchEditSettings.StartEditAction = appSchool.Controllers.GridViewEditingDemosHelper.BatchStartEditAction;
+
+            settings.SettingsBehavior.ConfirmDelete = true;
+
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+
+
+            //settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            //settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+
+            settings.CommandButtonInitialize = (sender, e) =>
+            {
+                if ((e.ButtonType == ColumnCommandButtonType.PreviewChanges) || (e.ButtonType == ColumnCommandButtonType.Cancel))
+                {
+                    e.Visible = false;
+                }
+            };
+
+
+
+            settings.Columns.Add("StudentSessionID").Visible=false;
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "EnrollmentNo";
+                column.Caption = "EnrollmentNo";
+                column.ColumnType = MVCxGridViewColumnType.TextBox;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(50);
+                column.ReadOnly = true;
+            });
+
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "FullName";
+                column.Caption = "FullName";
+                column.ColumnType = MVCxGridViewColumnType.TextBox;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                column.ReadOnly = true;
+            });
+
+
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "FatherName";
+                column.Caption = "FatherName";
+                column.ColumnType = MVCxGridViewColumnType.TextBox;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                column.ReadOnly = true;
+            });
+
+
+
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ClassSetupID";
+                column.Caption = "ClassDescription";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.ClassSetupRepository()).GetAllClassNameByClassID(int.Parse(ViewData["ClassSetupID"].ToString()));
+                comboBoxProperties.TextField = "ClassDescription";
+                comboBoxProperties.ValueField = "ClassSetupID";
+                comboBoxProperties.ValueType = typeof(int);
+                column.ReadOnly = true;
+                column.Visible = false;
+
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "RollNo";
+                column.Caption = "Roll No.";
+                column.ColumnType = MVCxGridViewColumnType.TextBox;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+
+            });
+
+
+
+
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "DateOfBirth";
+                column.Caption = "DateOfBirth";
+                column.ColumnType = MVCxGridViewColumnType.TextBox;
+                column.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(60);
+                column.ReadOnly = true;
+                column.Visible = false;
+            });
+
+
+
+            settings.CellEditorInitialize = (s, e) =>
+            {
+                ASPxEdit editor = (ASPxEdit)e.Editor;
+                editor.ValidationSettings.Display = Display.Dynamic;
+            };
+
+            settings.HtmlDataCellPrepared = (sender, e) =>
+            {
+                //  int a = -1;
+                if (e.DataColumn.FieldName == "HouseColor")
+                {
+
+                    if (e.CellValue != null)
+                    {
+                        e.Cell.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(e.CellValue));
+                        e.Cell.ForeColor = System.Drawing.Color.Black;
+                        e.Cell.Text = System.Drawing.ColorTranslator.ToHtml(System.Drawing.Color.FromArgb(Convert.ToInt32(e.CellValue)));
+
+                    }
+                }
+            };
+
+            //settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            //settings.SettingsPager.FirstPageButton.Visible = true;
+            //settings.SettingsPager.LastPageButton.Visible = true;
+            //settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.SettingsPager.PageSize = 15;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+            };
+
+
+
+
+
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+
+            settings.SettingsBehavior.AllowFocusedRow = true;
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+

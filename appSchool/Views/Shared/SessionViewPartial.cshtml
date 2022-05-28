@@ -1,0 +1,33 @@
+﻿@using appSchool.Controllers
+@using appSchool.Repositories
+
+<script src="@Url.Content("~/jsControllers/studentSessionController.js")" type="text/javascript"></script>
+
+@Html.DevExpress().ComboBox(
+    settingscbo =>
+    {
+        settingscbo.Name = "cmbSessionID";
+        settingscbo.ControlStyle.CssClass = "editor1";
+        settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+        settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settingscbo.Properties.TextField = "SessionName";
+        settingscbo.Properties.ValueField = "SessionID";
+        settingscbo.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+        settingscbo.Height = System.Web.UI.WebControls.Unit.Pixel(10);
+        settingscbo.ControlStyle.ForeColor = System.Drawing.Color.Black;
+        settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "studentSessionController.SelectedHomeSession";
+        settingscbo.SelectedIndex = 0;
+    }
+).BindList(new UnitOfWork().academicYearService.GetSessionListDescending()).GetHtml()
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,76 @@
+﻿@using appSchool.Repositories
+@model modelStudentPersonalInfo
+
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    Html.EnableClientValidation(true);
+}
+
+<div style="float:left;position:relative">
+<div style="width:15%;height:100%;float:left;position:relative">
+    <div class="imageContainer" style="width:80%;height:80%" >
+        @{
+         
+             <div style=" position:relative;  width:auto; height:auto; ">
+         @*   <img alt="" id="previewImage" src="@Url.Content(strFile)" width="130" height="130" />*@
+
+
+                  @Html.DevExpress().BinaryImageFor(
+            model=> model.AppImage,
+            settings => {
+                settings.Name = "AppImage";    
+                settings.ControlStyle.CssClass = "editor";
+                settings.Height = System.Web.UI.WebControls.Unit.Pixel(120);
+                settings.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                settings.ControlStyle.Border.BorderWidth = 1;
+                settings.ControlStyle.Border.BorderStyle = System.Web.UI.WebControls.BorderStyle.Solid;
+                settings.ControlStyle.Border.BorderColor = System.Drawing.Color.Black;
+                          
+                
+            }).GetHtml()
+                 </div>
+            
+            
+            
+            
+            
+            
+            
+           // @Html.Partial("UploadPhotoPartial",Model);
+            
+            }
+
+    </div>
+</div>
+<div style="width:84%;float:left;position:relative">
+@using (Ajax.BeginForm("UpdateProfileInfo", "StudentRegistrationWithTC",
+    new AjaxOptions {
+        HttpMethod = "POST",
+        OnBegin = "loadingPanelStdPersonalInfo.Show();",
+        OnComplete = "loadingPanelStdPersonalInfo.Hide();",
+        UpdateTargetId = "contentPersonal",
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "alert('Updated Successfuly');"
+    },
+    new {
+        id = "validationForm1",
+        @class = "edit_form",
+        style="height: 200px; position:relative; width: 100%;",
+        enctype = "multipart/form-data" 
+    }
+    )) {
+    <div id="contentPersonal" class="edit_form">
+        @Html.Partial("PersonalInfoEditPartial", Model)
+    </div>
+}
+</div>
+</div>
+
+ 
+@Html.DevExpress().LoadingPanel(
+    settings => {
+        settings.Name = "loadingPanelStdPersonalInfo";
+        settings.Modal = true;
+        settings.ContainerElementID = "";
+        settings.Styles.LoadingDiv.BackColor =System.Drawing.Color.White;
+    }).GetHtml()

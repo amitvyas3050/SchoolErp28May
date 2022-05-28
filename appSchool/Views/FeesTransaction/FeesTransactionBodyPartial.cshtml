@@ -1,0 +1,79 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Controllers
+@using appSchool.Repositories
+@model modelStudentFeesReceipt
+
+
+@Html.DevExpress().Splitter(settings => {
+    settings.Name = "FeesTransactionBodySplitter";
+    settings.Orientation = System.Web.UI.WebControls.Orientation.Horizontal;
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Styles.Pane.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(0);
+    settings.Styles.Pane.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+
+    settings.ClientSideEvents.PaneResized = "feesTransactionController.splitterResized";
+    
+    settings.Panes.Add(subpane => {
+        subpane.Name = "LeftPane";
+        subpane.PaneStyle.CssClass = "leftPane";
+        subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+        subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+        subpane.Size = System.Web.UI.WebControls.Unit.Percentage(25);
+        subpane.PaneStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(1);
+        subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+        subpane.SetContent(() => {
+
+           
+            ViewContext.Writer.Write("<div id='GridStudentListForFeeID' class='FTBottom'>");
+            Html.RenderPartial("GridStudentListForFee", new UnitOfWork().studentSessionService.GetAllStudentForSession(int.Parse(Session["SessionID"].ToString()),byte.Parse(Session["CompID"].ToString()),byte.Parse(Session["BranchID"].ToString())));
+            ViewContext.Writer.Write("</div>");
+
+            ViewContext.Writer.Write("<div id='GridTermListForFeeID' class='FTBottom'>");
+            Html.RenderPartial("ListTermView", new UnitOfWork().feesReceiptService.GetTermListForFeesReceiptStudentWise(Model.StudentID, int.Parse(Session["SessionID"].ToString()), byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString())));
+            ViewContext.Writer.Write("</div>");
+            
+            
+            //ViewContext.Writer.Write("<div class='FTtop' id='FTTopID'>");
+
+          
+
+            ////List<vTermListStudentFeeMaster> obj = new List<vTermListStudentFeeMaster>();
+            ////Html.RenderPartial("TermPartialView", obj);
+
+            //ViewContext.Writer.Write("</div>");
+            ViewContext.Writer.Write("<div>");
+
+            @Html.DevExpress().TextBox(
+                settingscls =>
+                {
+                    settingscls.Name = "txtStudentID";
+                    settingscls.ClientVisible = false;
+
+                }).GetHtml();
+            ViewContext.Writer.Write("</div>");            
+            
+        });
+    });
+
+    settings.Panes.Add(subpane => {
+        subpane.Name = "MiddleCenter";
+        subpane.PaneStyle.CssClass = "contentPane";
+        subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+        subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+        //subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+        subpane.Separator.Visible = DefaultBoolean.True;
+        subpane.Size = System.Web.UI.WebControls.Unit.Percentage(73);
+        subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+        subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+       // subpane.PaneStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(5);
+        subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Both;
+        subpane.SetContent(() =>
+        {
+            Html.RenderPartial("FeesTransactionView",Model);
+        });
+    });
+   
+    
+
+}).GetHtml()

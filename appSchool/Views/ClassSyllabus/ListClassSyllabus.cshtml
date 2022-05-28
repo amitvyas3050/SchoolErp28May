@@ -1,0 +1,104 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@if (ViewData["ClassSyllabusID"] == null)
+{
+    ViewData["ClassSyllabusID"] = 0;
+}
+@if (ViewData["ClassID_ForClassSyllabus"] == null)
+{
+    ViewData["ClassID_ForClassSyllabus"] = 0;
+}
+@if (ViewData["SubjectID_ForClassSyllabus"] == null)
+{
+    ViewData["SubjectID_ForClassSyllabus"] = 0;
+}
+
+@if (ViewData["PreferredBook_ForClassSyllabus"] == null)
+{
+    ViewData["PreferredBook_ForClassSyllabus"] = string.Empty;
+}
+
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "gridView";
+            settings.KeyFieldName = "ID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Pixel(40);
+           
+          
+            settings.SettingsPager.PageSize = 200;
+            settings.ControlStyle.CssClass = "grid-view"; //add this propert to new
+
+            settings.CallbackRouteValues = new { Controller = "ClassSyllabus", Action = "PartialClassSyllabusView", pClassSyllabusID = int.Parse(ViewData["ClassSyllabusID"].ToString()), pClassID = int.Parse(ViewData["ClassID_ForClassSyllabus"].ToString()), pSubjectID = int.Parse(ViewData["SubjectID_ForClassSyllabus"].ToString()), pPreferredBook = ViewData["PreferredBook_ForClassSyllabus"].ToString() };
+
+
+            settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "ClassSyllabus", Action = "updateClassSyllabusAll", pClassSyllabusID = int.Parse(ViewData["ClassSyllabusID"].ToString()), pClassID = int.Parse(ViewData["ClassID_ForClassSyllabus"].ToString()), pSubjectID = int.Parse(ViewData["SubjectID_ForClassSyllabus"].ToString()), pPreferredBook = ViewData["PreferredBook_ForClassSyllabus"].ToString() };
+            
+            settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+            settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+            settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+            settings.CommandColumn.ShowNewButtonInHeader = true;
+            settings.CommandColumn.ShowDeleteButton = true;
+            settings.Columns.Add("ID").Visible=false;
+            settings.Columns.Add("ClassSyllabusID").Visible = false;
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "OrderNo";
+                column.Caption = "OrderNo";
+                column.ColumnType = MVCxGridViewColumnType.TextBox;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(60);
+                
+             
+               
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "SubjectUnit";
+                column.Caption = "SubjectUnit";
+                column.ColumnType = MVCxGridViewColumnType.TextBox;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Topic";
+                column.Caption = "Topic";
+                column.ColumnType = MVCxGridViewColumnType.TextBox;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+            });
+             settings.Columns.Add(column =>
+            {
+                column.FieldName = "Description";
+                column.Caption = "Description";
+                column.ColumnType = MVCxGridViewColumnType.TextBox;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+            });
+            
+         
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+            };
+
+              settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+

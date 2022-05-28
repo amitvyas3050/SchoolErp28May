@@ -1,0 +1,136 @@
+﻿@using appSchool.Repositories
+@using System.IO
+
+@*@section Head {
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+}*@
+
+
+@model modelStudentPersonalInfo
+
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    Html.EnableClientValidation(true);
+
+
+}
+
+
+<script>
+
+    function UpdateSuccessfull(data) {
+
+        //alert(data.Resultmsg);
+        //  $("#RegistrationSplitter_3_CC").html(data.ResultData);
+        var mStudentIDs = StudentIDs.GetText();
+        if (mStudentIDs.toString() == "") {
+            alert("Please Select Students");
+            return;
+
+        }
+
+        $.ajax({
+            url: "/StudentRegistration/EditPersonaldetailbyClick",
+            type: "POST",
+            data: { mStudentID: mStudentIDs },
+            datatype: "json",
+            beforeSend: (function (data) {
+                //  loadingPanelStudentRegistration.Show();
+            }),
+            success: function (data) {
+                $("#divstudregistration").html(data.ResultData);
+                //var winHeight = document.getElementById('RegistrationSplitter_1_CC').offsetHeight;
+                //GridStudents.SetHeight(winHeight - 10);
+            },
+            error: function () {
+            }
+        }).done(function (data) {
+            // loadingPanelStudentRegistration.Hide();
+        });
+
+    }
+
+</script>
+
+
+<div style="float:left;position:relative">
+    <div style="width:15%;height:100%;float:left;position:relative">
+        <div class="imageContainer" style="width:80%;height:80%">
+            @{
+
+                <div style=" position:relative;  width:auto; height:auto; ">
+
+
+
+
+
+                    @*@Html.DevExpress().Image(settingsimg =>
+                   {
+                       settingsimg.Name = "img1";
+
+                       if (Model.AppImageName != null)
+                       {
+                           if (File.Exists(Server.MapPath("~//Images/Students/" + Model.AppImageName)))
+                               settingsimg.ImageUrl = @Url.Content("~//Images/Students/" + Model.AppImageName);
+                           else
+                               settingsimg.ImageUrl = @Url.Content("~//Images/Students/" + "blank.jpg");
+                       }
+                       else
+                           settingsimg.ImageUrl = @Url.Content("~//Images/Students/" + "blank.jpg");
+                       settingsimg.ControlStyle.CssClass = "editor";
+                       settingsimg.Height = System.Web.UI.WebControls.Unit.Pixel(120);
+                       settingsimg.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                       settingsimg.ControlStyle.Border.BorderWidth = 1;
+                       settingsimg.ControlStyle.Border.BorderStyle = System.Web.UI.WebControls.BorderStyle.Solid;
+                       settingsimg.ControlStyle.Border.BorderColor = System.Drawing.Color.Black;
+                   }).GetHtml()*@
+
+                </div>
+
+
+
+            }
+
+        </div>
+    </div>
+    <div style="width:84%;float:left;position:relative">
+        @using (Ajax.BeginForm("UpdateProfileInfo", "StudentRegistration",
+            new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnBegin = "loadingPanelStdPersonalInfo.Show();",
+                OnComplete = "loadingPanelStdPersonalInfo.Hide();",
+                UpdateTargetId = "contentPersonal",
+                InsertionMode = InsertionMode.Replace,
+                //OnSuccess = "UpdateSuccessfull(data)"
+
+            },
+            new
+            {
+                id = "validationForm1",
+                //@class = "edit_form",
+                //style = "height: 200px; position:relative; width: 100%;",
+                //enctype = "multipart/form-data"
+            }
+            ))
+        {
+
+
+            <div id="contentPersonal" class="edit_form">
+                @Html.Partial("PersonalInfoEditPartial", Model)
+            </div>
+        }
+    </div>
+</div>
+
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "loadingPanelStdPersonalInfo";
+        settings.Modal = true;
+        settings.ContainerElementID = "validationForm1";
+        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+    }).GetHtml()

@@ -1,0 +1,53 @@
+﻿@using appSchool.Controllers
+@using appSchool.ChartModels
+
+@{
+   // ChartBarViewsDemoOptions options = (ChartBarViewsDemoOptions)ViewData[ChartDemoHelper.OptionsKey];
+    ChartControlSettings settings = new ChartControlSettings();
+    settings.Name = "AttendanceClasswisechart";
+    settings.Width = System.Web.UI.WebControls.Unit.Pixel(1000);
+    settings.Height = 450;
+    settings.BorderOptions.Visible = true;
+    settings.CrosshairEnabled =DefaultBoolean.True;
+
+    settings.Titles.Add(new ChartTitle() {
+        Font = new System.Drawing.Font("Tahoma", 10),
+        Text = "Weekly Student Attendance Summary"
+    });
+    settings.Titles.Add(new ChartTitle() {
+        Alignment = System.Drawing.StringAlignment.Far,
+        Dock = ChartTitleDockStyle.Bottom,
+        Font = new System.Drawing.Font("Tahoma", 8),
+        TextColor = System.Drawing.Color.Gray,
+        Text = "Weekly Schedule"
+    });
+
+    settings.SeriesTemplate.ChangeView(DevExpress.XtraCharts.ViewType.Bar);
+    settings.SeriesDataMember = "Attendance";
+    settings.SeriesTemplate.ArgumentDataMember = "ClassSetupName";
+    settings.SeriesTemplate.ValueDataMembers[0] = "TotalAttendance";
+    settings.SeriesTemplate.LabelsVisibility =DefaultBoolean.True;
+    settings.SeriesTemplate.Label.ResolveOverlappingMode = ResolveOverlappingMode.Default;
+
+    //if (options.View != DevExpress.XtraCharts.ViewType.FullStackedBar){
+    //    settings.Legend.AlignmentHorizontal = LegendAlignmentHorizontal.Right;
+    //}
+
+    if (settings.Diagram is XYDiagram) {
+        //((XYDiagram)settings.Diagram).Rotated = Rotated;
+        Axis2D axisY = ((XYDiagram)settings.Diagram).AxisY;
+        axisY.Interlaced = true;
+        axisY.Title.Text = "No. of Students";
+        axisY.Title.Visible = true;
+    }
+    else {
+        XYDiagram3D diagram = (XYDiagram3D)settings.Diagram;
+        diagram.AxisY.Interlaced = true;
+        diagram.RotationType = RotationType.UseAngles;
+        diagram.RotationOrder = RotationOrder.XYZ;
+        diagram.ZoomPercent = 140;
+        diagram.VerticalScrollPercent = 4;
+    }
+}
+
+@Html.DevExpress().Chart(settings).Bind(Model).GetHtml()

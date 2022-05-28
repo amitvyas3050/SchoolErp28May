@@ -1,0 +1,16 @@
+﻿@model int
+@*<h4>@Model</h4>*@
+@{
+    var tab = Html.DevExpress().TabControl(settings =>
+    {
+        settings.Name = "FeesHeadGridRowChange";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Tabs.Add("Tab #1");
+        settings.Tabs.Add("Tab #2");
+        settings.Tabs.Add("Tab #3");
+        settings.Tabs.Add("Tab #4");
+        settings.Tabs.Add("Tab #5");
+    });
+}
+@tab.GetHtml()

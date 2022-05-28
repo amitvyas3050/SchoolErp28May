@@ -1,0 +1,211 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+
+
+@{
+    ViewBag.Title = "Add Fees Structure Info.";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Head {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/GridView.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap.css")" />
+    <script type="text/javascript" src="@Url.Content("~/Content/GridView.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/jsControllers/feesStructureController.js")"></script>
+
+}
+
+
+@section PageToolbar {
+    @Html.DevExpress().Menu(menuSettings =>
+   {
+       menuSettings.Name = "pageToolbar";
+
+       menuSettings.ItemAutoWidth = false;
+       menuSettings.AllowSelectItem = false;
+       menuSettings.ApplyItemStyleToTemplates = true;
+
+       menuSettings.SettingsAdaptivity.Enabled = true;
+       menuSettings.SettingsAdaptivity.EnableAutoHideRootItems = true;
+       menuSettings.SettingsAdaptivity.EnableCollapseRootItemsToIcons = true;
+       menuSettings.SettingsAdaptivity.CollapseRootItemsToIconsAtWindowInnerWidth = 600;
+
+       menuSettings.Width = Unit.Percentage(100);
+       menuSettings.ControlStyle.SeparatorWidth = Unit.Pixel(0);
+       menuSettings.ControlStyle.CssClass = "page-toolbar";
+
+        menuSettings.Styles.Item.CssClass = "item";
+        menuSettings.Styles.Item.VerticalAlign = VerticalAlign.Middle;
+
+       menuSettings.Images.Item.Width = Unit.Pixel(16);
+       menuSettings.Images.Item.Height = Unit.Pixel(16);
+
+       menuSettings.Items.Add(item =>
+       {
+           item.Enabled = false;
+           item.SetTemplateContent(template => ViewContext.Writer.Write("<h1>Add Fees Structure</h1>"));
+       });
+
+   }).GetHtml()
+
+}
+
+
+@section LeftPanelContent {
+
+    @{Html.RenderAction("ReturnLeftPanelView", "LeftAndRightPanel", new { moduleid = (int)appModule.appFeesManager });}
+
+
+}
+
+@section RightPanelContent {
+    @{Html.RenderAction("ReturnRightPanelView", "LeftAndRightPanel");}
+
+}
+
+<div class="row" style="margin-right:0">
+
+
+
+    <div class="col-sm-4">
+
+        @Html.DevExpress().Label(settingslbl =>
+           {
+               settingslbl.Name = "lblclas2";
+               settingslbl.Width = Unit.Percentage(100);
+               settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+               settingslbl.Text = "Select Class";
+           }).GetHtml()
+
+        @Html.Partial("ListClassGridLookupPartial", (new UnitOfWork().ClassService.GetClassList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))))
+
+    </div>
+
+    <div class="col-sm-4">
+
+        @Html.DevExpress().Label(settingslbl =>
+           {
+               settingslbl.Name = "lblterm";
+               settingslbl.Width = Unit.Percentage(100);
+               settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+               settingslbl.Text = "Select Term";
+           }).GetHtml()
+
+        @Html.Partial("ListTermGridLookupPartial", (new UnitOfWork().feeTermService.GetFeeTermList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()), byte.Parse(Session["SessionID"].ToString()))))
+
+        @Html.DevExpress().TextBox(
+         settings =>
+         {
+          settings.Name = "txtclasses";
+          settings.ClientVisible = false;
+         }).GetHtml()
+
+        @Html.DevExpress().TextBox(
+          settings =>
+          {
+          settings.Name = "txtTerm";
+          settings.ClientVisible = false;
+          }).GetHtml()
+
+    </div>
+
+    <div class="col-sm-4">
+        @Html.DevExpress().Button(
+            settings =>
+            {
+                settings.Name = "btnLoad";
+
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(40);
+                settings.Height = 30;
+                settings.ControlStyle.CssClass = "btnpaddingrow20px";
+                settings.RenderMode = ButtonRenderMode.Button;
+                settings.Text = "Load Structure";
+                settings.ImagePosition = ImagePosition.Right;
+                settings.Images.Image.IconID = "actions_refresh_16x16gray";
+                settings.ClientSideEvents.Click = "feesStructureController.ClickLoadGrid";
+            }).GetHtml()
+    </div>
+
+</div>
+
+<div class="row" style="margin-right:0">
+
+
+    <div class="col-sm-12">
+        @Html.DevExpress().TextBox(
+        settingslbl =>
+        {
+            settingslbl.Name = "lblclasserror";
+
+            settingslbl.ControlStyle.ForeColor = System.Drawing.Color.Red;
+            settingslbl.ControlStyle.Font.Bold = true;
+            settingslbl.ControlStyle.Font.Size = 12;
+            settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settingslbl.Enabled = false;
+            settingslbl.ReadOnly = true;
+            settingslbl.ClientVisible = false;
+        }).GetHtml()
+
+    </div>
+
+    <div class="col-sm-12">
+        @Html.DevExpress().TextBox(
+        settingslbl =>
+        {
+            settingslbl.Name = "lblclassName";
+
+            settingslbl.ControlStyle.ForeColor = System.Drawing.Color.Red;
+            settingslbl.ControlStyle.Font.Bold = true;
+            settingslbl.ControlStyle.Font.Size = 12;
+            settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settingslbl.Enabled = false;
+            settingslbl.ReadOnly = true;
+            settingslbl.ClientVisible = false;
+
+        }).GetHtml()
+
+    </div>
+
+
+
+
+</div>
+
+<div class="row" style="margin-right:0">
+
+    <div class="col-sm-12 gridviewdivhight" id="divfeesstructure">
+
+        @{Html.RenderPartial("ListAllFeesTerms");}
+
+    </div>
+</div>
+
+@Html.DevExpress().LoadingPanel(
+           settings =>
+           {
+               settings.Name = "loadingPanelFeestructure";
+               settings.Modal = true;
+               settings.ContainerElementID = "";
+               settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+           }).GetHtml()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

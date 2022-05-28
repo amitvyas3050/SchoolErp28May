@@ -1,0 +1,82 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+
+
+@{
+    ViewBag.Title = "Fees Structure Info.";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Head {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/GridView.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap.css")" />
+    <script type="text/javascript" src="@Url.Content("~/Content/GridView.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/jsControllers/feesStructureController.js")"></script>
+    
+}
+
+
+@section LeftPanelContent {
+
+    @{Html.RenderAction("ReturnLeftPanelView", "LeftAndRightPanel", new { moduleid = (int)appModule.appFeesManager });}
+
+
+}
+
+@section RightPanelContent {
+    @{Html.RenderAction("ReturnRightPanelView", "LeftAndRightPanel");}
+
+}
+
+<div class="row" style="margin-right:0">
+
+
+
+    <div class="col-sm-6">
+
+        @{Html.RenderPartial("GridListFeesStructure", new UnitOfWork().vlistFeesStructureService.GetFeesStructureList(int.Parse(Session["SessionID"].ToString()), byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString())));}
+
+    </div>
+
+    <div class="col-sm-6">
+
+        @Html.DevExpress().TextBox(
+                                    settingslbl =>
+                                    {
+                                        settingslbl.Name = "lblclassNameEdit";
+                                        settingslbl.ControlStyle.ForeColor = System.Drawing.Color.Blue;
+                                        settingslbl.ControlStyle.Font.Bold = true;
+                                        settingslbl.ControlStyle.Font.Size = 11;
+                                        settingslbl.Enabled = true;
+                                        settingslbl.ReadOnly = true;
+                                        settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+                                    }).GetHtml()
+
+        @{Html.RenderPartial("ListFeesStructureForEdit");}
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,19 @@
+﻿@using appSchool.Controllers;
+@using appSchool.Repositories;
+@using appSchool.Model;
+@model List<vSubjectAllotmentWithIDLOne>
+
+
+@Html.DevExpress().ComboBox(
+
+             settingscbo =>
+             {
+                 settingscbo.Name = "SubjectIDL1";
+                 settingscbo.ControlStyle.CssClass = "form-control";
+                 settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                 settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                 settingscbo.Properties.TextField = "SubjectNameL1";
+                 settingscbo.Properties.ValueField = "IdL1";
+                 settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "classSyllabusController.SelectedSubject";
+             }
+         ).BindList(Model).GetHtml()

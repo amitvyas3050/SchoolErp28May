@@ -1,0 +1,261 @@
+﻿<script>
+    function myfunction() {
+        alert('my function call');
+
+        feesTransactionController.ClickCheckFeePaid();
+    }
+
+</script>
+
+
+
+@{
+
+    var grid = Html.DevExpress().GridView (
+        settings =>
+        {
+            settings.Name = "GridStudentsFee1";
+            settings.KeyFieldName = "TermID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Height = System.Web.UI.WebControls.Unit.Pixel(50);
+            //settings.Caption = "Select Term";
+            // settings.CallbackRouteValues = new { Controller = "FeesTransaction", Action = "PartialGridAllStudentForFee" };
+
+            settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+            settings.SettingsBehavior.ConfirmDelete = true;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+            //settings.CommandColumn.ButtonType = GridViewCommandButtonType.Button;
+            //settings.SettingsCommandButton.UpdateButton.ButtonType = GridViewCommandButtonType.Link;
+            //settings.SettingsCommandButton.CancelButton.ButtonType = GridViewCommandButtonType.Link;
+
+            settings.Columns.Add("TermID").Visible=false;
+            //  settings.Columns.Add("StudmasterID").Visible = false;
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Pay";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(60);
+
+                column.UnboundType = DevExpress.Data.UnboundColumnType.String;
+                column.SetDataItemTemplateContent(c =>
+                {
+                    ViewContext.Writer.Write("<div style='padding: 1px 0px 1px 0px'>");
+
+                    //Html.DevExpress().Button(settingsBtn =>
+                    //{
+                    //    settingsBtn.Name = c.KeyValue.ToString();
+                    //    settingsBtn.Text = "Click";
+                    //    // settingsBtn.ClientSideEvents.Click = string.Format("function(s, e) {{ alert('{0}'); }}", c.KeyValue);
+                    //    settingsBtn.ClientSideEvents.Click = "feesTransactionController.ClickCheckFeePaid";
+
+                    //    //settingsBtn.RouteValues = new { Controller = "Home", Action = "ButtonClickAction", rowKeyValue = c.KeyValue };
+                    //}).Render();
+                    var idkeyvalue = c.KeyValue;
+                    Html.DevExpress().HyperLink(hyperLinkSettings =>
+                    {
+
+                        hyperLinkSettings.Name = c.KeyValue.ToString();
+                        hyperLinkSettings.Properties.Text = "Pay";
+                        hyperLinkSettings.NavigateUrl = "javascript:feesTransactionController.ClickCheckFeePaidnew("+idkeyvalue+")";
+                        //hyperLinkSettings.NavigateUrl = Url.Action("GridViewDetailsPage", "GridView", new { id = DataBinder.Eval(c.DataItem, "TermID") });
+                    }).Render();
+
+                    ViewContext.Writer.Write("</div>");
+                });
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "TermID";
+                column.Caption = "Term";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(110);
+                //column.EditFormSettings.ColumnSpan = 1;
+
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.FeeTermRepository()).GetFeeTermList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()), byte.Parse(Session["SessionID"].ToString()));
+                comboBoxProperties.TextField = "FeeTermType";
+                comboBoxProperties.ValueField = "FeeTermID";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+            settings.Columns.Add("Amount").Width = System.Web.UI.WebControls.Unit.Pixel(80);
+            //settings.Columns.Add("ClassDescription").Width = System.Web.UI.WebControls.Unit.Pixel(100);
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "PaidFlag";
+
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(50);
+                column.Visible = false;
+
+            });
+            settings.HtmlRowPrepared = (s, e) =>
+            {
+                //if (e.RowType != GridViewRowType.Data) return;
+
+                bool name = Convert.ToBoolean(e.GetValue("PaidFlag"));
+                if (name == true)
+                    e.Row.BackColor = System.Drawing.Color.Gray;
+
+                //e.Row.BackColor = System.Drawing.Color.Green;
+                // if (e.DataColumn.FieldName == "PaidFlag")
+                //{
+                //    if (Convert.ToBoolean(e.CellValue) == true)
+                //    {
+                //        e.Cell.BackColor = System.Drawing.Color.FromArgb(240, 128, 128);
+
+                //    }
+
+                //}
+
+            };
+
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            //  settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.SettingsPager.PageSize = 10;
+
+            // settings.Settings.ShowFilterRow = settings.Settings.ShowFilterRowMenu = true;
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            //  settings.ClientSideEvents.FocusedRowChanged = "feesTransactionController.RowSelectionChange";
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+@{
+    if (ViewBag.ShowFilter == null){
+        ViewBag.ShowFilter = false;
+    }
+        
+    var grid = Html.DevExpress().GridView (
+        settings =>
+        {
+            settings.Name = "GridStudentforFee";
+            settings.KeyFieldName = "StudentSessionID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.CommandColumn.ShowClearFilterButton = true;
+          //  settings.SettingsBehavior.AllowSelectByRowClick = true;
+           // settings.CallbackRouteValues = new { Controller = "FeesTransaction", Action = "PartialGridAllStudentForFee", PclassSetupID = ViewData["ClassSetupIDForFee"] };
+            //settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "StudentRegistration", Action = "AddNewRegistration" };
+            //settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "StudentRegistration", Action = "UpdateRegistration" };
+            //settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "StudentRegistration", Action = "DeleteRegistration" };
+
+
+            settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+            settings.SettingsBehavior.ConfirmDelete = true;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+            
+            //settings.CommandColumn.ButtonType = GridViewCommandButtonType.Button;
+            //settings.SettingsCommandButton.UpdateButton.ButtonType = GridViewCommandButtonType.Link;
+            //settings.SettingsCommandButton.CancelButton.ButtonType = GridViewCommandButtonType.Link;
+            settings.Columns.Add("StudentID").Visible = false;
+            
+            settings.Columns.Add("ClassDescription", "Class").Width = System.Web.UI.WebControls.Unit.Pixel(20);
+          
+            settings.Columns.Add("FullName").Width = System.Web.UI.WebControls.Unit.Pixel(50);
+            //settings.Columns.Add(column =>
+            //    {
+            //        column.FieldName = "EnrollmentNo";
+            //        column.Caption = "Registration";
+            //        column.EditFormSettings.ColumnSpan=2;
+            //        column.Width = System.Web.UI.WebControls.Unit.Pixel(20);
+            //        //var editProperties = (TextBoxProperties)column.PropertiesEdit;
+            //        //editProperties.MaskSettings.Mask = "(AAA)-000-0000";
+                   
+            //    });
+                       
+          
+          
+            //settings.CellEditorInitialize = (sender, e) =>
+            //{
+            //    if (e.Column.FieldName == "FullName")
+            //        e.Editor.Enabled = false;
+            //};
+            //settings.Columns.Add("Rating");
+
+
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+           
+           
+            settings.Settings.ShowFilterRow = settings.Settings.ShowFilterRowMenu = true;
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            settings.ClientSideEvents.FocusedRowChanged = "feesTransactionController.RowSelectionChange";
+           
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            settings.Settings.VerticalScrollableHeight = 370;
+
+         //   settings.SettingsPager.Mode = GridViewPagerMode.EndlessPaging;
+            settings.SettingsPager.PageSize = 100;
+            
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).Settings.ShowFilterRow = !((MVCxGridView)sender).Settings.ShowFilterRow;
+                //MVCxGridView grid = (MVCxGridView)sender;
+                //grid.Settings.ShowFilterRow = !grid.Settings.ShowFilterRow;
+                //((MVCxGridView)sender).StartEdit(((MVCxGridView)sender).GetFocusedRowIndex());
+                //GridStudents.StartEdit(GridStudents.GetFocusedRowIndex());
+                
+            };
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*@
+
+
+

@@ -1,0 +1,66 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+@model modelSendSms
+
+
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    Html.EnableClientValidation(true);
+}
+    
+<script>
+
+    function UpdateSuccessful(data) {
+        alert(data.Resultmsg);
+        $('#divmsg').empty();
+        var html = "<h3>" + data.Resultmsg + "</h3>"
+        $('#divmsg').append(html);
+        $("#contentPersonal").html(data.ResultData);
+    }
+
+</script>    
+
+<div>
+@using (Ajax.BeginForm("SMSButtonClick", "SendMessegeWishes",
+    new AjaxOptions {
+        HttpMethod = "POST",
+        UpdateTargetId = "contentPersonalWishes",
+        OnBegin = "loadingPanelSMSWishes.Show();",
+        OnComplete = "loadingPanelSMSWishes.Hide();",
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "UpdateSuccessful(data)",
+        OnFailure = "onError"
+    },
+    new {
+        id = "validationFormWishes",
+        //@class = "edit_form",
+        //style="height: 200px; position:relative; width: 100%;",
+        //enctype = "multipart/form-data" 
+    }
+    )) {
+     <div  id="divmsg" style="color:red;" >
+
+    </div>
+    
+      <div id="contentPersonalWishes">
+       
+    @Html.Partial("SendMessegeWishesEditTextView", Model)
+
+    </div>
+    
+
+    
+}
+</div>
+@Html.DevExpress().LoadingPanel(
+    settings => {
+        settings.Name = "loadingPanelSMSWishes";
+        settings.Modal = true;
+        settings.ContainerElementID = "";
+        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+    }).GetHtml()
+
+  
+
+

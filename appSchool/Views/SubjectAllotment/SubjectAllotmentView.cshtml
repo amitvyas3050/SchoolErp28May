@@ -1,0 +1,275 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+
+@{
+    ViewBag.Title = "SubjectAllotment Info.";
+}
+
+
+<script src="@Url.Content("~/jsControllers/subjectAllotmentController.js")" type="text/javascript"></script>
+
+
+@if (PermissionFlag._AddFlag == false && PermissionFlag._DelFlag == false && PermissionFlag._ModFlag == false)
+     {
+    
+               @Html.DevExpress().PopupControl(settings => {
+                settings.Name = "popupclass";
+                settings.PopupElementID = "popupArea";
+                settings.AllowDragging = true;
+                settings.ShowOnPageLoad = true;
+                settings.Width=180;
+                settings.Height = 100;
+            
+                settings.PopupHorizontalAlign =PopupHorizontalAlign.WindowCenter;
+                settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                settings.CloseAction = CloseAction.CloseButton;
+                settings.HeaderText = "User Permission";
+                settings.SetContent(() => {
+                    ViewContext.Writer.Write(
+                        " <p style=\"color:red;\"> Permission not granted </p>"
+                    );
+                    ViewContext.Writer.Write(
+            "<div style=\"text-align:center;\" > <img   src=\"" + Url.Content("~/Images/permission.png") + "\" alt=\"Permission\" /> </div> "
+                );
+               });
+            }).GetHtml()
+     }
+
+else
+{
+
+ @Html.DevExpress().Splitter(settings => {
+    settings.Name = "SubjectAllotmentSplitter";
+        settings.AllowResize = true;
+        settings.Orientation = System.Web.UI.WebControls.Orientation.Vertical;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SeparatorVisible = true;
+        settings.ClientSideEvents.PaneResized = "subjectAllotmentController.splitterResized";
+
+       settings.Panes.Add(subpane =>
+        {
+            subpane.Name = "SubjectAllotmentBody";
+            subpane.PaneStyle.CssClass = "contentPane";
+            subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+            subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+            subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+            subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(50);
+            subpane.Size = System.Web.UI.WebControls.Unit.Pixel(30);
+            subpane.Separator.Visible = DefaultBoolean.True;
+            subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            
+             subpane.SetContent(() =>
+            {
+                ViewContext.Writer.Write("<table><tr><td style=\"padding-right:10px; \"> ");
+
+             @Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lblCourse";
+                    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settingslbl.Text = "Select Class";
+                }).GetHtml();
+
+
+                @Html.DevExpress().ComboBox(
+
+             settingscbo =>
+             {
+                 settingscbo.Name = "ClassID";
+                 settingscbo.ControlStyle.CssClass = "editor";
+                 settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                 settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                 settingscbo.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+                 settingscbo.Properties.TextField = "ClassName";
+                 settingscbo.Properties.ValueField = "ClassID";
+                 settingscbo.Properties.EnableClientSideAPI = true;
+                 //settingscbo.ShowModelErrors = true;
+                 //settingscbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                 settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "subjectAllotmentController.SelectedClass";
+             }
+            ).BindList(new UnitOfWork().ClassService.GetClassList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))).GetHtml();
+
+               
+            ViewContext.Writer.Write("</td><td   style=\"padding-right:10px;  \"> ");
+
+            //@Html.DevExpress().Label(settingslbl =>
+            //{
+            //    settingslbl.Name = "lblSubjectlevel";
+            //    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            //    settingslbl.Text = "Subject Level";
+            //}).GetHtml();
+                
+            @Html.DevExpress().TextBox(
+            settingsSubjectLID =>
+            {
+                settingsSubjectLID.Name = "txtSubjectlevel";
+                settingsSubjectLID.ControlStyle.CssClass = "editor";
+                settingsSubjectLID.ClientVisible = false;
+            }
+           ).GetHtml();
+           
+                
+            ViewContext.Writer.Write("</td><td ID=\"td\"   style=\"padding-right:10px;  \"> ");
+
+            @Html.DevExpress().Label(settingslbl =>
+            {
+                settingslbl.Name = "lblSubjectlevelName";
+                settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                settingslbl.Text = "Subject Level";
+            }).GetHtml();
+
+            @Html.DevExpress().TextBox(
+            settingsSubjectLID =>
+            {
+                settingsSubjectLID.Name = "txtSubjectlevelName";
+                settingsSubjectLID.ControlStyle.CssClass = "editor";
+                settingsSubjectLID.ClientVisible = true;
+                settingsSubjectLID.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+                settingsSubjectLID.Height = System.Web.UI.WebControls.Unit.Pixel(20);
+                settingsSubjectLID.ReadOnly = true;
+                settingsSubjectLID.ControlStyle.Font.Size = 14;
+                settingsSubjectLID.ControlStyle.ForeColor = System.Drawing.Color.Blue;
+            }
+           ).GetHtml();
+             
+
+                ViewContext.Writer.Write("</td><td ID=\"Subjectleveltd\"    style=\"padding-right:10px;  \"> ");
+              
+              @Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lblbutton";
+                    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settingslbl.Text = "Click";
+                    settingslbl.ControlStyle.ForeColor = System.Drawing.Color.White;
+                }).GetHtml();
+
+                @Html.DevExpress().Button(
+                    settingsbtn =>
+                    {
+                        settingsbtn.Name = "btnSubmit";
+                        settingsbtn.Text = "Show Subject";
+                        settingsbtn.Width = System.Web.UI.WebControls.Unit.Pixel(120);
+                        settingsbtn.Height = System.Web.UI.WebControls.Unit.Pixel(30);
+                        settingsbtn.ImagePosition = ImagePosition.Right;
+                        settingsbtn.Images.Image.IconID = "actions_refresh_16x16gray";
+
+                        settingsbtn.ClientSideEvents.Click = "subjectAllotmentController.ShowSubjectForClass";
+
+
+                    }).GetHtml();
+               
+                ViewContext.Writer.Write("</td><td    style=\"padding-right:10px;  \"> ");
+                
+               ViewContext.Writer.Write("</td></tr></table> ");
+              });
+            
+        });
+
+       settings.Panes.Add(subpane =>
+       {
+           subpane.Name = "SubjectAllotmentMiddel";
+           subpane.PaneStyle.CssClass = "contentPane";
+           subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+           subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(30);
+           subpane.Size = System.Web.UI.WebControls.Unit.Pixel(100);
+           subpane.Separator.Visible = DefaultBoolean.True;
+           subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+           subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+           subpane.SetContent(() =>
+           {
+               //Html.RenderPartial("ListSubjectPaper", (new UnitOfWork()).SubjectPaperService.GetSubjectPaperMasterList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString())));
+               //Html.RenderPartial("RegistrationTabs",(int)1);
+           });
+       });
+    
+       settings.Panes.Add(subpane =>
+       {
+           subpane.Name = "SubjectAllotmentButtom";
+           subpane.PaneStyle.CssClass = "contentPane";
+           subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+           subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(20);
+           subpane.Size = System.Web.UI.WebControls.Unit.Pixel(30);
+           subpane.Separator.Visible = DefaultBoolean.True;
+           subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+           subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+           subpane.SetContent(() =>
+           {
+               ViewContext.Writer.Write(" <div style=\"border:1px solid #989898; width:98%; padding:1%;\">");
+               
+               ViewContext.Writer.Write(" <table><tr><td style=\"padding-right:10px;\">");
+
+               if (PermissionFlag._AddFlag == true)
+               {
+                   @Html.DevExpress().Button(
+                     settingsbtn =>
+                     {
+                         settingsbtn.Name = "btnSubject";
+                         settingsbtn.ControlStyle.CssClass = "button";
+                         settingsbtn.Text = "Subject Allot";
+                         settingsbtn.Width = 100;
+                         settingsbtn.Images.Image.IconID = IconID.SaveSave16x16;
+                         settingsbtn.ClientSideEvents.Click = "subjectAllotmentController.AllotSubjectForClass";
+                     }).GetHtml();
+               }
+               
+           
+               ViewContext.Writer.Write("</td><td>");
+
+
+               @Html.DevExpress().TextBox(
+          settingsStudentID =>
+          {
+              settingsStudentID.Name = "SubjectLevelD";
+              settingsStudentID.ControlStyle.CssClass = "editor";
+              settingsStudentID.ClientVisible = false;
+
+          }
+      ).GetHtml();
+
+            
+               ViewContext.Writer.Write(" </td></tr></table>");
+               ViewContext.Writer.Write("</div>");
+  
+           });
+       });
+    
+     settings.Panes.Add(subpane =>
+       {
+           subpane.Name = "SubjectAllotmentFooter";
+           subpane.PaneStyle.CssClass = "contentPane";
+           subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+           subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(100);
+           subpane.Size = System.Web.UI.WebControls.Unit.Pixel(100);
+           subpane.Separator.Visible = DefaultBoolean.True;
+           subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+           subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+           subpane.SetContent(() =>
+           {
+
+               //Html.RenderPartial("ListSubjectAllotment", (new UnitOfWork()).SubjectAllotmentService.GetSubjectAllotmentList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString())));
+             
+           });
+       });
+               
+               
+               
+               
+        
+    }).GetHtml()
+
+
+
+
+}
+
+
+@Html.DevExpress().LoadingPanel(
+    settings => {
+        settings.Name = "loadingPanelSubjectAllotment";
+        settings.Modal = true;
+        settings.ContainerElementID = "";
+        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+    }).GetHtml()
+

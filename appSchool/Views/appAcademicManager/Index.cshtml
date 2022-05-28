@@ -1,0 +1,29 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+
+@{
+    ViewBag.Title = "Academic";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Head {
+
+}
+
+
+
+@section LeftPanelContent {
+    @*@Html.Partial("LeftPanelPartial")*@
+
+    @{Html.RenderAction("ReturnLeftPanelView", "LeftAndRightPanel", new { moduleid = (int)appModule.appAcademicManager });}
+
+    @*{ @Html.RenderAction("ReturnLeftPanelView", "LeftPanel") }*@
+}
+
+@section RightPanelContent {
+    @{Html.RenderAction("ReturnRightPanelView", "LeftAndRightPanel");}
+
+}
+
+<h1>Academic Manager Home Page</h1>

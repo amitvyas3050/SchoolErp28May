@@ -1,0 +1,84 @@
+﻿@using appSchool.Repositories
+@model modelGuardianInfo
+
+<script>
+
+    function UpdateSuccessfully(data) {
+
+        alert("Update");
+        var mStudentIDs = StudentIDs.GetText();
+        if (mStudentIDs.toString() == "") {
+            alert("Please Select Students");
+            return;
+        }
+
+
+        $.ajax({
+            url: "/StudentRegistration/EditParentdetailbyClick",
+            type: "POST",
+            data: { mStudentID: mStudentIDs },
+            beforeSend: (function (data) {
+                loadingPanelStudentRegistration.Show();
+            }),
+
+            success: function (data) {
+                $("#RegistrationSplitter_1_CC").html(data.ResultData);
+                var winHeight = document.getElementById('RegistrationSplitter_1_CC').offsetHeight;
+                GridStudents.SetHeight(winHeight - 10);
+
+            },
+            error: function () {
+            }
+        }).done(function (data) {
+            loadingPanelStudentRegistration.Hide();
+
+        });
+    }
+
+</script>
+
+
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    Html.EnableClientValidation(true);
+}
+
+@using (Ajax.BeginForm("UpdateGuardianInfo", "StudentRegistration",
+    new AjaxOptions {
+        HttpMethod = "POST",
+        OnBegin = "loadingPanelStdGardianInfo.Show();",
+        OnComplete = "loadingPanelStdGardianInfo.Hide();",
+        UpdateTargetId = "contentGuardian",
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "UpdateSuccessfully(data)"
+    },
+    new {
+        id = "validationForm2",
+        @class = "edit_form",
+        style = "height: 200px; position:relative; width: 100%;"
+    })) {
+    <div id="contentGuardian">
+        @Html.Partial("GuardianEditPartial", Model)
+    </div>
+}
+
+@*@Html.DevExpress().LoadingPanel(
+    settings => {
+        settings.Name = "loadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "validationForm";
+        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+    }).GetHtml()
+ OnBegin = "function(){ loadingPanel.Show(); }",
+        OnComplete = "function(){ loadingPanel.Hide(); }",
+
+*@
+ 
+
+@Html.DevExpress().LoadingPanel(
+    settings => {
+        settings.Name = "loadingPanelStdGardianInfo";
+        settings.Modal = true;
+        settings.ContainerElementID = "";
+        settings.Styles.LoadingDiv.BackColor =System.Drawing.Color.White;
+    }).GetHtml()

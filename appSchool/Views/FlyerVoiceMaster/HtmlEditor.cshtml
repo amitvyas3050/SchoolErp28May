@@ -1,0 +1,17 @@
+﻿
+@using appSchool.ViewModels
+@using appSchool.Models
+@using appSchool.Repositories
+
+@model  NewsEventMaster
+
+@Html.DevExpress().HtmlEditor(settings => {
+    settings.Name = "EventDescription";
+  
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = System.Web.UI.WebControls.Unit.Pixel(200);
+    //settings.CallbackRouteValues = new { Controller = "NewsEventMaster", Action = "PartialGridNewsEventMasters", mShowFilter = ViewBag.ShowFilter, };
+    //settings.Html = "Some Content.";
+    
+    
+}).Bind(Model.EventDescription).GetHtml()

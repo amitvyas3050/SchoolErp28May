@@ -1,0 +1,60 @@
+﻿
+@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@model SMSTemplate
+
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    Html.EnableClientValidation(true);
+}
+
+
+@using (Ajax.BeginForm("AddNewSMSTemplate", "SMSTemplate",
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "SMSTempForm",
+        InsertionMode = InsertionMode.Replace
+
+    },
+    new
+    {
+        id = "validationForm",
+        @class = "edit_form",
+        style = "height: 200px; position:relative; width: 100%;",
+        enctype = "multipart/form-data"
+    }
+    ))
+{
+
+<div class="SMSTempForm" style="width:100%;height:auto;">
+    @Html.Partial("SMSTemplateEditForm",Model)
+  </div>
+    
+    
+    
+    
+    
+    
+    
+  
+    
+  
+
+   
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,69 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Repositories
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridClassSetup";
+            settings.KeyFieldName = "ClassSetupID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Height = System.Web.UI.WebControls.Unit.Pixel(100);
+
+
+            settings.CallbackRouteValues = new { Controller = "SendSMSAbsentees", Action = "PartialClassSetupView" };
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+            settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+           // settings.Columns.Add("StudentSessionID").EditFormSettings.ColumnSpan = 3;
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.ShowSelectCheckbox = true;
+            
+            
+            settings.CommandColumn.Width = 40;
+            settings.CommandColumn.SetHeaderTemplateContent(c =>
+            {
+                Html.DevExpress().CheckBox(settingsCheckBox =>
+                {
+                    settingsCheckBox.Name = "cbSelectAllClass";
+                    settingsCheckBox.Text = "";
+                    settingsCheckBox.Properties.ClientSideEvents.CheckedChanged = string.Format("function(s, e) {{ if(s.GetChecked()) {0}.SelectRows(); else {0}.UnselectRows(); }}", settings.Name);
+                    settingsCheckBox.Checked = c.Grid.VisibleRowCount == c.Grid.Selection.Count;
+                }).Render();
+            });
+            //settings.CommandColumn.Caption = "Select";
+            settings.SettingsBehavior.AllowSelectByRowClick = false;
+            settings.ClientSideEvents.SelectionChanged = "sendSMSAbsenteesController.SelectionChangedForClasses";
+            settings.Columns.Add("ClassSetupID").Visible=false;
+            settings.Columns.Add("ClassDescription").Caption = "Class List"; ;
+        
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+           // settings.SettingsPager.PageSizeItemSettings.Visible = true;
+           // settings.Settings.ShowFilterRow = true;
+           //  settings.Settings.ShowFilterRowMenu = true;
+            settings.SettingsPager.PageSize = 200;
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+          
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            
+           // settings.SettingsBehavior.AllowFocusedRow = true;
+          //  settings.ClientSideEvents.FocusedRowChanged = "sendMessegeController.RowSelectionChangeM";
+        });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+

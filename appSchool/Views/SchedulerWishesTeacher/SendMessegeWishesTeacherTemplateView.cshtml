@@ -1,0 +1,64 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Models
+@using appSchool.Repositories
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridSMSTemplate";
+            settings.KeyFieldName = "TemplateID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+           // settings.Caption = "Select Message Template";
+            //settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            settings.CallbackRouteValues = new { Controller = "SchedulerWishesTeacher", Action = "PartialSendMessegeWishesTeacherTemplateView" };
+            //settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "SMSTemplate", Action = "AddNewSMSTemplate" };
+            //settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "SMSTemplate", Action = "UpdateSMSTemplate" };
+            //settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "SMSTemplate", Action = "DeleteSMSTemplate" };
+            //settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+            //settings.SettingsBehavior.ConfirmDelete = true;
+
+            settings.SettingsPopup.EditForm.ShowHeader = false;
+            settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+            settings.CommandColumn.Visible = false;
+            settings.CommandColumn.ShowSelectCheckbox = false;
+            settings.Columns.Add("TemplateID").Visible = false;
+            settings.CommandColumn.Caption = "Select";
+            settings.CommandColumn.Width = 50;
+           
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "SMSTypeID";
+                column.Caption = "SMSTypeName";
+                column.Visible = false;
+                column.Width =System.Web.UI.WebControls.Unit.Pixel(120);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new SMSTypeRepository()).Get();
+                comboBoxProperties.TextField = "SMSTypeName";
+                comboBoxProperties.ValueField = "SMSTypeID";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+            //settings.Columns.Add("TemplateName").Width = System.Web.UI.WebControls.Unit.Pixel(150);
+            settings.Columns.Add(column =>
+                {
+                    column.FieldName = "TemplateName";
+                    column.Caption = "Select Template";
+                });
+            
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            settings.ClientSideEvents.FocusedRowChanged = "schedulerWishesTeacherController.RowSelectionChange";
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

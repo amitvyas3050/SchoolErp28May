@@ -1,0 +1,27 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+
+@{
+    ViewBag.Title = "Data Manager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Head {
+
+}
+
+@section LeftPanelContent {
+    @*@Html.Partial("LeftPanelPartial")*@
+
+    @{Html.RenderAction("ReturnLeftPanelView", "LeftAndRightPanel", new { moduleid = (int)appModule.appPermission });}
+
+    @*{ @Html.RenderAction("ReturnLeftPanelView", "LeftPanel") }*@
+}
+
+@section RightPanelContent {
+    @{Html.RenderAction("ReturnRightPanelView", "LeftAndRightPanel");}
+
+}
+
+<h1>App User Permission Home Page</h1>

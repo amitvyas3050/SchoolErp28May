@@ -1,0 +1,138 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+
+@{
+    ViewBag.Title = "Student Fee Structure";
+    if (ViewData["errorFeestructure"] == null)
+    {
+        ViewData["errorFeestructure"] = "";
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+@section Head {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/GridView.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap.css")" />
+    <script type="text/javascript" src="@Url.Content("~/Content/GridView.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/jsControllers/studentFeeStructureController.js")"></script>
+
+}
+
+
+@section LeftPanelContent {
+
+    @{Html.RenderAction("ReturnLeftPanelView", "LeftAndRightPanel", new { moduleid = (int)appModule.appFeesManager });}
+
+
+}
+
+@section RightPanelContent {
+    @{Html.RenderAction("ReturnRightPanelView", "LeftAndRightPanel");}
+
+}
+
+<div class="row" style="margin-right:0">
+
+
+    @Html.Partial("CallBackPanelPartial")
+
+
+    <div class="col-sm-4">
+
+        @Html.DevExpress().Label(settingslbl =>
+       {
+           settingslbl.Name = "lblclass";
+           settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+           settingslbl.Text = "Select Class";
+
+       }).GetHtml()
+
+        @Html.DevExpress().ComboBox(
+        settingscbo =>
+        {
+            settingscbo.Name = "ClassID";
+            settingscbo.ControlStyle.CssClass = "form-control";
+            settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+            settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+            settingscbo.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settingscbo.Properties.TextField = "ClassName";
+            settingscbo.Properties.ValueField = "ClassID";
+            //settingscbo.ShowModelErrors = true;
+            //settingscbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "studentFeeStructureController.SelectedClass";
+        }).BindList(new UnitOfWork().ClassService.GetClassList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))).GetHtml()
+
+
+    </div>
+
+    <div class="col-sm-3">
+
+        @Html.DevExpress().Button(
+        settingsSend =>
+        {
+            settingsSend.Name = "btnSave";
+            settingsSend.Width = 150;
+            settingsSend.ControlStyle.CssClass = "btnpaddingrow20px";
+            settingsSend.RenderMode = ButtonRenderMode.Button;
+            settingsSend.Text = "Save Structure";
+            settingsSend.ImagePosition = ImagePosition.Left;
+            settingsSend.Images.Image.IconID =IconID.SaveSave16x16;
+            //  settingsSend.ClientSideEvents.Click = "studentFeeStructureController.SaveFeeStructure";
+
+            settingsSend.ClientSideEvents.Click = "function(s, e) {  CallbackPanel.PerformCallback(); }";
+
+        }).GetHtml()
+
+    </div>
+
+    <div class="col-sm-3">
+
+        @Html.DevExpress().LoadingPanel(
+        settingslp =>
+        {
+            settingslp.Name = "LoadingPanel";
+            settingslp.Modal = true;
+            settingslp.ContainerElementID = false ? "Panel" : "";
+        }).GetHtml()
+
+        @Html.DevExpress().TextBox(
+        settingscls =>
+        {
+            settingscls.Name = "txtClassForSFS";
+            settingscls.ClientVisible = false;
+
+        }).GetHtml()
+
+    </div>
+
+</div>
+
+<div class="row" style="margin-right:0">
+
+    <div class="col-sm-12">
+
+        @{Html.RenderPartial("GridStudentListForSFS");}
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

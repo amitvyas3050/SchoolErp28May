@@ -1,0 +1,44 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+
+
+@Html.DevExpress().Splitter(settings => {
+    settings.Name = "AttendanceDatewiseLFSplitter";
+    settings.Orientation = System.Web.UI.WebControls.Orientation.Horizontal;
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.Styles.Pane.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(1);
+    //settings.Styles.Pane.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(1);
+    settings.ClientSideEvents.PaneResized = "attendanceDatewiseController.splitterResized";
+    settings.Panes.Add(subpane =>
+    {
+        subpane.Name = "LeftPane1";
+        //subpane.PaneStyle.CssClass = "leftPane";
+        subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+        subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+        subpane.Size = System.Web.UI.WebControls.Unit.Percentage(40);
+      
+        //subpane.PaneStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(1);
+        subpane.SetContent(() =>
+        {
+            Html.RenderPartial("ListAllDatewiseAttendance");
+        });
+    });
+
+    settings.Panes.Add(subpane =>
+    {
+        subpane.Name = "RightPane1";
+        //subpane.PaneStyle.CssClass = "leftPane";
+        subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+        subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+        subpane.Size = System.Web.UI.WebControls.Unit.Percentage(60);
+      
+        //subpane.PaneStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(1);
+        subpane.SetContent(() =>
+        {
+            Html.RenderPartial("ListAbsentStudentClasswise");
+        });
+    });
+   
+}).GetHtml()

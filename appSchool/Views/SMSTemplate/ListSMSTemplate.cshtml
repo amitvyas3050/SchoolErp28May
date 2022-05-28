@@ -1,0 +1,233 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridSMSTemplate";
+            settings.KeyFieldName = "TemplateID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            //settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            settings.CallbackRouteValues = new { Controller = "SMSTemplate", Action = "PartialGridSMSTemplate" };
+            settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "SMSTemplate", Action = "AddNewSMSTemplate" };
+            settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "SMSTemplate", Action = "UpdateSMSTemplate" };
+            settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "SMSTemplate", Action = "DeleteSMSTemplate" };
+            settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+            settings.SettingsBehavior.ConfirmDelete = true;
+
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+            settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+            
+
+            settings.CommandColumn.Visible = true;
+            settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(5);
+            settings.CommandColumn.ButtonType = GridViewCommandButtonType.Default;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Pixel(60);
+            if(PermissionFlag._ModFlag==true)
+            settings.CommandColumn.ShowEditButton = true;
+            if(PermissionFlag._AddFlag==true)
+            settings.CommandColumn.ShowNewButtonInHeader = true;
+            if(PermissionFlag._DelFlag==true)
+            settings.CommandColumn.ShowDeleteButton = true;
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "SMSTypeID";
+                column.Caption = "SMSTypeName";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(130);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new SMSTypeRepository()).GetSMSTypeList();
+                comboBoxProperties.TextField = "SMSTypeName";
+                comboBoxProperties.ValueField = "SMSTypeID";
+                comboBoxProperties.ValueType = typeof(int);
+                
+            });
+
+           
+            settings.Columns.Add(
+             column =>
+             {
+                 column.FieldName= "TemplateName";
+                 column.Caption = "Template Name";
+                 column.Width = System.Web.UI.WebControls.Unit.Pixel(160);
+             });
+            //settings.Columns.Add(column =>
+            //{
+               
+            //    column.FieldName = "LanguageID";
+            //    column.Caption = "Language";
+            //    column.Name = "language";
+              
+            //    column.ColumnType = MVCxGridViewColumnType.ComboBox;
+            //    var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+            //    comboBoxProperties.DataSource = cCommon.GetLanguageList();
+            //    comboBoxProperties.TextField = "Value";
+            //    comboBoxProperties.ValueField = "Key";
+            //    comboBoxProperties.ValueType = typeof(int);
+            //    comboBoxProperties.ClientSideEvents.SelectedIndexChanged = "function(s,e) { ddIndexChange(s,e);} ";
+                
+            //});
+
+            settings.Columns.Add("PreFix").Visible = true;
+          
+            settings.Columns.Add(
+              column =>
+              {
+                  column.FieldName = "TemplateMessage";
+                  column.Caption = "Template Message";
+                  column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+              });
+            settings.Columns.Add(
+                column =>
+                {
+                    column.FieldName = "PreFixH";
+                    column.Caption = "Prefix Hindi";
+
+                });
+          
+            settings.Columns.Add(
+                column =>
+                {
+                    column.FieldName = "TemplateMessageH";
+                    column.Caption = "Template Message Hindi";
+                    column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+                });
+            
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            settings.ClientSideEvents.FocusedRowChanged = "smsTemplatesController.RowSelectionChange";
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+@{
+    if (ViewBag.ShowFilter == null){
+        ViewBag.ShowFilter = false;
+    }
+        
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridSMSTemplate";
+            settings.KeyFieldName = "TemplateID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            settings.CallbackRouteValues = new { Controller = "SMSTemplate", Action = "PartialGridSMSTemplate" };
+            settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "SMSTemplate", Action = "AddNewSMSTemplate" };
+            settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "SMSTemplate", Action = "UpdateSMSTemplate" };
+            settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "SMSTemplate", Action = "DeleteSMSTemplate" };
+
+
+            settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+            settings.SettingsBehavior.ConfirmDelete = true;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+            
+            settings.CommandColumn.ButtonType = GridViewCommandButtonType.Button;
+            settings.SettingsCommandButton.UpdateButton.ButtonType = GridViewCommandButtonType.Button;
+            settings.SettingsCommandButton.CancelButton.ButtonType = GridViewCommandButtonType.Button;
+
+
+            settings.Columns.Add("TemplateName").EditFormSettings.ColumnSpan = 3;
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "LanguageID";
+                column.Caption = "Language";
+
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource =cCommon.GetLanguageList() ;
+                comboBoxProperties.TextField = "Value";
+                comboBoxProperties.ValueField = "Key";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+            
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "SMSTypeID";
+                column.Caption = "SMSTypeName";
+
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new SMSTypeRepository()).Get();
+                comboBoxProperties.TextField = "SMSTypeName";
+                comboBoxProperties.ValueField = "SMSTypeID";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+            settings.Columns.Add("TemplateMessage").EditFormSettings.ColumnSpan = 3;
+            
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            
+            settings.Settings.ShowFilterRow = settings.Settings.ShowFilterRowMenu = ViewBag.ShowFilter;
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            settings.ClientSideEvents.FocusedRowChanged = "smsTemplatesController.RowSelectionChange";
+            
+            
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).Settings.ShowFilterRow = !((MVCxGridView)sender).Settings.ShowFilterRow;
+                //MVCxGridView grid = (MVCxGridView)sender;
+                //grid.Settings.ShowFilterRow = !grid.Settings.ShowFilterRow;
+                //((MVCxGridView)sender).StartEdit(((MVCxGridView)sender).GetFocusedRowIndex());
+                //GridStudents.StartEdit(GridStudents.GetFocusedRowIndex());
+                
+            };
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+
+
+*@

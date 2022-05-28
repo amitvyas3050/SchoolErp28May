@@ -1,0 +1,28 @@
+﻿@using (Html.BeginForm("Callbacks", "UploadControl", FormMethod.Post, new { @class = "imagePreview" })) {
+    <div class="uploadContainer">
+        <label>Choose Image:</label>
+        @Html.DevExpress().UploadControl(
+            settings => {
+                settings.Name = "ucCallbacks";
+                settings.CallbackRouteValues = new { Controller = "UploadControl", Action = "CallbacksImageUpload" };
+                settings.ControlStyle.CssClass = "editorArea";
+
+                settings.ShowProgressPanel = true;
+               // settings.ValidationSettings.Assign(UploadControlDemosHelpers.ValidationSettings);
+
+                settings.ClientSideEvents.FileUploadComplete = "function(s,e){ if(e.callbackData != '') $('#previewImage').attr('src', e.callbackData); }";
+            }).GetHtml()
+        <label>&nbsp;</label>
+        <div class="editorArea text">
+            Allowed image types: jpeg, gif<br />
+            Maximum file size: 20MB
+        </div>
+        <label>&nbsp;</label>
+        <div class="editorArea">
+            <input type="button" value="Upload" onclick="ucCallbacks.Upload()" />
+        </div>
+    </div>
+    <div class="imageContainer">
+        <img alt="" id="previewImage" src="@Url.Content("~/Content/UploadControl/ImagePreview.gif")" />
+    </div>
+}

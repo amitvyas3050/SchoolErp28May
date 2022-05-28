@@ -1,0 +1,134 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@{
+    var gridView = Html.DevExpress().GridView(gridViewSettings =>
+    {
+        gridViewSettings.Name = "GridSendGeneralMessege";
+        gridViewSettings.KeyFieldName = "StudentSessionID";
+
+        gridViewSettings.CallbackRouteValues = new { Controller = "SendGeneralMessege", Action = "PartialSendGeneralMessegeView", mClassSetup = ViewData["ClassSetupID"] };
+
+        gridViewSettings.EnablePagingGestures = AutoBoolean.False;
+
+        gridViewSettings.ControlStyle.CssClass = "grid-view";
+        gridViewSettings.Width = Unit.Percentage(100);
+
+        gridViewSettings.Styles.Cell.Wrap = DefaultBoolean.False;
+        gridViewSettings.Styles.PagerBottomPanel.CssClass = "pager";
+        gridViewSettings.Styles.FocusedRow.CssClass = "focused";
+
+        gridViewSettings.Settings.VerticalScrollBarMode = ScrollBarMode.Hidden;
+        gridViewSettings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+        gridViewSettings.Settings.ShowHeaderFilterButton = true;
+        gridViewSettings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+        gridViewSettings.SettingsPager.PageSize = 15;
+        gridViewSettings.SettingsPager.EnableAdaptivity = true;
+        gridViewSettings.SettingsPager.PageSizeItemSettings.Visible = true;
+
+        gridViewSettings.SettingsExport.EnableClientSideExportAPI = true;
+        gridViewSettings.SettingsExport.ExportSelectedRowsOnly = true;
+
+        gridViewSettings.SettingsPopup.EditForm.SettingsAdaptivity.MaxWidth = 800;
+        gridViewSettings.SettingsPopup.EditForm.SettingsAdaptivity.Mode = PopupControlAdaptivityMode.Always;
+        gridViewSettings.SettingsPopup.EditForm.SettingsAdaptivity.VerticalAlign = PopupAdaptiveVerticalAlign.WindowCenter;
+
+
+        gridViewSettings.CommandColumn.Visible = true;
+        gridViewSettings.CommandColumn.ShowSelectCheckbox = true;
+        gridViewSettings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+        gridViewSettings.CommandColumn.VisibleIndex = 0;
+        gridViewSettings.CommandColumn.Width = Unit.Pixel(52);
+
+        gridViewSettings.Columns.Add("StudentID").Visible = false;
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "EnrollmentNo";
+            column.Caption = "EnrollmentNo";
+            column.ToolTip = "Click to Sort";
+            column.Width = Unit.Pixel(120);
+        });
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "FullName";
+            column.Caption = "Name";
+            column.ToolTip = "Click to Sort";
+            column.Width = Unit.Pixel(230);
+        });
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "ClassDescription";
+            column.Caption = "Class";
+            column.ToolTip = "Click to Sort";
+            column.Width = Unit.Pixel(80);
+        });
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "DateOfBirth";
+            column.Caption = "Date Of Birth";
+            column.ColumnType = MVCxGridViewColumnType.DateEdit;
+
+            var dateProperties = column.PropertiesEdit as DateEditProperties;
+            dateProperties.UseMaskBehavior = true;
+            dateProperties.EditFormat = EditFormat.Custom;
+            dateProperties.EditFormatString = "MMMM dd, yyyy";
+            dateProperties.DisplayFormatString = "MMMM dd, yyyy";
+            dateProperties.MaxDate = DateTime.Now;
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+            //column.EditFormSettings.ColumnSpan = 1;
+
+        });
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "FatherName";
+            column.Caption = "Father Name";
+            column.ToolTip = "Click to Sort";
+            column.ReadOnly = true;
+            column.Width = Unit.Pixel(210);
+        });
+
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "SMSMobileNo";
+            column.Caption = "MobileNo";
+            column.ToolTip = "Click to Sort";
+            column.Width = Unit.Pixel(150);
+        });
+
+        gridViewSettings.Columns.Add(column =>
+        {
+            column.FieldName = "SMSInHindi";
+            column.Caption = "SMS In Hindi";
+            column.ColumnType = MVCxGridViewColumnType.CheckBox;
+            column.ToolTip = "Click to Sort";
+            column.Width = Unit.Pixel(120);
+        });
+
+        //gridViewSettings.Columns.Add("FatherName").ReadOnly = true;
+        gridViewSettings.Columns.Add("HouseName", "House").Visible = false;
+        gridViewSettings.Columns.Add("BusName").Visible = false;
+        gridViewSettings.Columns.Add("BusFacility", MVCxGridViewColumnType.CheckBox).Visible = false;
+        //gridViewSettings.Columns.Add("SMSInHindi", MVCxGridViewColumnType.CheckBox).Visible = true;
+
+
+        gridViewSettings.ClientSideEvents.SelectionChanged = "sendGeneralMessegeController.SelectionChanged";
+        //gridViewSettings.ClientSideEvents.Init = "onGridViewInit";
+        //gridViewSettings.ClientSideEvents.SelectionChanged = "onGridViewSelectionChanged";
+        //gridViewSettings.ClientSideEvents.BeginCallback = "onGridViewBeginCallback";
+
+
+        gridViewSettings.CellEditorInitialize = (s, e) =>
+        {
+            ((ASPxEdit)e.Editor).ValidationSettings.Display = Display.Dynamic;
+        };
+
+
+    });
+    if (ViewBag.GeneralError != null)
+    {
+        gridView.SetEditErrorText(ViewBag.GeneralError);
+    }
+}
+
+@gridView.Bind(Model).GetHtml()

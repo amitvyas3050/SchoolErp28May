@@ -1,0 +1,170 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Repositories
+ 
+@if (ViewBag.ShowFilter == null){
+        ViewBag.ShowFilter = false;
+    }
+
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridThoughtMaster";
+            settings.KeyFieldName = "ThoughtID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(99);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+
+            settings.CallbackRouteValues = new { Controller = "ThoughtMaster", Action = "PartialGridThoughtMaster", mShowFilter = ViewBag.ShowFilter, };
+            settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ThoughtMaster", Action = "AddNewThoughtMaster" };
+            settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ThoughtMaster", Action = "UpdateThoughtMaster" };
+            settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ThoughtMaster", Action = "DeleteThoughtMaster" };
+
+
+            settings.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
+            //settings.SettingsPopup.EditForm.Modal = true;
+
+            settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+
+            settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Above;
+            settings.SettingsPopup.EditForm.Height = System.Web.UI.WebControls.Unit.Pixel(350);
+            settings.SettingsPopup.EditForm.Width = System.Web.UI.WebControls.Unit.Pixel(800);
+
+            settings.SettingsBehavior.ConfirmDelete = true;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+           settings.Columns.Add(column =>
+           {
+               column.FieldName = "ThoughtID";
+               column.Caption = "ThoughtID";
+               column.Visible = false;
+           });
+
+           settings.Columns.Add(column =>
+           {
+               column.FieldName = "Thought";
+               column.Caption = "Thoughts";
+               column.ToolTip = "Click to Sort";
+               column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+           });
+
+           settings.Columns.Add(column =>
+           {
+               column.FieldName = "ThoughtOrder";
+               column.Caption = "Thoughts Order";
+               column.ToolTip = "Click to Sort";
+               column.Width = System.Web.UI.WebControls.Unit.Pixel(50);
+           });
+
+          
+           //settings.Columns.Add(column =>
+           //{
+           //    column.FieldName = "CategoryType";
+           //    column.Caption = "Category Type";
+           //    column.ToolTip = "Click to Sort";
+           //    column.ColumnType = MVCxGridViewColumnType.ComboBox;
+           //    var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+
+           //    comboBoxProperties.DataSource = (cCommon.GetNewsCategoryList());
+           //    column.Width = System.Web.UI.WebControls.Unit.Pixel(120);
+           //    comboBoxProperties.TextField = "Value";
+           //    comboBoxProperties.ValueField = "Key";
+           //});
+
+           settings.Columns.Add(column =>
+           {
+               column.FieldName = "FromDate";
+               column.Caption = "From Date";
+               column.ToolTip = "Click to Sort";
+               column.ColumnType = MVCxGridViewColumnType.DateEdit;
+
+               var dateProperties = column.PropertiesEdit as DateEditProperties;
+               dateProperties.UseMaskBehavior = true;
+               dateProperties.EditFormat = EditFormat.Custom;
+               dateProperties.EditFormatString = "MMMM dd, yyyy";
+               dateProperties.DisplayFormatString = "MMMM dd, yyyy";
+               //dateProperties.MaxDate = DateTime.Now;
+               column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+               column.EditFormSettings.ColumnSpan = 1;
+
+           });
+
+           settings.Columns.Add(column =>
+           {
+               column.FieldName = "ToDate";
+               column.Caption = "To Date";
+               column.ToolTip = "Click to Sort";
+               column.ColumnType = MVCxGridViewColumnType.DateEdit;
+
+               var dateProperties = column.PropertiesEdit as DateEditProperties;
+               dateProperties.UseMaskBehavior = true;
+               dateProperties.EditFormat = EditFormat.Custom;
+               dateProperties.EditFormatString = "MMMM dd, yyyy";
+               dateProperties.DisplayFormatString = "MMMM dd, yyyy";
+               //dateProperties.Date = DateTime.Now.Date;
+               column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+               column.EditFormSettings.ColumnSpan = 1;
+           });
+
+
+           //settings.Columns.Add(column =>
+           //{
+           //    column.FieldName = "EventDescription";
+           //    column.Caption = "Event Discription";
+           //    column.ToolTip = "Click to Sort";
+           //    column.Width = System.Web.UI.WebControls.Unit.Pixel(400);
+
+           //    column.EditFormSettings.ColumnSpan = 2;
+           //    column.EditFormSettings.CaptionLocation = ASPxColumnCaptionLocation.Top;
+
+           //    column.ColumnType = MVCxGridViewColumnType.Memo;
+           //    (column.PropertiesEdit as MemoProperties).EncodeHtml = false;
+
+           //    column.SetEditItemTemplateContent(c =>
+           //    {
+           //        var dataObject = c.Grid.IsNewRowEditing ? new NewsEventMaster() : c.Grid.GetRow(c.VisibleIndex);
+           //        Html.RenderPartial("HtmlEditor", dataObject);
+           //    });
+           
+           //});		
+                
+            
+            
+           
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(10);
+            
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            settings.Settings.ShowHeaderFilterButton = true;
+            settings.CommandColumn.Visible = false;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            //settings.CommandColumn.ShowClearFilterButton = true;
+          
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            //settings.ClientSideEvents.FocusedRowChanged = "thoughtMasterController.RowSelectionChange";
+        
+            
+            settings.PreRender = (sender, e) =>
+            {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+            //settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            
+        });
+       
+        
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

@@ -1,0 +1,310 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+@{
+    ViewBag.Title = "Student Session Info.";
+    
+    
+}
+
+@if (ViewData["ClassIDForTCAllotment"] == null)
+{
+    ViewData["ClassIDForTCAllotment"] = 0;
+}
+
+<script src="@Url.Content("~/jsControllers/tCAllotmentController.js")" type="text/javascript"></script>
+
+@if (PermissionFlag._AddFlag == false && PermissionFlag._DelFlag == false && PermissionFlag._ModFlag == false)
+     {
+     
+              @Html.DevExpress().PopupControl(settings => {
+                settings.Name = "popupclass";
+                settings.PopupElementID = "popupArea";
+                settings.AllowDragging = true;
+                settings.ShowOnPageLoad = true;
+                settings.Width=180;
+                settings.Height = 100;
+            
+                settings.PopupHorizontalAlign =PopupHorizontalAlign.WindowCenter;
+                settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                settings.CloseAction = CloseAction.CloseButton;
+                settings.HeaderText = "User Permission";
+                settings.SetContent(() => {
+                    ViewContext.Writer.Write(
+                        " <p style=\"color:red;\"> Permission not granted </p>"
+                    );
+                    ViewContext.Writer.Write(
+            "<div style=\"text-align:center;\" > <img   src=\"" + Url.Content("~/Images/permission.png") + "\" alt=\"Permission\" /> </div> "
+        );
+               });
+}).GetHtml()
+     }
+else
+{
+
+ @Html.DevExpress().Splitter(settings => {
+    settings.Name = "TCAllotmentSplitter";
+        settings.AllowResize = true;
+        settings.Orientation = System.Web.UI.WebControls.Orientation.Vertical;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SeparatorVisible = true;
+        settings.ClientSideEvents.PaneResized = "tCAllotmentController.splitterResized";
+
+       settings.Panes.Add(subpane =>
+        {
+            subpane.Name = "TCAllotmentBody";
+            subpane.PaneStyle.CssClass = "contentPane";
+            subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+            subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(60);
+            subpane.Size = System.Web.UI.WebControls.Unit.Pixel(60);
+            subpane.Separator.Visible = DefaultBoolean.False;
+            subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.SetContent(() =>
+            {
+              //  Html.RenderPartial("ListStudentSessionView", (new UnitOfWork().studentSessionService.GetAllStudentForSession(int.Parse(Session["SessionID"].ToString()))));
+
+                ViewContext.Writer.Write("<table><tr><td style=\"padding-right:10px; \"> ");
+                
+                @Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lb";
+                    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settingslbl.Text = "Select Class for TCAllotment";
+                }).GetHtml();
+                
+                ViewContext.Writer.Write("</td><td style=\"padding-right:10px;  \"> ");
+
+                @Html.DevExpress().ComboBox(
+
+              settingscbo =>
+              {
+                  settingscbo.Name = "ClassID";
+                  settingscbo.ControlStyle.CssClass = "editor";
+                  settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                  settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                  settingscbo.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+                  settingscbo.Properties.TextField = "ClassName";
+                  settingscbo.Properties.ValueField = "ClassID";
+                  //settingscbo.ShowModelErrors = true;
+                  //settingscbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                 // settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "tCAllotmentController.SelectedClass";
+              }
+          ).BindList(new UnitOfWork().ClassService.GetClassList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))).GetHtml();
+
+                ViewContext.Writer.Write("</td><td style=\"padding-right:10px;  \"> ");
+
+                @Html.DevExpress().Button(
+                     settingsbtn =>
+                     {
+                         settingsbtn.Name = "btnStudentList";
+                         settingsbtn.ControlStyle.CssClass = "button";
+                         settingsbtn.Text = "Student List";
+                         settingsbtn.Width = 150;
+                         settingsbtn.Images.Image.IconID = IconID.EditPaste32x32;
+                         settingsbtn.ImagePosition = ImagePosition.Left;
+                         //settings.ClientSideEvents.Click = "function(s, e) { CallbackPanel.PerformCallback(); }";
+                         settingsbtn.ClientSideEvents.Click = "tCAllotmentController.GetStudentListWithTCFalse";
+                     }).GetHtml();
+
+                ViewContext.Writer.Write("</td><td style=\"padding-right:10px;  \"> ");
+
+                @Html.DevExpress().Button(
+                settingsbtn =>
+                {
+                    settingsbtn.Name = "btnTCIssued";
+                    settingsbtn.ControlStyle.CssClass = "button";
+                    settingsbtn.Text = "TC Issued";
+                    settingsbtn.Width = 150;
+                    settingsbtn.Images.Image.IconID = IconID.EditPaste32x32;
+                    settingsbtn.ImagePosition = ImagePosition.Left;
+                    //settings.ClientSideEvents.Click = "function(s, e) { CallbackPanel.PerformCallback(); }";
+                    settingsbtn.ClientSideEvents.Click = "tCAllotmentController.GetStudentListWithTCTrue";
+                }).GetHtml();
+                
+                ViewContext.Writer.Write("</td></tr></table> ");
+            });
+        });
+       settings.Panes.Add(subpane =>
+       {
+           subpane.Name = "TCAllotmentFooter";
+           subpane.PaneStyle.CssClass = "contentPane";
+           subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+           subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(100);
+           subpane.Size = System.Web.UI.WebControls.Unit.Percentage(40);
+           subpane.Separator.Visible = DefaultBoolean.True;
+           subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+           subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+           subpane.SetContent(() =>
+           {
+               Html.RenderPartial("ListTCAllotmentView");
+               //Html.RenderPartial("RegistrationTabs",(int)1);
+           });
+       });
+
+
+       settings.Panes.Add(subpane =>
+       {
+           subpane.Name = "TCAllotmentBottom";
+           subpane.PaneStyle.CssClass = "contentPane";
+           subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+           subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(80);
+           subpane.Size = System.Web.UI.WebControls.Unit.Pixel(80);
+           subpane.Separator.Visible = DefaultBoolean.True;
+           subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+           subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+           subpane.SetContent(() =>
+           {
+             
+
+               ViewContext.Writer.Write(" <div style=\"border:1px solid #989898; width:98%; padding:1%;\">");
+
+               ViewContext.Writer.Write(" <table><tr><td style=\"padding-right:10px;\">");
+    
+                  @Html.DevExpress().CheckBox(settingchk =>
+                 {
+                     settingchk.Name = "cbSelectAllStudSession";
+                     settingchk.Text = "Select All";
+                     settingchk.ControlStyle.ForeColor = System.Drawing.Color.Red;
+                     settingchk.ControlStyle.Font.Size = 12;
+                     settingchk.Properties.ClientSideEvents.CheckedChanged = "tCAllotmentController.SelectAllStudent";
+                     // settingchk.Checked = c.Grid.VisibleRowCount == c.Grid.Selection.Count;
+                 }).GetHtml();
+           
+                    ViewContext.Writer.Write("</td><td style=\"padding-right:10px;\">");
+            
+               //@Html.DevExpress().RadioButtonList(
+               //settingsrbtn =>
+               //         {
+               //             settingsrbtn.Name = "rbtnStudSession";
+               //             settingsrbtn.Properties.RepeatLayout = System.Web.UI.WebControls.RepeatLayout.Flow;
+               //             settingsrbtn.Properties.RepeatDirection = System.Web.UI.WebControls.RepeatDirection.Horizontal;
+               //           //settingsrbtn.Properties.RepeatColumns = options.RepeatColumns;
+
+               //             settingsrbtn.Properties.TextField = "Value";
+               //             settingsrbtn.Properties.ValueField = "Key";
+
+               //             settingsrbtn.Properties.ClientSideEvents.SelectedIndexChanged = "tCAllotmentController.SelectedIndexChangedForRbtnUpdate";
+               //         }).BindList(cCommon.GetStudentSessionSelectList()).GetHtml();
+
+                         ViewContext.Writer.Write("</td> <td style=\"padding-right:10px;\">");
+                        
+                  
+               //@Html.DevExpress().Label(settingslbl =>
+               // {
+               //     settingslbl.Name = "lblHouseID";
+               //     settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+               //     settingslbl.Text = "Select House Name";
+               //     settingslbl.ClientVisible = false;
+               // }).GetHtml();
+
+                 
+               
+                ViewContext.Writer.Write(" </td> <td ID=\"ClassSetupIDtd\"  style=\"padding-right:10px;\">");
+
+                   //Html.RenderPartial("ClassSetupPartial");
+               
+                  ViewContext.Writer.Write("</td><td style=\"padding-right:10px;\">");
+
+
+              @Html.DevExpress().RadioButtonList(
+           settingsrbtnSMS =>
+           {
+               settingsrbtnSMS.Name = "chkTCFlag";
+               settingsrbtnSMS.Properties.RepeatLayout = System.Web.UI.WebControls.RepeatLayout.Flow;
+               settingsrbtnSMS.Properties.RepeatDirection = System.Web.UI.WebControls.RepeatDirection.Horizontal;
+               //settingsrbtn.Properties.RepeatColumns = options.RepeatColumns;
+               //  settingsrbtn.Properties.TextField = "Value";
+               //  settingsrbtn.Properties.ValueField = "Key";
+               //settingsrbtn.Properties.ClientSideEvents.SelectedIndexChanged = "studentSessionController.SelectedIndexChangedForRbtnUpdate";
+               settingsrbtnSMS.Properties.Items.Add("TC Allotment", 1).Selected = true;
+               settingsrbtnSMS.Properties.Items.Add("TC Not Allotment", 2).Selected = false;
+               settingsrbtnSMS.ClientVisible = true;
+               
+           }).GetHtml();
+              ViewContext.Writer.Write("</td><td style=\"padding-right:10px;\">");
+              @Html.DevExpress().Label(
+            settingsLbl =>
+            {
+                settingsLbl.ControlStyle.CssClass = "label";
+                settingsLbl.Text = "TC Date";
+                settingsLbl.AssociatedControlName = "ToDate";
+            }
+    ).GetHtml();
+
+              @Html.DevExpress().DateEdit(
+
+                   settingsdate =>
+                   {
+                       settingsdate.Name = "TcDate";
+                       settingsdate.ControlStyle.CssClass = "editor";
+                       settingsdate.Properties.NullText = "dd/MM/yyyy";
+                       settingsdate.Properties.EditFormat = EditFormat.Custom;
+                       settingsdate.Properties.EditFormatString = "dd/MM/yyyy";
+
+                   }
+               ).GetHtml();
+               
+               ViewContext.Writer.Write("</td><td style=\"padding-right:10px;\">");
+
+               if (PermissionFlag._AddFlag == true)
+               {
+                   @Html.DevExpress().Button(
+                     settingsbtn =>
+                     {
+                         settingsbtn.Name = "btnStudSession";
+                        settingsbtn.ControlStyle.CssClass = "button";
+                         settingsbtn.Text = "Update";
+                         settingsbtn.Width = 150;
+                         settingsbtn.Images.Image.IconID = IconID.EditPaste32x32;
+                         settingsbtn.ImagePosition = ImagePosition.Left;
+                         //settings.ClientSideEvents.Click = "function(s, e) { CallbackPanel.PerformCallback(); }";
+                         settingsbtn.ClientSideEvents.Click = "tCAllotmentController.UpdateTCAllotment";
+                     }).GetHtml();
+               }
+                ViewContext.Writer.Write("</td><td>");
+               
+                     @Html.DevExpress().TextBox(
+                settingsStudentID =>
+                {
+                    settingsStudentID.Name = "StudentIDs";
+                    settingsStudentID.ControlStyle.CssClass = "editor";
+                    settingsStudentID.ClientVisible = false;
+                    
+                }
+            ).GetHtml();
+                  ViewContext.Writer.Write(" </td></tr></table>");
+                  ViewContext.Writer.Write("</div>");
+               
+           });
+       });
+    
+    
+    }).GetHtml()
+
+
+
+}
+
+
+
+@Html.DevExpress().LoadingPanel(
+    settings => {
+        settings.Name = "loadingPanelTCAllotment";
+        settings.Modal = true;
+        settings.ContainerElementID = "";
+        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+    }).GetHtml()
+
+
+
+
+
+
+
+
+
+
+
+

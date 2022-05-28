@@ -1,0 +1,115 @@
+﻿
+@using appSchool.ViewModels
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridContectList";
+            settings.KeyFieldName = "ContactID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            settings.CallbackRouteValues = new { Controller = "ContectList", Action = "ListContectListView" };
+            settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ContectList", Action = "AddNewContect" };
+            settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ContectList", Action = "UpdateContect" };
+            settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ContectList", Action = "DeleteContect" };
+            settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+            settings.SettingsBehavior.ConfirmDelete = true;
+
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+            settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            //settings.SettingsPopup.EditForm.Height = 150;
+            //settings.SettingsPopup.EditForm.Modal = true;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.Caption = "ContectList";
+            settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(10);
+            settings.CommandColumn.ButtonType = GridViewCommandButtonType.Default;
+            if (PermissionFlag._AddFlag == true)
+                settings.CommandColumn.ShowNewButtonInHeader = true;
+
+            if (PermissionFlag._ModFlag == true)
+                settings.CommandColumn.ShowEditButton = true;
+            if (PermissionFlag._DelFlag == true)
+                settings.CommandColumn.ShowDeleteButton = true;
+            
+            //settings.Columns.Add("DepartmentName").EditFormSettings.ColumnSpan = 3;
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Department";
+                column.Caption = "Department Name";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "MobileNo";
+                column.Caption = "Mobile No";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "PhoneNo1";
+                column.Caption = "Phone No1";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "PhoneNo2";
+                column.Caption = "Phone No2";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Description";
+                column.Caption = "Description";
+                column.ToolTip = "Click to Sort";
+            });
+            
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            settings.Settings.ShowHeaderFilterButton = true;
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            settings.Settings.VerticalScrollableHeight = 350;
+            settings.Settings.VerticalScrollBarStyle = GridViewVerticalScrollBarStyle.Virtual;
+
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            settings.ClientSideEvents.FocusedRowChanged = "contectListController.RowSelectionChange";
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+
+
+
+
+
+

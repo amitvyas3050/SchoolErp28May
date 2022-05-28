@@ -1,0 +1,124 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Repositories
+
+@if(ViewData["ClassID"] == null)
+{
+   ViewData["ClassID"] = 0;
+}
+
+@if (ViewData["SubjectLevel"] == null)
+{
+    ViewData["SubjectLevel"] = 0;
+}
+
+
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridSubjectlevelTwo";
+            settings.KeyFieldName = "IdL2";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(99);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Pixel(40);
+            settings.CommandColumn.ShowSelectCheckbox = true;
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.SettingsPager.PageSize = 200;
+            settings.CommandColumn.Caption = "Select";
+            settings.CommandColumn.SetHeaderTemplateContent(c =>
+            {
+                Html.DevExpress().CheckBox(settingsCheckBox =>
+                {
+                    settingsCheckBox.Name = "cbSelectAllSS";
+                    // settingsCheckBox.Text = "Select";
+                    settingsCheckBox.Properties.ClientSideEvents.CheckedChanged = string.Format("function(s, e) {{ if(s.GetChecked()) {0}.SelectRows(); else {0}.UnselectRows(); }}", settings.Name);
+                    settingsCheckBox.Checked = c.Grid.VisibleRowCount == c.Grid.Selection.Count;
+                }).Render();
+            });
+
+            settings.ClientSideEvents.SelectionChanged = "subjectAllotmentController.SelectionChangedForSubjectLevelTwo";
+
+            settings.CallbackRouteValues = new { Controller = "SubjectAllotment", Action = "PartialGridSubjectLeveTwo", PClassID = ViewData["ClassID"], mSubjectlevel = ViewData["SubjectLevel"] };
+
+            //settings.SettingsBehavior.ConfirmDelete = true;
+            //settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+            settings.Columns.Add("ClassID").Visible = false;
+            settings.Columns.Add("IdL2").Visible = false;
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "SubjectNameL1";
+                column.Caption = "Subject Level One";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "SubjectCodeL1";
+                column.Caption = "Subject Code One";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+            });
+            
+            
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "SubjectNameL2";
+                column.Caption = "Subject level Two";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+            });
+            
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "SubjectCodeL2";
+                column.Caption = "Subject Code Two";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+            });
+
+            //settings.Columns.Add(column =>
+            //{
+            //    column.FieldName = "Order1";
+            //    column.Caption = "Order";
+            //    column.ToolTip = "Click to Sort";
+            //    column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+            //});
+
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            //settings.CommandColumn.Visible = true;
+            //settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.(10);
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) =>
+            {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+
+
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+
+            // settings.SettingsBehavior.AllowFocusedRow = true;
+            // settings.ClientSideEvents.FocusedRowChanged = "studentSessionController.RowSelectionChange";
+        });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+    
+    
+    
+}
+@grid.Bind(Model).GetHtml()

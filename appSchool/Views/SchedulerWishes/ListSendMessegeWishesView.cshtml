@@ -1,0 +1,195 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Repositories
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridSendMessegeWishes";
+            settings.KeyFieldName = "StudentID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            //settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.CallbackRouteValues = new { Controller = "SchedulerWishes", Action = "PartialSendMessegeWishesView", mClassSetup = ViewData["ClassSetupID"], mFromDate = ViewData["SchedulerFromDate"], mToDate = ViewData["SchedulerToDate"] };
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+            settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+           // settings.Columns.Add("StudentSessionID").EditFormSettings.ColumnSpan = 3;
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.ShowSelectCheckbox = true;
+            
+            
+            settings.CommandColumn.Width = 40;
+            settings.CommandColumn.SetHeaderTemplateContent(c =>
+            {
+                Html.DevExpress().CheckBox(settingsCheckBox =>
+                {
+                    settingsCheckBox.Name = "cbSelectAll";
+                    settingsCheckBox.Text = "";
+                    settingsCheckBox.Properties.ClientSideEvents.CheckedChanged = string.Format("function(s, e) {{ if(s.GetChecked()) {0}.SelectRows(); else {0}.UnselectRows(); }}", settings.Name);
+                    settingsCheckBox.Checked = c.Grid.VisibleRowCount == c.Grid.Selection.Count;
+                }).Render();
+            });
+            //settings.CommandColumn.Caption = "Select";
+           // settings.SettingsBehavior.AllowSelectByRowClick = true;
+            settings.ClientSideEvents.SelectionChanged = "schedulerWishesController.SelectionChanged";
+            settings.Columns.Add("StudentID").Visible=false;
+            settings.Columns.Add("EnrollmentNo");
+            settings.Columns.Add("FullName","Name");
+           // settings.Columns.Add("ClassDescription","Class");
+            
+            
+            
+            
+           // settings.Columns.Add("DateOfBirth", "DOB");
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "DateOfBirth";
+                column.Caption = "Student B'Day";
+                column.ColumnType = MVCxGridViewColumnType.DateEdit;
+
+                var dateProperties = column.PropertiesEdit as DateEditProperties;
+                dateProperties.UseMaskBehavior = true;
+                dateProperties.EditFormat = EditFormat.Custom;
+                dateProperties.EditFormatString = "MMMM dd, yyyy";
+                dateProperties.DisplayFormatString = "MMMM dd, yyyy";
+                dateProperties.MaxDate = DateTime.Now;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                //column.EditFormSettings.ColumnSpan = 1;
+                if (ViewData["ClassSetupID"].ToString() == "1")
+                {
+                    column.Visible = true;
+                    column.CellStyle.BackColor = System.Drawing.Color.FromArgb(243, 229, 171);
+                }
+                else
+                {
+                    column.Visible = false;
+                }
+
+            });
+         
+            settings.Columns.Add(column =>
+                {
+                    column.FieldName = "FatherName";
+                    column.Caption = "Father Name";
+                    column.ReadOnly = true;
+                });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "FatherDOB";
+                column.Caption = "Father B'Day";
+                column.ColumnType = MVCxGridViewColumnType.DateEdit;
+
+                var dateProperties = column.PropertiesEdit as DateEditProperties;
+                dateProperties.UseMaskBehavior = true;
+                dateProperties.EditFormat = EditFormat.Custom;
+                dateProperties.EditFormatString = "MMMM dd, yyyy";
+                dateProperties.DisplayFormatString = "MMMM dd, yyyy";
+                
+                dateProperties.MaxDate = DateTime.Now;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                if (ViewData["ClassSetupID"].ToString() == "2")
+                {
+                    column.Visible = true;
+                    column.CellStyle.BackColor = System.Drawing.Color.FromArgb(243, 229, 171);
+                }
+                else
+                {
+                    column.Visible = false;
+                }
+                
+                //column.EditFormSettings.ColumnSpan = 1;
+
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "MotherName";
+                column.Caption = "Mother Name";
+                column.ReadOnly = true;
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "MotherDOB";
+                column.Caption = "Mother B'Day";
+                column.ColumnType = MVCxGridViewColumnType.DateEdit;
+
+                var dateProperties = column.PropertiesEdit as DateEditProperties;
+                dateProperties.UseMaskBehavior = true;
+                dateProperties.EditFormat = EditFormat.Custom;
+                dateProperties.EditFormatString = "MMMM dd, yyyy";
+                dateProperties.DisplayFormatString = "MMMM dd, yyyy";
+                dateProperties.MaxDate = DateTime.Now;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                if (ViewData["ClassSetupID"].ToString() == "3")
+                {
+                    column.Visible = true;
+                    column.CellStyle.BackColor = System.Drawing.Color.FromArgb(243, 229, 171);
+                   
+                  
+                }
+                else
+                {
+                    column.Visible = false;
+                }
+                //column.EditFormSettings.ColumnSpan = 1;
+
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "AnniversaryDate";
+                column.Caption = "Anniversary";
+                column.ColumnType = MVCxGridViewColumnType.DateEdit;
+
+                var dateProperties = column.PropertiesEdit as DateEditProperties;
+                dateProperties.UseMaskBehavior = true;
+                dateProperties.EditFormat = EditFormat.Custom;
+                dateProperties.EditFormatString = "MMMM dd, yyyy";
+                dateProperties.DisplayFormatString = "MMMM dd, yyyy";
+                dateProperties.MaxDate = DateTime.Now;
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                if (ViewData["ClassSetupID"].ToString() == "4")
+                {
+                    column.Visible = true;
+                    column.CellStyle.BackColor = System.Drawing.Color.FromArgb(243, 229, 171);
+                }
+                else
+                {
+                    column.Visible = false;
+                }
+                //column.EditFormSettings.ColumnSpan = 1;
+
+            });
+            
+            
+            settings.Columns.Add("SMSMobileNo","Mobile No");
+            settings.Columns.Add("SMSInHindi", MVCxGridViewColumnType.CheckBox).Visible=true ;
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+          
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            
+           // settings.SettingsBehavior.AllowFocusedRow = true;
+          //  settings.ClientSideEvents.FocusedRowChanged = "sendMessegeController.RowSelectionChangeM";
+        });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+

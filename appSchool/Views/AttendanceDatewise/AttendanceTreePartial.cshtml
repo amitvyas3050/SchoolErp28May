@@ -1,0 +1,23 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Repositories
+
+<div class="leftPanel">
+
+    @Html.DevExpress().NavBar(
+    settings=>{
+        settings.Name = "LeftNavBar";
+        settings.AutoCollapse = true;
+        settings.EnableAnimation = true;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+       // settings.Styles.GroupHeader.Height = System.Web.UI.WebControls.Unit.Pixel(2);
+        settings.ControlStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+        settings.AllowSelectItem = true;
+        settings.EnableClientSideAPI = true;
+        settings.Groups.AddRange(new ClassRepository().GetClassSetupNavigationBar(byte.Parse(Session["CompID"].ToString()),byte.Parse(Session["BranchID"].ToString())));
+        settings.ClientSideEvents.ItemClick = "attendanceDatewiseController.ItemClicked";
+    }).GetHtml()
+    
+
+
+</div>

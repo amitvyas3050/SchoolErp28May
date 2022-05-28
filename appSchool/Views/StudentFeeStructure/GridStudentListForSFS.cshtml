@@ -1,0 +1,120 @@
+﻿@{
+    if (ViewBag.ShowFilter == null)
+    {
+        ViewBag.ShowFilter = false;
+    }
+
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridStudentforSFS";
+            settings.KeyFieldName = "StudentID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            //settings.CommandColumn.Caption = "Select";
+            //settings.CommandColumn.SetHeaderTemplateContent(c =>
+            //{
+            //    Html.DevExpress().CheckBox(settingsCheckBox =>
+            //    {
+            //        settingsCheckBox.Name = "cbSelectAll";
+            //        // settingsCheckBox.Text = "Select";
+            //        settingsCheckBox.Properties.ClientSideEvents.CheckedChanged = string.Format("function(s, e) {{ if(s.GetChecked()) {0}.SelectRows(); else {0}.UnselectRows(); }}", settings.Name);
+            //        settingsCheckBox.Checked = c.Grid.VisibleRowCount == c.Grid.Selection.Count;
+            //    }).Render();
+            //});
+
+            //settings.CommandColumn.Visible = true;
+            //settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(2);
+            //settings.CommandColumn.ButtonType = GridViewCommandButtonType.Default;
+            
+
+            settings.CallbackRouteValues = new { Controller = "StudentFeeStructure", Action = "PartialGridAllStudentForSFS", PclassSetupID = ViewData["ClassIDForSFS"] };
+            //settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "StudentRegistration", Action = "AddNewRegistration" };
+            //settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "StudentRegistration", Action = "UpdateRegistration" };
+            //settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "StudentRegistration", Action = "DeleteRegistration" };
+
+
+            //settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+            //settings.SettingsBehavior.ConfirmDelete = true;
+            //settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+            //settings.CommandColumn.ButtonType = GridViewCommandButtonType.Button;
+            //settings.SettingsCommandButton.UpdateButton.ButtonType = GridViewCommandButtonType.Link;
+            //settings.SettingsCommandButton.CancelButton.ButtonType = GridViewCommandButtonType.Link;
+            settings.Columns.Add("StudentID").Visible = false;
+            settings.Columns.Add("FullName").Width = System.Web.UI.WebControls.Unit.Pixel(210);
+            settings.Columns.Add(column =>
+                {
+                    column.FieldName = "EnrollmentNo";
+                    column.Caption = "Registration";
+                    column.EditFormSettings.ColumnSpan = 2;
+                    column.Width = System.Web.UI.WebControls.Unit.Pixel(110);
+                    //var editProperties = (TextBoxProperties)column.PropertiesEdit;
+                    //editProperties.MaskSettings.Mask = "(AAA)-000-0000";
+
+                });
+            settings.Columns.Add("ClassDescription").Width = System.Web.UI.WebControls.Unit.Pixel(210);
+
+
+            //settings.CellEditorInitialize = (sender, e) =>
+            //{
+            //    if (e.Column.FieldName == "FullName")
+            //        e.Editor.Enabled = false;
+            //};
+            //settings.Columns.Add("Rating");
+
+
+            //settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            //settings.SettingsPager.FirstPageButton.Visible = true;
+            //settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+
+            settings.Settings.ShowFilterRow = settings.Settings.ShowFilterRowMenu = true;
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            // settings.ClientSideEvents.FocusedRowChanged = "studentFeeStructureController.RowSelectionChange";
+
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            settings.Settings.VerticalScrollableHeight = 370;
+
+            settings.SettingsPager.Mode = GridViewPagerMode.EndlessPaging;
+            settings.SettingsPager.PageSize = 20;
+
+            settings.PreRender = (sender, e) =>
+            {
+                //((MVCxGridView)sender).Settings.ShowFilterRow = !((MVCxGridView)sender).Settings.ShowFilterRow;
+                //MVCxGridView grid = (MVCxGridView)sender;
+                //grid.Settings.ShowFilterRow = !grid.Settings.ShowFilterRow;
+                //((MVCxGridView)sender).StartEdit(((MVCxGridView)sender).GetFocusedRowIndex());
+                //GridStudents.StartEdit(GridStudents.GetFocusedRowIndex());
+
+            };
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

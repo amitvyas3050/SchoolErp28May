@@ -1,0 +1,131 @@
+﻿  @using appSchool.Repositories
+@using appSchool.ViewModels
+
+@model modelStudentDocumentUploadInfo
+
+ <script src="@Url.Content("~/jsControllers/studentRegistrationWithTCController.js")" type="text/javascript"></script>
+@*@Html.Hidden("StudentID")*@
+@Html.Hidden("EnrollmentNo")
+
+ 
+ 
+   @* <div style="width:40%;float:left;position:relative">
+
+<table>
+    <tr><td>
+
+         <p> Allowed file extensions: .jpg, .jpeg, .gif, .png.  </p>
+     <p>Maximum file size: 20 MB.</p>
+
+        <br />
+        </td></tr>
+
+    <tr><td>
+         @Html.DevExpress().TextBoxFor(
+            model=> model.StudentID,
+            settings => {
+                settings.Name = "StudentID";    
+                settings.ControlStyle.CssClass = "editor";
+                settings.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+                settings.ClientVisible = false;
+                //settings.Properties.MaskSettings.Mask = "(AAA)-000-0000";
+                // settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.None;
+             
+                
+                
+            }).GetHtml()
+
+        </td></tr>
+    <tr><td>
+        
+
+  @Html.DevExpress().LabelFor(
+            model=> model.DocumentName,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Document Name";
+                settings.AssociatedControlName = "DocumentName";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model=> model.DocumentName,
+            settings => {
+                settings.Name = "DocumentName";    
+                settings.ControlStyle.CssClass = "editor";
+                settings.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+                //settings.Properties.MaskSettings.Mask = "(AAA)-000-0000";
+                // settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.None;
+                
+            }).GetHtml()
+
+        </td></tr>
+     <tr><td>
+        
+
+  @Html.DevExpress().LabelFor(
+            model=> model.Remark,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Remark";
+                settings.AssociatedControlName = "Remark";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model=> model.Remark,
+            settings => {
+                settings.Name = "Remark";    
+                settings.ControlStyle.CssClass = "editor";
+                settings.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+                //settings.Properties.MaskSettings.Mask = "(AAA)-000-0000";
+                // settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.None;
+             
+                
+                
+            }).GetHtml()
+
+        </td></tr>
+    <tr><td style="padding:10px;">
+        
+   @Html.DevExpress().UploadControl(settings =>
+{
+    settings.Name = "ucDoc";
+    settings.CallbackRouteValues = new { Controller = "StudentRegistrationWithTC", Action = "UploadDocument" };
+    settings.ClientSideEvents.FileUploadComplete = "RefreshDocumentList";
+    
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.ValidationSettings.Assign(appSchool.Controllers.UploadControlDemosHelpers.ValidationSettings);
+}).GetHtml()
+    
+
+        </td></tr>
+    <tr><td style="float:right; padding:10px;">
+        
+
+@if(PermissionFlag._ModFlag==true)
+{
+    @Html.DevExpress().Button(button =>
+{
+    button.Name = "btnDocUploadFile";
+    button.Text = "Upload File";
+    button.ClientSideEvents.Click = "OnClickDoc";
+
+    button.Images.Image.IconID = IconID.SaveSave16x16;
+    
+}).GetHtml()
+}
+
+      
+
+
+        </td></tr>
+
+   
+      
+</table>
+
+        </div>*@
+ 
+    <div style="width:60%;float:left;position:relative">
+            @Html.Partial("GridDocumentListPartial",(new UnitOfWork().studentDocumentService.GetStudentDetailListByStudentID(Model.StudentID)))
+
+    </div>

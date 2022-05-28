@@ -1,0 +1,1447 @@
+﻿html, body {
+	margin: 0;
+	padding: 0;
+}
+
+
+/* Header */
+.headerPane {
+    background-position: left top;
+    background-repeat: no-repeat;
+    
+
+}
+.headerPane .headerTop
+{
+    height: 45px;
+}
+.templateTitle 
+{
+    float:left;
+    margin-left: 15px;
+    margin-top: 11px;
+    vertical-align:text-top;
+}
+
+
+.templateTitle a 
+{
+    text-decoration: none;
+    font-size: x-large;
+    color: White;
+}
+.loginControl 
+{
+    float: right;
+    margin-top: 17px;
+    margin-right: 25px;
+    font-size: 12px;
+
+}
+.loginControl a 
+{
+    color: white;
+    text-decoration: none;
+    border-bottom: dashed 1px White;
+}
+.headerMenu 
+{
+    margin-top: 0px;
+}
+
+
+/* Footer */
+.footerPane 
+{
+    height:100%;
+}
+.footerMenu {
+    float: right;
+    padding-top: 7px;
+}
+.copyright 
+{
+    float: left;
+    margin-left: 15px;
+    margin-top: 100px;
+}
+
+.content 
+{
+    padding: 5px;
+}
+
+
+/* Account */
+.accountHeader h2 
+{
+    margin: 10px 0 7px 0;
+    font-size: 16px;
+}
+.accountHeader p 
+{
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+.accountHeader 
+{
+    margin-bottom: 20px;
+}
+.form-field
+{
+    margin-bottom: 8px;
+}
+.field-validation-error {
+	font-size: 11px;
+	color: Red;
+}
+
+
+/* iOS */
+.dxsplVSeparator_iOS,
+.dxsplHSeparator_iOS
+{
+    border-width: 0px !important;
+}
+.dxsplPane_iOS.leftPane,
+.dxsplPane_iOS.rightPane,
+.dxsplPane_iOS.contentPane
+{
+    border-width: 1px !important;
+}
+.dxsplControl_iOS .templateTitle
+{
+    margin-top: 3px;    
+}
+.dxsplControl_iOS .templateTitle a
+{
+    color: #303030;
+    font-size: 26px;
+    line-height: 1em;
+    font-weight: bold;
+}
+.dxsplControl_iOS .headerTop,
+.dxsplControl_iOS .content
+{
+    font-family: HelveticaNeue,Helvetica,Verdana,sans-serif;
+}
+.dxsplControl_iOS .loginControl
+{
+    margin-top: 4px;    
+}
+.dxsplControl_iOS .loginControl a
+{
+    color: #0160E7;
+    text-decoration: underline;
+    font-size: 20px;
+    font-weight: bold;
+}
+.dxsplControl_iOS .headerTop
+{
+    height: 33px;
+}
+.dxsplControl_iOS .headerMenu
+{
+    margin-top: 0px;   
+}
+.dxsplPane_iOS.mainContentPane
+{
+    border-width: 0px !important;
+    box-shadow: initial;
+    -webkit-box-shadow: initial;
+    -moz-box-shadow: initial;
+}
+.dxsplPane_iOS.footerPane
+{
+    border-width: 1px !important;
+}
+.dxsplControl_iOS .accountHeader p
+{
+    color: #303030;
+    font-size: 18px;
+}
+.dxsplControl_iOS .accountHeader h2
+{
+    color: #303030;
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+
+/* Aqua */
+.dxsplControl_Aqua 
+{
+    font-family: Tahoma;
+}
+.dxsplControl_Aqua .headerPane,
+.dxsplControl_Aqua .footerPane,
+.dxsplControl_Aqua .footerMenu li
+{
+    background-color: #BFDBFF;
+}
+.dxsplControl_Aqua .headerPane
+{
+    background-image: url('images/AquaHeader.jpg');
+}
+.dxsplControl_Aqua .headerMenu .dxm-separator b
+{
+    height: 25px !important;
+}
+.dxsplControl_Aqua .accountHeader h2
+{
+    color: #5689C5;
+}
+
+
+/* DevEx */
+.dxsplControl_DevEx 
+{
+    font-family: Verdana;
+    color: #201F35;
+}
+.dxsplControl_DevEx .headerPane,
+.dxsplControl_DevEx .footerPane,
+.dxsplControl_DevEx .footerMenu li
+{
+    background-color: #F2F3F4;
+}
+.dxsplControl_DevEx .templateTitle a,
+.dxsplControl_DevEx .loginControl,
+.dxsplControl_DevEx .loginControl a
+{
+    color: #4B4B57;
+}
+.dxsplControl_DevEx .loginControl a 
+{
+    border-bottom-color: #4B4B57;
+}
+.dxsplControl_DevEx .headerMenu 
+{
+    margin-top: 13px;
+}
+.dxsplControl_DevEx .accountHeader p
+{
+    font-size: 11px;
+}
+
+
+/* BlackGlass */
+.dxsplControl_BlackGlass 
+{
+    font-family: Tahoma;
+}
+.dxsplControl_BlackGlass .headerPane,
+.dxsplControl_BlackGlass .footerPane,
+.dxsplControl_BlackGlass .footerMenu li
+{
+    background-color: #2A2A2A;
+    color: white;
+}
+.dxsplControl_BlackGlass .headerPane
+{
+    background-image: url('images/BlackGlassHeader.jpg');
+}
+.dxsplControl_BlackGlass .leftPanel li[class$="dxnb-last"] ul
+{
+    border-bottom: 1px solid black;
+}
+.dxsplControl_BlackGlass .accountHeader p
+{
+    color: #585858;
+}
+
+
+/* Glass */
+.dxsplControl_Glass 
+{
+    font-family: Tahoma;
+}
+.dxsplControl_Glass .headerPane,
+.dxsplControl_Glass .footerPane,
+.dxsplControl_Glass .footerMenu li
+{
+    background-color: #CFE0E7;
+}
+.dxsplControl_Glass .headerPane
+{
+    background-image: url('images/GlassHeader.jpg');
+}
+.dxsplControl_Glass .footerMenu *
+{
+    background-image: none !important;
+}
+.dxsplControl_Glass .headerMenu .dxm-separator b
+{
+    height: 25px !important;
+}
+.dxsplControl_Glass .templateTitle a,
+.dxsplControl_Glass .loginControl,
+.dxsplControl_Glass .loginControl a
+{
+    color: #4B4B57;
+}
+.dxsplControl_Glass .loginControl a 
+{
+    border-bottom-color: #4B4B57;
+}
+.dxsplControl_Glass .accountHeader h2
+{
+    color: #387FA4;
+}
+.dxsplControl_Glass .accountHeader p
+{
+    color: #575757;
+}
+
+
+
+/* Office2003Blue */
+.dxsplControl_Office2003Blue 
+{
+    font-family: Tahoma;
+}
+.dxsplControl_Office2003Blue .headerPane,
+.dxsplControl_Office2003Blue .footerPane,
+.dxsplControl_Office2003Blue .footerMenu li
+{
+    background-color: #BCD4F6;
+}
+.dxsplControl_Office2003Blue .footerMenu div
+{
+    background: transparent none;
+}
+.dxsplControl_Office2003Blue .leftPanel > ul
+{
+    background: transparent none;
+}
+.dxsplControl_Office2003Blue .templateTitle a,
+.dxsplControl_Office2003Blue .loginControl,
+.dxsplControl_Office2003Blue .loginControl a
+{
+    color: #4B4B57;
+}
+.dxsplControl_Office2003Blue .loginControl a 
+{
+    border-bottom-color: #4B4B57;
+}
+.dxsplControl_Office2003Blue .accountHeader p
+{
+    color: #424242;
+}
+.dxsplControl_Office2003Blue .headerMenu 
+{
+    margin-top: 5px;
+}
+
+
+/* Office2003Olive */
+.dxsplControl_Office2003Olive 
+{
+    font-family: Tahoma;
+}
+.dxsplControl_Office2003Olive .headerPane,
+.dxsplControl_Office2003Olive .footerPane,
+.dxsplControl_Office2003Olive .footerMenu li
+{
+    background-color: #D6DCBB;
+}
+.dxsplControl_Office2003Olive .footerMenu div
+{
+    background: transparent none;
+}
+.dxsplControl_Office2003Olive .leftPanel > ul
+{
+    background: transparent none;
+}
+.dxsplControl_Office2003Olive .templateTitle a,
+.dxsplControl_Office2003Olive .loginControl,
+.dxsplControl_Office2003Olive .loginControl a
+{
+    color: #4B4B57;
+}
+.dxsplControl_Office2003Olive .loginControl a 
+{
+    border-bottom-color: #4B4B57;
+}
+.dxsplControl_Office2003Olive .accountHeader p
+{
+    color: #424242;
+}
+.dxsplControl_Office2003Olive .headerMenu 
+{
+    margin-top: 5px;
+}
+
+/* Office2003Silver */
+.dxsplControl_Office2003Silver 
+{
+    font-family: Tahoma;
+}
+.dxsplControl_Office2003Silver .headerPane,
+.dxsplControl_Office2003Silver .footerPane,
+.dxsplControl_Office2003Silver .footerMenu li
+{
+    background-color: #D0D0DE;
+}
+.dxsplControl_Office2003Silver .footerMenu div
+{
+    background: transparent none;
+}
+.dxsplControl_Office2003Silver .leftPanel > ul
+{
+    background: transparent none;
+}
+.dxsplControl_Office2003Silver .templateTitle a,
+.dxsplControl_Office2003Silver .loginControl,
+.dxsplControl_Office2003Silver .loginControl a
+{
+    color: #4B4B57;
+}
+.dxsplControl_Office2003Silver .loginControl a
+{
+    border-bottom-color: #4B4B57;
+}
+.dxsplControl_Office2003Silver .accountHeader p
+{
+    color: #424242;
+}
+.dxsplControl_Office2003Silver .headerMenu 
+{
+    margin-top: 5px;
+}
+
+
+/* Office2010Black */
+.dxsplControl_Office2010Black 
+{
+    font-family: Verdana;
+}
+.dxsplControl_Office2010Black .headerPane,
+.dxsplControl_Office2010Black .footerPane,
+.dxsplControl_Office2010Black .footerMenu li
+{
+    background-color: #393939;
+    color: white;
+}
+.dxsplControl_Office2010Black .footerMenu a
+{
+    color: white !important;
+}
+.dxsplControl_Office2010Black .accountHeader h2
+{
+    color: #3C3C3C;
+}
+.dxsplControl_Office2010Black .accountHeader p
+{
+    font-size: 11px;
+}
+.dxsplControl_Office2010Black .headerMenu 
+{
+    margin-top: 13px;
+}
+
+
+/* Office2010Blue */
+.dxsplControl_Office2010Blue 
+{
+    font-family: Verdana;
+}
+.dxsplControl_Office2010Blue .headerPane,
+.dxsplControl_Office2010Blue .footerPane,
+.dxsplControl_Office2010Blue .footerMenu li
+{
+    background-color: #D3E4F6;
+}
+.dxsplControl_Office2010Blue .templateTitle a,
+.dxsplControl_Office2010Blue .loginControl,
+.dxsplControl_Office2010Blue .loginControl a
+{
+    color: Black;
+}
+.dxsplControl_Office2010Blue .loginControl a 
+{
+    border-bottom-color: Black;
+}
+.dxsplControl_Office2010Blue .accountHeader h2
+{
+    color: #498BC2;
+}
+.dxsplControl_Office2010Blue .accountHeader p
+{
+    font-size: 11px;
+}
+.dxsplControl_Office2010Blue .headerMenu 
+{
+    margin-top: 13px;
+}
+
+
+/* Office2010Silver */
+.dxsplControl_Office2010Silver 
+{
+    font-family: Verdana;
+}
+.dxsplControl_Office2010Silver .headerPane,
+.dxsplControl_Office2010Silver .footerPane,
+.dxsplControl_Office2010Silver .footerMenu li
+{
+    background-color: #A9ACB4;
+    color: white;
+}
+.dxsplControl_Office2010Silver .accountHeader h2
+{
+    color: #3B3B3B;
+}
+.dxsplControl_Office2010Silver .accountHeader p
+{
+    font-size: 11px;
+}
+.dxsplControl_Office2010Silver .headerMenu 
+{
+    margin-top: 13px;
+}
+
+
+
+/* PlasticBlue */
+.dxsplControl_PlasticBlue 
+{
+    font-family: Tahoma;
+}
+.dxsplControl_PlasticBlue .headerPane,
+.dxsplControl_PlasticBlue .footerPane,
+.dxsplControl_PlasticBlue .footerMenu li
+{
+    background-color :#3C4F8F;
+    color: white;
+}
+.dxsplControl_PlasticBlue .headerPane
+{
+    background-image: url('images/PlasticBlueHeader.jpg');
+}
+.dxsplControl_PlasticBlue .accountHeader h2
+{
+    color: #5A83D0;
+}
+.dxsplControl_PlasticBlue .accountHeader p
+{
+    color: #575757;
+}
+.dxsplControl_PlasticBlue .headerMenu 
+{
+    margin-top: 12px;
+}
+
+
+/* RedWine */
+.dxsplControl_RedWine 
+{
+    font-family: Tahoma;
+}
+.dxsplControl_RedWine .headerPane,
+.dxsplControl_RedWine .footerPane,
+.dxsplControl_RedWine .footerMenu li
+{
+    background-color: #78002B;
+    color: white;
+}
+.dxsplControl_RedWine .headerPane
+{
+    background-image: url('images/RedWineHeader.jpg');
+    background-position: top right;
+}
+.dxsplControl_RedWine .footerMenu div 
+{
+    background: transparent none;
+}
+.dxsplControl_RedWine .accountHeader h2
+{
+    color: #8A0A37;
+}
+.dxsplControl_RedWine .headerMenu 
+{
+    margin-top: 9px;
+}
+
+
+/* SoftOrange */
+.dxsplControl_SoftOrange 
+{
+    font-family: Tahoma;
+}
+.dxsplControl_SoftOrange .headerPane,
+.dxsplControl_SoftOrange .footerPane,
+.dxsplControl_SoftOrange .footerMenu li
+{
+    background-color: #F9F9F9 !important;
+    background-image: none !important;
+}
+.dxsplControl_SoftOrange .templateTitle a,
+.dxsplControl_SoftOrange .loginControl,
+.dxsplControl_SoftOrange .loginControl a
+{
+    color: Black;
+}
+.dxsplControl_SoftOrange .loginControl a 
+{
+    border-bottom-color: Black;
+}
+.dxsplControl_SoftOrange .accountHeader h2
+{
+    color: Black;
+}
+.dxsplControl_SoftOrange .accountHeader p
+{
+    color: #707070;
+}
+.dxsplControl_SoftOrange .headerMenu 
+{
+    margin-top: 8px;
+}
+
+
+/* Youthful */
+.dxsplControl_Youthful 
+{
+    font-family: Tahoma;
+}
+.dxsplControl_Youthful .headerPane,
+.dxsplControl_Youthful .footerPane,
+.dxsplControl_Youthful .footerMenu li
+{
+    background-color: #8AA150;
+    color: white !important;
+}
+.dxsplControl_Youthful .headerMenu .dxm-separator b
+{
+    height: 35px !important;
+}
+.dxsplControl_Youthful .accountHeader h2
+{
+    color: #80A70E;
+}
+.dxsplControl_Youthful .headerMenu 
+{
+    margin-top: 1px;
+}
+
+/* Metropolis */
+.dxsplControl_Metropolis 
+{
+    font-family: Segoe UI;
+}
+.dxsplControl_Metropolis .headerPane,
+.dxsplControl_Metropolis .footerMenu li
+{
+    background-color: White;
+    color: Black;
+}
+.dxsplControl_Metropolis .accountHeader h2
+{
+    color: #3B3B3B;
+}
+.dxsplControl_Metropolis .accountHeader p
+{
+    font-size: 11px;
+}
+.dxsplControl_Metropolis .headerMenu 
+{
+    margin-top: 13px;
+}
+.dxsplControl_Metropolis .loginControl a,
+.dxsplControl_Metropolis .templateTitle a
+{
+    color: Black;
+    border-color: Black;
+}
+.dxsplControl_Metropolis .templateTitle a 
+{
+	font-size: 28px;
+}
+.dxsplControl_Metropolis .dxsplVSeparator_Metropolis 
+{
+	border-bottom: 0!important;
+}
+.dxsplControl_Metropolis .footerPane 
+{
+	background: #EDEDED;
+}
+
+/* MetropolisBlue */
+.dxsplControl_MetropolisBlue
+{
+    font-family: Segoe UI;
+}
+.dxsplControl_MetropolisBlue .headerPane,
+.dxsplControl_MetropolisBlue .footerMenu li
+{
+    background-color: White;
+    color: Black;
+}
+.dxsplControl_MetropolisBlue .accountHeader h2
+{
+    color: #3B3B3B;
+}
+.dxsplControl_MetropolisBlue .accountHeader p
+{
+    font-size: 11px;
+}
+.dxsplControl_MetropolisBlue .headerMenu 
+{
+    margin-top: 13px;
+}
+.dxsplControl_MetropolisBlue .loginControl a,
+.dxsplControl_MetropolisBlue .templateTitle a
+{
+    color: Black;
+    border-color: Black;
+}
+.dxsplControl_MetropolisBlue .templateTitle a 
+{
+	font-size: 28px;
+}
+.dxsplControl_MetropolisBlue .dxsplVSeparator_MetropolisBlue 
+{
+	border-bottom: 0!important;
+}
+.dxsplControl_MetropolisBlue .footerPane 
+{
+	background: #EDEDED;
+}
+
+/* Moderno */
+.dxsplControl_Moderno 
+{
+    font-family: Segoe UI;
+}
+.dxsplControl_Moderno .headerPane,
+.dxsplControl_Moderno .footerMenu li
+{
+    background-color: White;
+    color: Black;
+}
+.dxsplControl_Moderno .accountHeader h2
+{
+    color: #3B3B3B;
+}
+.dxsplControl_Moderno .accountHeader p
+{
+    font-size: 11px;
+}
+.dxsplControl_Moderno .headerMenu 
+{
+    margin-top: 13px;
+}
+.dxsplControl_Moderno .loginControl a,
+.dxsplControl_Moderno .templateTitle a
+{
+    color: #0072c6;
+    border-color: #0072c6;
+}
+.dxsplControl_Moderno .templateTitle a 
+{
+	font-size: 28px;
+}
+.dxsplControl_Moderno .dxsplVSeparator_Moderno 
+{
+	border-bottom: 0!important;
+    border-left: 1px solid #d1d1d1;
+    border-right: 1px solid #d1d1d1;
+}
+.dxsplControl_Moderno .footerPane 
+{
+	background: #EDEDED;
+}
+.edit_form {
+
+    content: ".";
+display: block;
+clear: both;
+
+width:100%;
+}
+
+.edit_form .line {
+   
+    display: block;
+    float: left;
+    margin: 1px 0;
+    width: 32%;
+}
+.edit_form .line4 {
+   
+    display: block;
+    float: left;
+    margin: 1px 0;
+    width: 25%;
+}
+.edit_form .line70 {
+   
+    display: block;
+    float: left;
+    margin: 0px 0;
+    width: 70%;
+}
+.edit_form .line30 {
+   
+    display: block;
+    float: left;
+    margin: 0px 0;
+    width: 30%;
+}
+
+.edit_form .line5 {
+   
+    display: block;
+    float: left;
+    margin: 0px 0;
+    width: 20%;
+}
+.edit_form .line3 {
+   
+    display: block;
+    float: left;
+    margin: 0px 0;
+    width: 33%;
+}
+
+
+.edit_form .line90 {
+   
+    display: block;
+    float: left;
+    margin: 1px 0;
+    width: 85%;
+
+}
+.edit_form .Set3 {
+   
+    display: block;
+    float: left;
+    margin: 0px 0;
+    width: 90%;
+}
+ .edit_form .line41 {
+   
+    display: block;
+    float: left;
+    margin: 1px 0;
+    width: 30%;
+}
+
+
+
+.edit_form .lineFooter
+{
+   display: block;
+    float: left;
+    margin:0px;
+    width:99%;
+ 
+
+
+    }
+.grpheader {
+
+    font-size:12px;
+    color:#0160E7;
+    font-weight:bold;
+    margin-top:2px;
+}
+    .edit_form .divSubmit
+     {
+       position:relative;
+       display: block;
+    float: left;
+    width: 10%;
+    text-align:center;
+    vertical-align:top;
+     padding-right:5px;
+    }
+
+    .edit_form .divError
+    {
+         display: block;
+    float: left;
+    margin: 1% 0;
+    width: 80%;
+     text-align:left;
+     font-size:12px;
+
+   
+    }
+ .edit_form .divError span
+ {
+     margin:5px; 
+      font-size:12px;
+}
+
+
+.edit_form .label, .edit_form .wideLabel {
+    clear: left;
+    display: block;
+    float: left;
+    padding: 4px 0;
+    width: 150px;
+}
+.edit_form .wideLabel {
+    width: 200px;
+}
+.edit_form .editor {
+    float: left;
+    margin-right: 8px;
+    width: 180px;
+}
+.edit_form .checkEditor {
+    float: left;
+    margin-right: 8px;
+}
+.edit_form .button {
+    float: left;
+    margin: 8px 4px 0 0;
+}
+.edit_form .validator {
+    clear: right;
+    color: #FF0000;
+    display: block;
+    float: left;
+    font-family: Verdana;
+    font-size: 8pt;
+    padding: 3px 0;
+}
+#validationForm.edit_form .label {
+    width: 95px;
+}
+#popupControlForm.edit_form .label {
+    width: 70px;
+}
+
+.headerAttendence .line4 {
+
+    float:left;
+    margin-left:10px;
+  
+   
+}
+
+.SMSTempForm {
+    width:100%;
+    position:relative;
+    font-family:Mangal;
+     float:left;
+}
+
+    .SMSTempForm .Line100 {
+         float:left;
+        position:relative;
+        width:94%;
+          padding:0.5%;
+        border:1px solid #BFDBFF;
+        margin-top:0px;
+          margin:0.5%;
+    }
+    .SMSTempForm .Line50 {
+   position:relative;
+        width:46%;
+        float:left;
+        margin:0.5%;
+        padding:0.5%;
+        border:1px solid #BFDBFF;
+    }
+
+      .SMSTempForm .Line51 {
+   position:relative;
+        width:46%;
+        height:80%;
+        float:left;
+        margin:0.5%;
+        padding:0.5%;
+        /*border:1px solid #BFDBFF;*/
+    }
+
+
+
+    .SMSTempForm .label {
+
+        float: left;
+    margin-right: 8px;
+    width:auto;
+
+    }
+
+
+
+.edit_form .div1 {
+    float:left;
+}
+
+.div1 .button 
+{
+    text-align:center;
+    margin:0px;
+}
+
+.edit_form {
+    padding-top:5px;
+}
+.attendanceTop {
+
+    padding:10px;
+    padding-left:2px;
+    padding-right:2px;
+width: 98%;
+border:3px ridge White;
+height:50px;
+
+
+}
+.attendanceBottom {
+    padding:2px;
+       margin-top:10px;
+width: 98%;
+border:3px ridge White;
+height:100%;
+
+}
+
+.AttStudenttop {
+    float:left;
+    height:32px;
+   padding:1px;
+  
+}
+
+#txtclassName {
+
+    height:30px;
+    width:250px;
+  
+   font-weight:bold;
+   
+}
+
+.leftsmsAbsentee {
+    position:relative;
+   
+    width:18%;
+    float:left;
+    min-height:190px;
+    padding:10px;
+}
+
+.RightsmsAbsentee {
+      position:relative;
+   
+    width:79%;
+    float:left;
+}
+
+.btnSMSAb {
+    margin:10px;
+    width:150px;
+    height:28px;
+}
+
+.btnBack {
+
+   color:black;
+}
+.logout {
+    color:black;
+
+}
+
+.loginControl .logout {
+     /*background-image: url('/Images/logout.png');*/
+  color:black;
+  text-decoration:none;
+  border-bottom:none;
+  padding-left:5px;
+  /*padding:5px;*/
+  /*border:1px solid #575757;
+  padding-left:20px;
+  padding-right:20px;
+  margin-top:20px;*/
+}
+    .loginControl .logout:hover {
+
+        color:#eb780a;
+
+    }
+.loginControl .usersetting, .loginControl .logout {
+
+    font-size:14px;
+    /*color:#303030;*/
+
+}
+
+.mainContentPaneLogin {
+    /*padding-left:40%;
+    padding-right:40%;*/
+   
+
+}
+.loginmaindivtop {
+   
+    position:relative;
+    margin-left:34%;
+    margin-right:34%;
+    margin-top:5%;
+    width:350px;
+    height:auto;
+    padding:5px;
+      border:1px solid #bfdbff;
+   
+  
+}
+.loginmaindiv {
+    padding:35px;
+    position:relative;
+    margin:0px;
+    /*margin-left:35%;
+    margin-right:35%;
+    margin-top:5%;*/
+    width:auto;
+    height:auto;
+    color:black;
+      /*border:1px solid #bfdbff;*/
+    background-color:white;
+  
+}
+    .loginmaindiv .line label {
+
+    }
+    .loginmaindiv .line input[type="password"] {
+        width:275px;
+      height:20px;
+        font-size:14px;
+       
+    }
+     .loginmaindiv .line input[type="text"] {
+        width:275px;
+      height:20px;
+        font-size:14px;
+       
+    }
+    .loginmaindiv .line #SessionID_I {
+
+         width:257px;
+         height:20px;
+        font-size:14px;
+    }
+
+    .loginmaindiv .line #BranchID_I {
+          width:257px;
+         height:20px;
+        font-size:14px;
+    }
+    .loginmaindiv .line .button {
+        width:100px;
+    
+    }
+
+    .loginmaindiv .line .linebtn {
+        text-align:center;
+      
+
+    }
+
+.loginmaindiv {
+     position: relative;
+ 
+  padding: 20px 20px 20px;
+  width: 310px;
+}
+.loginmaindiv:before {
+  content: '';
+  /*position: absolute;
+  top: -8px;
+  right: -8px;
+  bottom: -8px;
+  left: -8px;
+  z-index: -1;
+  background: #d1d1d1;
+  border-radius: 4px;*/
+}
+.loginmaindiv h1 {
+  
+  margin: -20px -20px 21px;
+  line-height: 40px;
+  font-size: 15px;
+  font-weight: bold;
+
+  text-align: center;
+  text-shadow: 0 1px white;
+ 
+  border-bottom: 1px solid #909abd;
+  /*border-radius: 3px 3px 0 0;*/
+ 
+   
+}
+
+    .loginmaindiv .linebtn{
+
+         text-align: right;
+         padding-right:20px;
+
+
+    }
+
+
+.FTtop {
+    position:relative;
+    width:100%;
+   padding-top:5px;
+   padding-bottom:5px;
+   padding-left:10%;
+ padding-right:10%;
+
+}
+
+.FTBottom {
+    position:relative;
+    width:100%;
+
+
+}
+
+.tblStudFeeSturct {
+
+      padding-left:10px;
+}
+
+.tblStudFeeSturct tr td {
+
+    padding-left:5px;
+
+}
+
+.lblHindi {
+
+    float: left;
+    margin-right: 8px;
+    width: 180px;
+    color:red;
+    font-weight:bold;
+}
+
+.tblExportbtn {
+
+  position:relative;
+
+}
+
+    .tblExportbtn tr td {
+
+        padding:5px;
+    }
+
+    .mainbox {
+    position:relative;
+    width:100%;
+    height:auto;
+
+}
+     .mainbox .box10 {
+     display: block;
+ position:relative;
+float:left;
+    width:9%;
+    height:auto;
+
+   
+
+    }
+     .mainbox .box15 {
+     display: block;
+ position:relative;
+float:left;
+    width:14%;
+    height:auto;
+
+   
+
+    }
+
+
+
+     .mainbox .box20 {
+          display: block;
+     position:relative;
+    float:left;
+    width:19%;
+    height:auto;
+
+   
+
+    }
+      .mainbox .box25 {
+          display: block;
+     position:relative;
+    float:left;
+    width:25%;
+    height:auto;
+    }
+
+
+     .mainbox .box30 {
+        position:relative;
+        float:left;
+        width:29%;
+        height:auto;
+    display: block;
+
+    }
+     .mainbox .box40 {
+     position:relative;
+     float:left;
+     width:39%;
+     height:auto;
+      display: block;
+    }
+     .mainbox .box50 {
+     position:relative;
+     float:left;
+     width:49%;
+     height:auto;
+      display: block;
+    }
+     .mainbox .box60 {
+ position:relative;
+float:left;
+    width:59%;
+    height:auto;
+    display: block;
+
+    }
+     .mainbox .box70 {
+ position:relative;
+float:left;
+    width:69%;
+    height:auto;
+    display: block;
+
+    }
+     .mainbox .box80 {
+ position:relative;
+float:left;
+    width:79%;
+    height:auto;
+     display: block;
+   
+
+    }
+       .mainbox .box85 {
+ position:relative;
+float:left;
+    width:84%;
+    height:auto;
+     display: block;
+   
+
+    }
+
+
+
+
+
+     .mainbox .box90 {
+     position:relative;
+    float:left;
+    width:89%;
+    height:auto;
+     display: block;
+   
+
+    }
+     .mainbox .box100 {
+  padding:1%;
+         margin:1%;
+        width:94%;
+        border:3px solid #BFDBFF;
+         height:100%;
+         float:left;
+          display: block;
+    }
+      .mainbox .box99 {
+ 
+         margin:0;
+        width:100%;
+    
+         height:100%;
+         float:left;
+          display: block;
+    }
+     .mainbox .box100 div {
+        float:left;
+        margin-right:5px;
+         display: block;
+    }
+
+ 
+
+   
+
+      
+
+
+     
+
+     
+
+        
+
+
+.tblBday {
+    margin:0px;
+    border:1px solid #BFDBFF;
+    width:100%;
+    text-align:left;
+    vertical-align:initial;
+}
+
+.tblBday tr td
+{
+    margin-right:0px;
+    width:auto;
+    padding-left:3px;
+    /*border:1px solid #303030;*/
+}
+
+    .tblBday tr td span {
+        /*color:#0882dc;*/
+        font-style:initial;
+        /*font-weight:bold;*/
+    }
+    .tblBday tr .bdphoto {
+        border:1px solid #BFDBFF;
+        width:60px;
+        padding:2px;
+
+    }
+
+     .icontbl tr td {
+
+        margin:2px;
+        width:200px;
+        
+    }
+
+.LoginLogo {
+    height:110px;
+   width:110px;
+   
+    
+
+
+}
+.LoginLogoimg {
+    position:relative;
+    height:80%;
+    width:80%;
+    margin:10%;
+ 
+   
+
+}

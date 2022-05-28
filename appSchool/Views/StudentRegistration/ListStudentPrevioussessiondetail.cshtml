@@ -1,0 +1,41 @@
+﻿@using System.Data.SqlClient;
+
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        //settings.Name = "GridAllSession";
+        settings.Name = "gridView";
+        settings.KeyFieldName = "StudentID";
+        settings.CallbackRouteValues = new { Controller = "StudentRegistration", Action = "ParentStudentRegistration" };
+        //settings.CustomActionRouteValues = new { Controller = "StudentManager", Action = "StudentBirthdayCustomPartial" };
+        //settings.SettingsPager.PageSize = GridViewTemplatesDemoHelper.PageSize;
+        settings.SettingsPager.PageSize = 200;
+        settings.SettingsPager.AlwaysShowPager = true;
+        settings.Width =System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SettingsPager.Mode = GridViewPagerMode.EndlessPaging;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+        //settings.Caption = "Student All Session Detail";
+        settings.ControlStyle.CssClass = "grid-view";
+        settings.Width = Unit.Percentage(100);
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "SessionName";
+            column.Caption = "Session";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+        });
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ClassDescription";
+            column.Caption = "Class";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        });
+
+
+
+    }).Bind(Model).GetHtml()

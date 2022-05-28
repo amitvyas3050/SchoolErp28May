@@ -1,0 +1,505 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+@using appSchool.Controllers
+@model ModelUserLogin
+
+@{
+
+    Layout = null;
+}
+
+@if (ViewData["USerMessage"] == null)
+{
+    ViewData["USerMessage"] = "";
+}
+
+@{
+    var UserMessage = ViewData["USerMessage"];
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+
+
+    <meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0" />
+    @Html.DevExpress().GetStyleSheets(
+        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.VerticalGrid },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.CardView },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.HtmlEditor },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.RichEdit },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Spreadsheet },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Gantt },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Diagram },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Chart },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.ClientRichEdit },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Dashboard },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.SpellChecker },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.QueryBuilder }
+)
+    @Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView },
+            new Script { ExtensionSuite = ExtensionSuite.TreeList },
+            new Script { ExtensionSuite = ExtensionSuite.VerticalGrid },
+            new Script { ExtensionSuite = ExtensionSuite.CardView },
+            new Script { ExtensionSuite = ExtensionSuite.PivotGrid },
+            new Script { ExtensionSuite = ExtensionSuite.HtmlEditor },
+            new Script { ExtensionSuite = ExtensionSuite.RichEdit },
+            new Script { ExtensionSuite = ExtensionSuite.Spreadsheet },
+            new Script { ExtensionSuite = ExtensionSuite.Scheduler },
+            new Script { ExtensionSuite = ExtensionSuite.Gantt },
+            new Script { ExtensionSuite = ExtensionSuite.Diagram },
+            new Script { ExtensionSuite = ExtensionSuite.Chart },
+            new Script { ExtensionSuite = ExtensionSuite.Report },
+            new Script { ExtensionSuite = ExtensionSuite.ClientRichEdit },
+            new Script { ExtensionSuite = ExtensionSuite.Dashboard },
+            new Script { ExtensionSuite = ExtensionSuite.SpellChecker },
+            new Script { ExtensionSuite = ExtensionSuite.QueryBuilder }
+    )
+
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Content.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Layout.css")" />
+
+
+    <link href="@Url.Content("~/Content/SignInRegister.css")" rel="stylesheet" type="text/css" />
+
+    <script src="@Url.Content("~/Content/SignInRegister.js")" type="text/javascript"></script>
+
+    <script type="text/javascript" src="@Url.Content("~/Content/Script.js")"></script>
+
+
+
+
+</head>
+<body>
+    @*<div>
+             @using (Html.BeginForm("UserLoginCheck", "UserLogin"))
+             {
+
+
+                 @Html.DevExpress().Splitter(settings =>
+                 {
+                settings.Name = "MainSplitter";
+                settings.AllowResize = false;
+                settings.Orientation = System.Web.UI.WebControls.Orientation.Vertical;
+                settings.FullscreenMode = true;
+                settings.SeparatorVisible = false;
+                settings.Styles.Pane.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+                settings.Styles.Pane.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(0);
+
+                settings.Panes.Add(pane =>
+                     {
+                    pane.Name = "Header";
+                    pane.Size = ASPxWebControl.GlobalTheme == "Moderno" ? 150 : 110;
+                    pane.MinSize = ASPxWebControl.GlobalTheme == "Moderno" ? 150 : 110;
+                   // pane.Size = System.Web.UI.WebControls.Unit.Pixel(100);
+                    pane.PaneStyle.BorderBottom.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(1);
+                    pane.PaneStyle.CssClass = "headerPane";
+                    pane.SetContent(() =>
+                         {
+                       Html.RenderPartial("LoginHeaderPartial");
+
+                        //ViewContext.Writer.Write("<div class='LoginLogo' >");
+                        //Html.DevExpress().BinaryImage(
+                        //settingslogo =>
+                        //{
+                        //    settingslogo.Name = "binaryImage1";
+
+                        //    settings.ControlStyle.CssClass = "LoginLogoimg";
+                        //}).Bind((new UnitOfWork().schoolMasterService.GetSchoolSetup().Logo).ToArray()).GetHtml();
+
+                        //ViewContext.Writer.Write("</div>");
+                       @Html.DevExpress().Label(settingslbl =>
+                       {
+                           settingslbl.Name = "lb";
+                           settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           settingslbl.Text = "Select Class ";
+                       }).GetHtml();
+
+                    });
+
+
+
+                });
+
+                settings.Panes.Add(pane =>
+                     {
+                    pane.Name = "Content";
+                    pane.PaneStyle.CssClass = "mainContentPaneLogin";
+                    pane.MinSize = System.Web.UI.WebControls.Unit.Pixel(100);
+                    pane.PaneStyle.BackColor = System.Drawing.Color.White;
+                    pane.PaneStyle.BorderBottom.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(1);
+                    pane.SetContent(() =>
+                         {
+
+
+
+                        ViewContext.Writer.Write("<div class='loginmaindivtop headerPane' >");
+                        ViewContext.Writer.Write("<div class='loginmaindiv'>");
+                        ViewContext.Writer.Write(" <h1 class='headerPane'>Login</h1>");
+            ViewContext.Writer.Write("<div class='line'>");
+            var UserMessage = ViewData["USerMessage"];
+            @Html.DevExpress().Label(settingslbl =>
+            {
+                settingslbl.Name = "lbmessage";
+                settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                settingslbl.Text = UserMessage.ToString();
+                settings.ControlStyle.ForeColor = System.Drawing.Color.Red;
+                settings.ControlStyle.Font.Size = 14;
+            }).GetHtml();
+
+            @Html.DevExpress().LabelFor(model => model.UserName, CommonDemoHelper.LabelSettingsMethod).GetHtml();
+            @Html.DevExpress().TextBoxFor(model => model.UserName, CommonDemoHelper.TextBoxSettingsMethod).GetHtml();
+
+
+            ViewContext.Writer.Write("</div>");
+            ViewContext.Writer.Write("<div class='line'>");
+            @Html.DevExpress().LabelFor(model => model.Password, CommonDemoHelper.LabelSettingsMethod).GetHtml();
+            @Html.DevExpress().TextBoxFor(model => model.Password,
+            s =>
+                             {
+            s.Name = "Password";
+            s.Properties.Password = true;
+            s.ClientVisible = true;
+            //s.Properties.ClientSideEvents.LostFocus = "OnLostFocus";
+        }
+            ).GetHtml();
+
+
+         ViewContext.Writer.Write("</div>");
+
+         ViewContext.Writer.Write("<div class='line'>");
+         @Html.DevExpress().LabelFor(model => model.BranchID, CommonDemoHelper.LabelSettingsMethod).GetHtml();
+
+         @Html.DevExpress().ComboBoxFor(
+               model => model.BranchID,
+                       settingscbo =>
+                       {
+                           settingscbo.Name = "BranchID";
+                           settingscbo.ControlStyle.CssClass = "editor1";
+                           settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                           settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                           settingscbo.Properties.TextField = "BranchName";
+                           settingscbo.Properties.ValueField = "BranchID";
+                           settingscbo.Width = System.Web.UI.WebControls.Unit.Pixel(120);
+                           settingscbo.SelectedIndex = 0;
+                           //settings.ShowModelErrors = true;
+                           //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                       }
+                   ).BindList(new UnitOfWork().branchService.Get()).GetHtml();
+
+         ViewContext.Writer.Write("</div>");
+
+         ViewContext.Writer.Write("<div class='line'>");
+         @Html.DevExpress().LabelFor(model => model.SessionID, CommonDemoHelper.LabelSettingsMethod).GetHtml();
+
+         @Html.DevExpress().ComboBoxFor(
+               model => model.SessionID,
+                       settingscbo =>
+                       {
+                           settingscbo.Name = "SessionID";
+                           settingscbo.ControlStyle.CssClass = "editor1";
+                           settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                           settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                           settingscbo.Properties.TextField = "SessionName";
+                           settingscbo.Properties.ValueField = "SessionID";
+                           settingscbo.Width = System.Web.UI.WebControls.Unit.Pixel(120);
+                           settingscbo.SelectedIndex = 0;
+                           //settings.ShowModelErrors = true;
+                           //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                       }
+                   ).BindList(new UnitOfWork().academicYearService.Get()).GetHtml();
+
+         ViewContext.Writer.Write("</div>");
+
+
+         //ViewContext.Writer.Write("<div class='line' style=\"text-decoration: none; \" >  ");
+         //@Html.DevExpress().HyperLink(settingshpyrlink =>
+         //{
+         //    settingshpyrlink.Name = "hyperLinkName";
+         //    settingshpyrlink.NavigateUrl = DevExpressHelper.GetUrl(new { Controller = "UserLogin", Action = "ForgotPasswordView" } );
+         //    settingshpyrlink.Properties.Text = "Forgot Password";
+         //    settingshpyrlink.ControlStyle.ForeColor = System.Drawing.Color.Blue;
+         //    settingshpyrlink.ControlStyle.Font.Size = 12;
+
+         //    //settingshpyrlink.ControlStyle.
+
+         //}).GetHtml();
+
+         //ViewContext.Writer.Write("</div>");
+
+
+         ViewContext.Writer.Write("<div class='linebtn' style=\"margin-top:20px;  \" >  ");
+
+         ViewContext.Writer.Write("<table><tr><td style=\"text-decoration-color:#ff0000;  \" > ");
+
+
+         @Html.DevExpress().HyperLink(settingshpyrlink =>
+         {
+             settingshpyrlink.Name = "hyperLinkName";
+             settingshpyrlink.NavigateUrl = DevExpressHelper.GetUrl(new { Controller = "UserLogin", Action = "ForgotPasswordView" });
+             settingshpyrlink.Properties.Text = "Forgot Password";
+             //settingshpyrlink.ControlStyle.ForeColor = System.Drawing.Color.Blue;
+             settingshpyrlink.ControlStyle.Font.Size = 12;
+             settingshpyrlink.ControlStyle.Font.Underline = false;
+            // settingshpyrlink.ControlStyle.Border = System.Drawing.Color.White;
+             //settingshpyrlink.ControlStyle.
+
+         }).GetHtml();
+
+         ViewContext.Writer.Write("</td> <td style=\"padding-left:110px;  \">");
+
+             @Html.DevExpress().Button(
+                settingsbtn =>
+                                {
+                    settingsbtn.Name = "btnUpdatePersonalInfo";
+                    settingsbtn.ControlStyle.CssClass = "button";
+                    settingsbtn.Text = "Login";
+                  settings.ControlStyle.Font.Size = 14;
+                    settingsbtn.UseSubmitBehavior = true;
+                }).GetHtml();
+
+
+
+         ViewContext.Writer.Write("</td></tr></table>");
+
+        ViewContext.Writer.Write("</div>");
+
+        //ViewContext.Writer.Write("<div class='' style=\"text-align:center;  border-top:3px solid #bfdbff; margin-top:15px; \">  ");
+
+        // //@Html.ActionLink("Link", "ForgotPasswordView", "UserLogin");
+        //@Html.DevExpress().HyperLink(settingshpyrlink =>
+        //{
+        //    settingshpyrlink.Name = "hyperLinkName";
+        //    settingshpyrlink.NavigateUrl = DevExpressHelper.GetUrl(new { Controller = "UserLogin", Action = "ForgotPasswordView" });
+        //    settingshpyrlink.Properties.Text = "Forgot Password";
+        //    settingshpyrlink.ControlStyle.ForeColor = System.Drawing.Color.Blue;
+        //    settingshpyrlink.ControlStyle.Font.Size = 12;
+
+        //}).GetHtml();
+
+        //ViewContext.Writer.Write("</div>");
+
+
+        ViewContext.Writer.Write("</div>");
+        ViewContext.Writer.Write("</div>");
+
+
+
+
+
+
+
+
+                    });
+                });
+
+                settings.Panes.Add(pane =>
+                     {
+                    pane.Name = "Footer";
+                    pane.Size = System.Web.UI.WebControls.Unit.Pixel(50);
+                    pane.PaneStyle.CssClass = "footerPane";
+                    pane.SetContent(() =>
+                         {
+                        Html.RenderPartial("LoginFooterView");
+                    });
+                });
+            }).GetHtml()
+
+
+             }
+
+         </div>*@
+
+
+    <div class="formLayout-verticalAlign">
+        <div class="formLayout-container">
+
+
+            @using (Html.BeginForm("UserLoginCheck", "UserLogin"))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.DevExpress().FormLayout(settings =>
+           {
+               settings.Name = "formLayout";
+               settings.UseDefaultPaddings = false;
+               settings.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+               settings.SettingsItemCaptions.Location = LayoutItemCaptionLocation.Top;
+               settings.Styles.LayoutGroup.Cell.Paddings.Padding = Unit.Pixel(0);
+               settings.Styles.LayoutItem.Paddings.PaddingBottom = Unit.Pixel(8);
+
+               var groupItem = settings.Items.AddGroupItem(i =>
+               {
+                   i.ShowCaption = DefaultBoolean.False;
+                   i.GroupBoxDecoration = GroupBoxDecoration.None;
+                   i.Paddings.Padding = Unit.Pixel(16);
+
+               });
+               groupItem.Items.Add(m => m.UserName, i =>
+               {
+                   i.HelpText = "Please, enter your login name";
+                   i.NestedExtension().TextBox(s =>
+                   {
+                       s.Width = Unit.Percentage(100);
+                       s.ShowModelErrors = true;
+                       s.Properties.ValidationSettings.Display = Display.Dynamic;
+                       s.Properties.ValidationSettings.SetFocusOnError = true;
+                       s.Properties.ValidationSettings.ErrorTextPosition = ErrorTextPosition.Bottom;
+                       s.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+
+                       s.Properties.ClientSideEvents.Init = "function(s, e){ s.Focus(); }";
+                   });
+               });
+
+               groupItem.Items.Add(m => m.Password, i =>
+               {
+                   i.NestedExtension().ButtonEdit(s =>
+                   {
+                       s.Width = Unit.Percentage(100);
+                       s.ShowModelErrors = true;
+                       s.Properties.ValidationSettings.Display = Display.Dynamic;
+                       s.Properties.ValidationSettings.SetFocusOnError = true;
+                       s.Properties.ValidationSettings.ErrorTextPosition = ErrorTextPosition.Bottom;
+                       s.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+
+                       s.Properties.Password = true;
+                       s.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                       s.Properties.ClientSideEvents.ButtonClick = "onPasswordButtonEditButtonClick";
+
+                       s.Properties.ButtonStyle.Border.BorderWidth = Unit.Pixel(0);
+                       s.Properties.ButtonStyle.Width = Unit.Pixel(6);
+                       s.Properties.ButtonStyle.CssClass = "eye-button";
+                       s.Properties.ButtonStyle.HoverStyle.BackColor = System.Drawing.Color.Transparent;
+                       s.Properties.ButtonStyle.PressedStyle.BackColor = System.Drawing.Color.Transparent;
+
+                       s.SetButtonTemplateContent("<div></div>");
+                       s.Properties.Buttons.Add();
+                   });
+               });
+
+               groupItem.Items.Add(m => m.BranchID, i =>
+               {
+                   i.SetNestedContent(() =>
+                   {
+                       @Html.DevExpress().ComboBoxFor(
+                      model => model.BranchID,
+                              settingscbo =>
+                              {
+                                  settingscbo.Name = "BranchID";
+                                  //settingscbo.ControlStyle.CssClass = "editor1";
+                                  settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                  settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                  settingscbo.Properties.TextField = "BranchName";
+                                  settingscbo.Properties.ValueField = "BranchID";
+                                  settingscbo.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                  settingscbo.SelectedIndex = 0;
+                                  //settings.ShowModelErrors = true;
+                                  //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                              }
+                          ).BindList(new UnitOfWork().branchService.Get()).GetHtml();
+
+
+                   });
+               });
+               groupItem.Items.Add(m => m.BranchID, i =>
+               {
+                   i.SetNestedContent(() =>
+                   {
+                       Html.DevExpress().ComboBoxFor(
+                       model => model.SessionID,
+                               settingscbo =>
+                               {
+                                   settingscbo.Name = "SessionID";
+                                   //settingscbo.ControlStyle.CssClass = "editor1";
+                                   settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                   settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                   settingscbo.Properties.TextField = "SessionName";
+                                   settingscbo.Properties.ValueField = "SessionID";
+                                   settingscbo.Width = System.Web.UI.WebControls.Unit.Pixel(120);
+                                   settingscbo.SelectedIndex = 0;
+                                   //settings.ShowModelErrors = true;
+                                   //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                               }
+                           ).BindList(new UnitOfWork().academicYearService.Get()).GetHtml();
+
+
+                   });
+               });
+
+               //Html.DevExpress().ComboBox(settingscbo =>
+               //{
+               //    settingscbo.Name = "SessionID";
+               //    //settingscbo.ControlStyle.CssClass = "editor1";
+               //    settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+               //    settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+               //    settingscbo.Properties.TextField = "SessionName";
+               //    settingscbo.Properties.ValueField = "SessionID";
+               //    settingscbo.Width = System.Web.UI.WebControls.Unit.Pixel(120);
+               //    settingscbo.SelectedIndex = 0;
+               //}).BindList(new UnitOfWork().academicYearService.Get()).GetHtml();
+
+
+               //groupItem.Items.Add(m => m.RememberMe, i =>
+               //     {
+               //    i.ShowCaption = DefaultBoolean.False;
+               //    i.Paddings.PaddingTop = Unit.Pixel(13);
+               //    i.NestedExtension().CheckBox(s =>
+               //         {
+               //        s.Text = "Remember me";
+               //    });
+               //});
+
+               groupItem.Items.Add(itemSettings =>
+               {
+                   itemSettings.ShowCaption = DefaultBoolean.False;
+                   itemSettings.Visible = ViewBag.GeneralError != null;
+                   itemSettings.SetNestedContent(() =>
+                   {
+                       ViewContext.Writer.Write("<div class=\"formLayout-generalErrorText\">" + @ViewBag.GeneralError + "</div>");
+                   });
+               });
+
+               groupItem = settings.Items.AddGroupItem(i =>
+               {
+                   i.ShowCaption = DefaultBoolean.False;
+                   i.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+                   i.Paddings.PaddingTop = Unit.Pixel(13);
+                   i.Paddings.PaddingBottom = Unit.Pixel(13);
+                   i.GroupBoxStyle.CssClass = "formLayout-groupBox";
+               });
+               groupItem.Items.Add(i =>
+               {
+                   i.ShowCaption = DefaultBoolean.False;
+                   i.HorizontalAlign = FormLayoutHorizontalAlign.Center;
+                   i.Paddings.Padding = Unit.Pixel(0);
+                   i.NestedExtension().Button(s =>
+                   {
+                       s.Name = "SignInButton";
+                       s.Width = Unit.Pixel(200);
+                       s.Text = "Log In";
+                       s.UseSubmitBehavior = true;
+                   });
+               });
+
+           }).GetHtml()
+            }
+        </div>
+    </div>
+
+
+</body>
+</html>

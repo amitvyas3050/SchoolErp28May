@@ -1,0 +1,89 @@
+@using appSchool.Model
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>
+        @{ var pageTitleParts = new string[] { ViewBag.Title, "School Portal Login" }; }
+        @string.Join(" - ", @pageTitleParts.Where(s => !string.IsNullOrEmpty(s)))
+    </title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0" />
+        @Html.DevExpress().GetStyleSheets(
+        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.VerticalGrid },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.CardView },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.HtmlEditor },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.RichEdit },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Spreadsheet },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Gantt },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Diagram },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Chart },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.ClientRichEdit },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Dashboard },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.SpellChecker },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.QueryBuilder }
+    )
+    @Html.DevExpress().GetScripts( 
+        new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new Script { ExtensionSuite = ExtensionSuite.Editors },
+        new Script { ExtensionSuite = ExtensionSuite.GridView },
+        new Script { ExtensionSuite = ExtensionSuite.TreeList },
+        new Script { ExtensionSuite = ExtensionSuite.VerticalGrid },
+        new Script { ExtensionSuite = ExtensionSuite.CardView },
+        new Script { ExtensionSuite = ExtensionSuite.PivotGrid },
+        new Script { ExtensionSuite = ExtensionSuite.HtmlEditor },
+        new Script { ExtensionSuite = ExtensionSuite.RichEdit },
+        new Script { ExtensionSuite = ExtensionSuite.Spreadsheet },
+        new Script { ExtensionSuite = ExtensionSuite.Scheduler },
+        new Script { ExtensionSuite = ExtensionSuite.Gantt },
+        new Script { ExtensionSuite = ExtensionSuite.Diagram },
+        new Script { ExtensionSuite = ExtensionSuite.Chart },
+        new Script { ExtensionSuite = ExtensionSuite.Report },
+        new Script { ExtensionSuite = ExtensionSuite.ClientRichEdit },
+        new Script { ExtensionSuite = ExtensionSuite.Dashboard },
+        new Script { ExtensionSuite = ExtensionSuite.SpellChecker },
+        new Script { ExtensionSuite = ExtensionSuite.QueryBuilder }
+    )
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Content.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Layout.css")" />
+    @RenderSection("Head", false)
+    <script type="text/javascript" src="@Url.Content("~/Content/Script.js")"></script>
+
+    <script>
+        // sending the __RequestVerificationToken value manually, see details: https://github.com/DevExpress/aspnet-security-bestpractices/tree/master/SecurityBestPractices.Mvc#4-preventing-cross-site-request-forgery-csrf
+        if(window.jQuery) {
+            $.ajaxPrefilter(function(options, originalOptions, xhr) {
+                if (options.dataType && options.dataType !== "html")
+                    return;
+                var tokenValue = $('input:hidden[name="__RequestVerificationToken"]').val();
+                if(tokenValue && options && options.data && options.data.indexOf('RequestVerificationToken') === -1)
+                    options.data += "&__RequestVerificationToken=" + tokenValue;
+            });
+        }
+    </script>
+</head>
+<body>
+    @using(Html.BeginForm("SignOut", "Account", FormMethod.Post, new { id = "signOutForm" })) {
+        @Html.AntiForgeryToken();
+    }
+    
+    <div class="form">
+       
+        <div class="content" id="pageContent">
+            @RenderBody()
+          
+        </div>
+    </div>
+    <script type="text/javascript">
+        MVCxClientGlobalEvents.AddControlsInitializedEventHandler(onControlsInitialized);
+        ASPxClientControl.GetControlCollection().BrowserWindowResized.AddHandler(onBrowserWindowResized);
+    </script>
+</body>
+</html>

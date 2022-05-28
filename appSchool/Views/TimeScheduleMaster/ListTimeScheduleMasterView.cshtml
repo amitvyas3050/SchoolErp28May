@@ -1,0 +1,129 @@
+﻿@using appSchool.ViewModels
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridTimeScheduleMaster";
+            settings.KeyFieldName = "ScheduleId";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            //settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            settings.CallbackRouteValues = new { Controller = "TimeScheduleMaster", Action = "PartialTimeScheduleMasterView" };
+            settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "TimeScheduleMaster", Action = "AddNewTimeSchedule" };
+            settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "TimeScheduleMaster", Action = "UpdateTimeSchedule" };
+            settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "TimeScheduleMaster", Action = "DeleteTimeSchedule" };
+            settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+            settings.SettingsBehavior.ConfirmDelete = true;
+
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+            settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+            settings.CommandColumn.Visible = true;
+            settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(10);
+            settings.CommandColumn.ButtonType = GridViewCommandButtonType.Default;
+            if(PermissionFlag._ModFlag==true)
+            settings.CommandColumn.ShowEditButton = true;
+            if(PermissionFlag._AddFlag==true)
+            settings.CommandColumn.ShowNewButtonInHeader = true;
+            if(PermissionFlag._DelFlag==true)
+            settings.CommandColumn.ShowDeleteButton = true;
+
+            settings.Columns.Add("ScheduleId").Visible = false;
+            
+           
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ScheduleName";
+                column.Caption = "ScheduleName";
+                                                
+            });
+            settings.Columns.Add("UIDAdd").Visible = false;
+            settings.Columns.Add("AddDate").Visible = false;
+            settings.Columns.Add("SessionID").Visible = false;
+            settings.Columns.Add("UIDMod").Visible = false;
+            settings.Columns.Add("ModDate").Visible = false;
+                        
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "StartTime";
+                column.Caption = "Start Time";
+                column.ColumnType = MVCxGridViewColumnType.DateEdit;
+
+                var dateProperties = column.PropertiesEdit as DateEditProperties;
+                dateProperties.UseMaskBehavior = true;
+                dateProperties.EditFormat = EditFormat.Custom;
+                dateProperties.EditFormatString = "dd/MM/yyyy hh:mm tt";
+                dateProperties.DisplayFormatString = "hh:mm tt";
+                dateProperties.TimeSectionProperties.Visible = true;
+                dateProperties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                dateProperties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                
+                
+            });
+
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "EndTime";
+                column.Caption = "End Time";
+                column.ColumnType = MVCxGridViewColumnType.DateEdit;
+
+                var dateProperties = column.PropertiesEdit as DateEditProperties;
+                dateProperties.UseMaskBehavior = true;
+                dateProperties.EditFormat = EditFormat.Custom;
+                dateProperties.EditFormatString = "dd/MM/yyyy hh:mm tt";
+                dateProperties.DisplayFormatString = "hh:mm tt";
+                dateProperties.TimeSectionProperties.Visible = true;
+                dateProperties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                dateProperties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                
+                
+            });
+            settings.Columns.Add("IsBreak", MVCxGridViewColumnType.CheckBox).EditFormSettings.ColumnSpan = 1;
+
+
+            settings.Columns.Add("SessionID").Visible = false;
+            settings.Columns.Add("UIdAdd").Visible = false;
+            settings.Columns.Add("AddDate").Visible = false;
+            
+            
+            //settings.Columns.Add("FeeTermFromDate").EditFormSettings.ColumnSpan = 1;
+            //settings.Columns.Add("FeeTermToDate").EditFormSettings.ColumnSpan = 1;
+           
+            
+            
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            settings.Settings.ShowHeaderFilterButton = true;
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            settings.ClientSideEvents.FocusedRowChanged = "timeScheduleMasterController.RowSelectionChange";
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+
+

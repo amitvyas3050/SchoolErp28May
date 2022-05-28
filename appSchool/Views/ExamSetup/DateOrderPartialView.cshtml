@@ -1,0 +1,91 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+@using appSchool.Controllers
+
+@model ExamSetupMaster
+
+                
+<table id="DateOrderPartial">
+    <tr>
+        <td>
+              @Html.DevExpress().LabelFor(
+              model=>model.StartDate,
+              settingslbl =>
+                {
+                  //  settingslbl.Name = "lblFromDate";
+                    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settingslbl.Text = "FromDate";
+                }).GetHtml()
+
+                @Html.DevExpress().DateEditFor(
+                model=>model.StartDate,
+                   settingsFromdate =>
+                   {
+                     //  settingsFromdate.Name = "FromDate";
+                       settingsFromdate.ControlStyle.CssClass = "editor";
+                       settingsFromdate.Properties.NullText = "dd MMM yyyy";
+                       settingsFromdate.Properties.EditFormat = EditFormat.Custom;
+                       settingsFromdate.Properties.EditFormatString = "dd MMM yyyy";
+                       settingsFromdate.ShowModelErrors = true;
+                       settingsFromdate.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                       settingsFromdate.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                   }).GetHtml()
+              
+
+
+        </td>
+        <td>
+               @Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lblToDate";
+                    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settingslbl.Text = "ToDate";
+                }).GetHtml()
+
+                @Html.DevExpress().DateEditFor(
+               model=>model.EndDate,
+                   settingsTodate =>
+                   {
+                      // settingsTodate.Name = "ToDate";
+                       settingsTodate.ControlStyle.CssClass = "editor";
+                       settingsTodate.Properties.NullText = "dd MMM yyyy";
+                       settingsTodate.Properties.EditFormat = EditFormat.Custom;
+                       settingsTodate.Properties.EditFormatString = "dd MMM yyyy";
+                       settingsTodate.ShowModelErrors = true;
+                       settingsTodate.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                       settingsTodate.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                   }).GetHtml()
+
+
+
+        </td>
+        <td>
+
+            
+                @Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lblOrder";
+                    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settingslbl.Text = "Order";
+                }).GetHtml()
+
+                @Html.DevExpress().TextBoxFor(
+                model=>model.ExamOrder,
+                settingsorder =>
+                {
+                  //  settingsorder.Name = "OrderID";
+                    settingsorder.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                }).GetHtml()
+
+                
+
+
+        </td>
+
+    </tr>
+
+</table>
+
+              
+             
+            

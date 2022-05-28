@@ -1,0 +1,83 @@
+﻿
+@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@model  AttendanceClass
+
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    Html.EnableClientValidation(true);
+}
+
+
+
+        @Html.DevExpress().HyperLink(settings => {
+    settings.Name = "hyperLinkName";
+    settings.ControlStyle.CssClass = "button";
+    settings.NavigateUrl = DevExpressHelper.GetUrl(new { Controller = "AttendanceManager", Action = "Index" });
+    settings.Properties.Text = "Back to Attendance";
+   
+       
+}).GetHtml()
+             
+
+  
+@using (Ajax.BeginForm("AddAttendanceMaster", "AttendanceDaily",
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnBegin = "loadingPanel.Show();",
+        OnComplete = "loadingPanel.Hide();",
+        UpdateTargetId = "contentPersonal",
+        InsertionMode = InsertionMode.Replace
+
+    },
+    new
+    {
+        id = "validationForm",
+        //@class = "edit_form",
+        //style = "height: 80px; position:relative; width: 100%;",
+        //enctype = "multipart/form-data"
+    }
+    ))
+{
+
+    <div id="contentPersonal" class="edit_form">
+
+
+         @Html.Partial("AttendanceTemplatePartial", Model)
+        </div>
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

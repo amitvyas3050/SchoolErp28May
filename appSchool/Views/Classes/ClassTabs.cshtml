@@ -1,0 +1,16 @@
+﻿@model int
+@*<h4>@Model</h4>*@
+@{
+    var tab = Html.DevExpress().TabControl(settings =>
+    {
+        settings.Name = "tabClassRecord";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Tabs.Add("Class Teachers");
+        settings.Tabs.Add("Students");
+        settings.Tabs.Add("Activities Info");
+        settings.Tabs.Add("SMS History");
+        settings.Tabs.Add("Fees details");
+    });
+}
+@tab.GetHtml()

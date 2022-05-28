@@ -1,0 +1,36 @@
+﻿@using appSchool.Repositories;
+
+
+@model int
+
+
+@Html.DevExpress().PageControl(
+        settings =>
+        {
+            settings.Name = "pcClientSideAPI";
+            settings.EnableClientSideAPI = true;
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Height = 120;
+            settings.TabAlign = TabAlign.Justify;
+            //settings.TabPages.Add("News/Event Info", "NewsEventInfo").SetContent(() =>
+            //{
+            //    modelNewsEventinfo obj = (new NewsEventMasterRepository()).GetNewsEventInfo(Model);
+            //    @Html.RenderPartial("NewsEventPartial", obj);
+            //});
+
+
+
+            settings.TabPages.Add("Flyer Voice Upload", "PhotoUploadInfo").SetContent(() =>
+            {
+                //modelNewsEventPhotoUploadInfo obj1 = (new NewsEventMasterRepository()).GetEventPhotoInfo(Model);
+                modelFlyerVoiceMasterPhotoUploadInfo obj1 = (new FlyerVoiceMasterRepository()).GetFlyerVoiceMasterPhotoInfo(Model);
+                @Html.RenderPartial("UploadFlyerVoiceMasterPhotoPartial", obj1);
+            });
+
+          
+            
+            
+          
+            
+           
+        }).GetHtml()

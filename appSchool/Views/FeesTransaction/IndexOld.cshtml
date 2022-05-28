@@ -1,0 +1,85 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Controllers
+@using appSchool.Repositories
+
+@model modelStudentFeesReceipt
+
+@{
+    ViewBag.Title = "Fees Reciept Info.";
+    Layout = "~/Views/Shared/_rootLayout.cshtml";
+}
+
+<script src="@Url.Content("~/jsControllers/feesTransactionController.js")"></script>
+@if (PermissionFlag._AddFlag == false && PermissionFlag._DelFlag == false && PermissionFlag._ModFlag == false)
+     {
+     
+              @Html.DevExpress().PopupControl(settings => {
+                settings.Name = "popupclass";
+                settings.PopupElementID = "popupArea";
+                settings.AllowDragging = true;
+                settings.ShowOnPageLoad = true;
+                settings.Width=180;
+                settings.Height = 100;
+            
+                settings.PopupHorizontalAlign =PopupHorizontalAlign.WindowCenter;
+                settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                settings.CloseAction = CloseAction.CloseButton;
+                settings.HeaderText = "User Permission";
+                settings.SetContent(() => {
+                    ViewContext.Writer.Write(
+                        " <p style=\"color:red;\"> Permission not granted </p>"
+                    );
+                    ViewContext.Writer.Write(
+            "<div style=\"text-align:center;\" > <img   src=\"" + Url.Content("~/Images/permission.png") + "\" alt=\"Permission\" /> </div> "
+        );
+                    Html.DevExpress().HyperLink(settingsHLink =>
+                    {
+                        settingsHLink.Name = "HRFeesManager";
+
+                        settingsHLink.ControlStyle.CssClass = "button";
+                     
+                        settingsHLink.NavigateUrl = DevExpressHelper.GetUrl(new { Controller = "FeesManager", Action = "Index" });
+                        settingsHLink.Properties.Text = "Back to FeesManager";
+                    }).GetHtml();
+                    
+               });
+}).GetHtml()
+     }
+else
+{
+@Html.DevExpress().Splitter(settings => {
+    settings.Name = "FeesTransactionSplitter";
+    settings.Orientation = System.Web.UI.WebControls.Orientation.Vertical;
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Styles.Pane.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(1);
+    settings.Styles.Pane.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(1);
+    //settings.Panes.Add(subpane => {
+    //    subpane.Name = "topPane";
+    //    subpane.PaneStyle.CssClass = "leftPane";
+    //    subpane.ShowCollapseBackwardButton = DefaultBoolean.False;
+    //    subpane.Size = System.Web.UI.WebControls.Unit.Percentage(5);
+    //    subpane.PaneStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(3);
+    //    subpane.SetContent(() => {
+    //        Html.RenderPartial("sendSMSHeader");
+    //    });
+    //});
+    settings.Panes.Add(subpane =>
+    {
+        subpane.Name = "bodyPane";
+        subpane.PaneStyle.CssClass = "bodyPane";
+        subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+        subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+        subpane.Size = System.Web.UI.WebControls.Unit.Percentage(99);
+        subpane.PaneStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(1);
+        subpane.SetContent(() =>
+        {
+            Html.RenderPartial("FeesTransactionBodyPartial",Model);
+        });
+    });
+   
+}).GetHtml()
+
+    
+    
+}

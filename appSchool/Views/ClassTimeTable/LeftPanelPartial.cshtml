@@ -1,0 +1,40 @@
+﻿<h3 class="leftpanel-section section-caption">Data Manager</h3>
+@Html.DevExpress().NavBar(navBarSettings => {
+    navBarSettings.Name = "filtersNavBar";
+
+    navBarSettings.AllowSelectItem = true;
+    navBarSettings.ShowGroupHeaders = false;
+    navBarSettings.Width = Unit.Percentage(100);
+    navBarSettings.ControlStyle.CssClass = "filters-navbar";
+    navBarSettings.Styles.Item.CssClass = "item";
+    navBarSettings.Groups.Add(group => {
+        group.Items.Add(item => {
+            item.Name = "Class";
+            item.Text = "Class";
+            item.Selected = true;
+        });
+        group.Items.Add(item => {
+            item.Name = "Class Setup";
+            item.Text = "Class Setup";
+
+        });
+        group.Items.Add(item => {
+            item.Name = "Section";
+            item.Text = "Section";
+            item.NavigateUrl = "/Home/Index";
+            item.Image.IconID = IconID.HelpContent16x16gray;
+        });
+        group.Items.Add(item =>
+        {
+            item.Name = "Houe Master";
+            item.Text = "Houe Master";
+            item.NavigateUrl = "/Home/Index";
+            item.Image.IconID = IconID.HelpContent16x16gray;
+        });
+        group.Items.Add(item => {
+            item.Name = "Setups";
+            item.Text = "Setups";
+        });
+    });
+    navBarSettings.ClientSideEvents.ItemClick = "onFiltersNavBarItemClick";
+}).GetHtml()

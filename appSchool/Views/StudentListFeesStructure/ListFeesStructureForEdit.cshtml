@@ -1,0 +1,129 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@if (ViewData["StudMasterIDForSFS"] == null)
+{
+    ViewData["StudMasterIDForSFS"] = 0;
+}
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridFeeStructureEdit";
+            settings.KeyFieldName = "StudentDetailID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            settings.CommandColumn.Visible = true;
+          
+         //   settings.CommandColumn.ShowClearFilterButton = true;
+            
+            settings.CallbackRouteValues = new { Controller = "StudentListFeesStructure", Action = "PartialGridFeesHead", mStudMasterID = int.Parse(ViewData["StudMasterIDForSFS"].ToString()) };
+            //settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "RouteMaster", Action = "AddNewRoute" };
+            //settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "RouteMaster", Action = "UpdateRoute" };
+            //settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "RouteMaster", Action = "DeleteRoute" };
+
+            settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "StudentListFeesStructure", Action = "UpdateFeesStructureEdit", mStudMasterID = int.Parse(ViewData["StudMasterIDForSFS"].ToString()) };
+
+
+                settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+                settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+                settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+                //settings.SettingsCommandButton.EditButton.ButtonType = GridViewCommandButtonType.Button;
+            
+            settings.SettingsBehavior.ConfirmDelete = true;
+
+            //settings.SettingsPopup.EditForm.ShowHeader = true;
+            //settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            //settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            //settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+
+            //settings.CommandColumn.Visible = true;
+            settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(2);
+            //settings.CommandColumn.ButtonType = GridViewCommandButtonType.Default;
+            //settings.CommandColumn.ShowEditButton = true;
+          
+            settings.CommandColumn.ShowNewButtonInHeader = true;
+          
+            settings.CommandColumn.ShowDeleteButton = true;
+
+
+
+            settings.Columns.Add("StudentDetailID").Visible=false;
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "TermID";
+                column.Caption = "FeeTerm";
+                //column.EditFormSettings.ColumnSpan = 1;
+
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.FeeTermRepository()).GetFeeTermList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()), byte.Parse(Session["SessionID"].ToString()));
+                comboBoxProperties.TextField = "FeeTermName";
+                comboBoxProperties.ValueField = "FeeTermID";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "HeadID";
+                column.Caption = "FeesHead";
+                //column.EditFormSettings.ColumnSpan = 1;
+
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.FeesHeadRepository()).GetFeesHeadList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "FeesHeadName";
+                comboBoxProperties.ValueField = "FeesHeadID";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+            
+            
+            //settings.Columns.Add("FeesHeadName");
+            settings.Columns.Add("HeadAmount");
+             settings.CellEditorInitialize = (s, e) =>
+            {
+              //  ASPxEdit editor = (ASPxEdit)e.Editor;
+               // editor.ValidationSettings.Display = Display.Dynamic;
+            };
+
+
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+
+           // settings.Settings.ShowGroupPanel = true;
+           // settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            settings.Settings.VerticalScrollableHeight = 370;
+
+            settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+            settings.SettingsPager.PageSize = 200;
+            
+         
+           
+        
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+            
+          
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            
+         
+        });
+
+    if (ViewData["EditError"] != null){
+       // grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+

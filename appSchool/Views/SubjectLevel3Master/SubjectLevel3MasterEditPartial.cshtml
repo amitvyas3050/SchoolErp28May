@@ -1,0 +1,167 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@model modelSubjectLevel3Grid
+
+@*@Html.Hidden("StudentID")*@
+
+ @* @Html.DevExpress().BinaryImageFor(
+            model=> model.AppImage,
+            settings => {
+                settings.Name = "AppImage";    
+                settings.ControlStyle.CssClass = "editor";
+                //settings.Properties.MaskSettings.Mask = "(AAA)-000-0000";
+                // settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.None;
+              
+                
+            }).GetHtml()*@
+
+<div id="form_edit_controls" style="width:100%;height:auto;">
+<div class="line5" >
+    @Html.DevExpress().LabelFor(
+            model=> model.IdL1,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "IdL1";
+                settings.AssociatedControlName = "IdL1";
+            }
+        ).GetHtml()
+     @Html.DevExpress().ComboBoxFor(
+            model=> model.IdL1,
+                    settings => {
+                        settings.ControlStyle.CssClass = "editor";
+                        settings.ShowModelErrors = true;
+                        settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                        settings.Name = "IdL1";
+                        settings.Properties.TextField = "SubjectNameL1";
+                        settings.Properties.ValueField = "IdL1";
+                        settings.SelectedIndex = 0;
+                        //settings.Properties.RequireDataBinding();
+                        // settings.Properties.EnableClientSideAPI = true;
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.ClientSideEvents.SelectedIndexChanged = "subjectLevel3MasterController.FillIDL2SubjectData";
+                        
+                    }
+                ).BindList(new SubjectLevel1Repository().Get()).GetHtml()
+    
+</div>
+<div class="line5" >
+    @Html.DevExpress().LabelFor(
+            model=> model.IdL2,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "IdL2";
+                settings.AssociatedControlName = "IdL2";
+                
+            }
+        ).GetHtml()
+      @Html.DevExpress().ComboBoxFor(
+            model=> model.IdL2,
+                    settings => {
+                        settings.Name = "IdL2";
+                        settings.ControlStyle.CssClass = "editor";
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.TextField = "SubjectNameL2";
+                        settings.Properties.ValueField = "IdL2";
+                        //settings.ShowModelErrors = true;
+                        //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                        
+                    }
+                ).BindList(new SubjectLevel2Repository().GetSubjectLevel2Data()).GetHtml()
+</div>
+
+   @* <div class="line4" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.IdL3,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "IdL3";
+                settings.AssociatedControlName = "IdL3";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model=> model.IdL3,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                //settings.ShowModelErrors = true;
+                //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.ReadOnly = false;
+                
+            }).GetHtml()
+  
+    </div>*@
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.SubjectCodeL3,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "SubjectCodeL3";
+                settings.AssociatedControlName = "Subject Code";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model=> model.SubjectCodeL3,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                //settings.ShowModelErrors = true;
+                //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.ReadOnly = false;
+                
+            }).GetHtml()
+  
+    </div>
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.SubjectNameL3,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Subject Name";
+                settings.AssociatedControlName = "SubjectNameL3";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.SubjectNameL3,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                //settings.ShowModelErrors = true;
+                //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.ReadOnly = false;
+                
+            }).GetHtml()
+
+    </div>
+
+     <div class="line5">
+       @if(PermissionFlag._ModFlag==true)
+       {
+       @Html.DevExpress().Button(
+        settings => {
+            settings.Name = "btnUpdateSubjectLevel3Info";
+            settings.ControlStyle.CssClass = "button1";
+            settings.Text = "Update";
+            settings.UseSubmitBehavior = true;
+        }).GetHtml()
+       }
+    </div>
+
+<div class="line4">
+ @*   <input type="file" name="FileUpload" />*@
+</div>
+</div>
+<div style="clear:both"></div>
+
+
+  
+    <div class="divError" >
+
+@*        @Html.ValidationMessageFor(model=> model.FirstName) 
+        @Html.ValidationMessageFor(model=> model.LastName) *@ 
+    </div>
+
+     

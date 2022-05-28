@@ -1,0 +1,67 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+@model modelEmployeeSendSms
+
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    Html.EnableClientValidation(true);
+}
+<script>
+
+    function UpdateSuccessful(data) {
+        alert(data.Resultmsg);
+
+        $('#divmsg').empty();
+        var html = "<h3>" + data.Resultmsg + "</h3>"
+        $('#divmsg').append(html);
+
+        $("#contentPersonal").html(data.ResultData);
+    }
+
+</script>    
+
+
+    
+<div>
+@using (Ajax.BeginForm("SMSButtonClick", "EmployeeSMSAbsentees",
+    new AjaxOptions {
+        HttpMethod = "POST",
+        OnBegin = "loadingPanel.Show();",
+        OnComplete = "loadingPanel.Hide();",
+        UpdateTargetId = "contentPersonal",
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "UpdateSuccessful(data)",
+        OnFailure = "onError"
+    },
+    new {
+        id = "validationForm1",
+        //@class = "edit_form",
+        //style="height:auto; position:relative; width: 100%;",
+        //enctype = "multipart/form-data" 
+    }
+    )) {
+
+    <div  id="divmsg" style="color:red;" >
+
+    </div>
+      <div id="contentPersonal">
+       
+    @Html.Partial("SendSMSAbsenteesEditTextView")
+
+    </div>
+    
+    
+    
+}
+</div>
+
+  
+
+@Html.DevExpress().LoadingPanel(
+    settings => {
+        settings.Name = "loadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "";
+        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+    }).GetHtml()

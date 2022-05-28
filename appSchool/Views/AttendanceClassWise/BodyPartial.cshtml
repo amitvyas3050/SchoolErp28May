@@ -1,0 +1,246 @@
+﻿@using appSchool.Repositories
+
+
+<div class="row">
+    <div class="col-sm-2">
+        @Html.DevExpress().Label(
+                settingslbl =>
+                {
+                    settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+                    settingslbl.Text = "Date for Attendance ";
+                }
+            ).GetHtml()
+
+
+        @Html.DevExpress().DateEdit(
+        settingsdate =>
+        {
+            settingsdate.Name = "AttendanceDateAll";
+            settingsdate.ControlStyle.CssClass = "editor";
+            settingsdate.Properties.NullText = "dd MMM yyyy";
+            settingsdate.Properties.EditFormat = EditFormat.Custom;
+            settingsdate.Properties.EditFormatString = "dd MMM yyyy";
+            settingsdate.ShowModelErrors = true;
+            settingsdate.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        }).GetHtml()
+    </div>
+    <div class="col-sm-2">
+        @Html.DevExpress().Button(
+             settingsbtn =>
+             {
+                 settingsbtn.Name = "btnAllAttendance";
+                 settingsbtn.ControlStyle.CssClass = "btnpaddingrow15px";
+                 settingsbtn.Text = "All Attendance";
+                 //settingsbtn.Images.Image.IconID = IconID.PeopleTeam32x32;
+                 settingsbtn.Width = 150;
+                 // settings.ClientSideEvents.Click = "function(s, e) { CallbackPanel.PerformCallback(); }";
+                 settingsbtn.ClientSideEvents.Click = "attendanceClasswiseController.ClickAllAttendance";
+             }).GetHtml()
+    </div>
+    <div class="col-sm-2">
+        @Html.DevExpress().Button(
+                settingsbtn =>
+                {
+                    settingsbtn.Name = "btnAttendanceList";
+                    settingsbtn.ControlStyle.CssClass = "btnpaddingrow15px";
+                    settingsbtn.Text = "Attendance List";
+                    settingsbtn.Width = 150;
+                    settingsbtn.Images.Image.IconID = IconID.GridCustomizegrid32x32;
+                    // settings.ClientSideEvents.Click = "function(s, e) { CallbackPanel.PerformCallback(); }";
+                    settingsbtn.ClientSideEvents.Click = "attendanceClasswiseController.ClickAllAttendanceList";
+                }).GetHtml()
+    </div>
+    <div class="col-sm-2">
+        @Html.DevExpress().Button(
+           settingsbtn =>
+           {
+               settingsbtn.Name = "btnAttendanceChart";
+               settingsbtn.ControlStyle.CssClass = "btnpaddingrow15px";
+               settingsbtn.Text = "Attendance Chart";
+               settingsbtn.Images.Image.IconID = IconID.ChartBar32x32;
+               settingsbtn.Width = 100;
+
+               // settings.ClientSideEvents.Click = "function(s, e) { CallbackPanel.PerformCallback(); }";
+               settingsbtn.ClientSideEvents.Click = "attendanceClasswiseController.ClickAllAttendanceChart";
+           }).GetHtml()
+    </div>
+
+    <div class="col-sm-2">
+
+        @Html.DevExpress().HyperLink(settingsHLink =>
+        {
+            settingsHLink.Name = "hyperLinkName";
+            settingsHLink.ControlStyle.CssClass = "btnpaddingrow25px";
+            
+            settingsHLink.NavigateUrl = DevExpressHelper.GetUrl(new { Controller = "AttendanceManager", Action = "Index" });
+            settingsHLink.Properties.Text = "Back to Attendance";
+        }).GetHtml()
+
+        </div>
+        <div class="col-sm-2">
+            @Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lblclass";
+                    settingslbl.Width = Unit.Percentage(100);
+                    settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+                    settingslbl.Text = "Select Class";
+
+                }).GetHtml()
+
+            @Html.Partial("ListClassGridLookupPartial", (new UnitOfWork().classSetupService.GetClassSetupList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))))
+
+            @Html.DevExpress().TextBox(
+                settingstxt =>
+                {
+                    settingstxt.Name = "txtclassSetup";
+                    settingstxt.ClientVisible = false;
+                }).GetHtml()
+
+            @Html.DevExpress().Button(
+               settingsBttn =>
+               {
+                   settingsBttn.Name = "Getstudentlist";
+                   settingsBttn.ControlStyle.CssClass = "btnpaddingrow";
+              //settingsBttn.Width = 80;
+              settingsBttn.Text = "Get Student";
+                   settingsBttn.ClientVisible = false;
+                   settingsBttn.ClientSideEvents.Click = "attendanceClasswiseController.ClickLoadGrid";
+               }).GetHtml()
+
+        </div>
+    </div>
+    @*@Html.DevExpress().Splitter(settings =>
+    {
+        settings.Name = "AttendanceClasswiseBodySplitter";
+        settings.Orientation = System.Web.UI.WebControls.Orientation.Vertical;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Styles.Pane.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(0);
+        settings.Styles.Pane.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+
+        settings.ClientSideEvents.PaneResized = "attendanceClasswiseController.splitterResized";
+
+        settings.Panes.Add(subpane =>
+            {
+
+
+                ViewContext.Writer.Write("<table ><tr><td style=\"  padding-right:10px; \" >");
+                @Html.DevExpress().Label(
+                       settingslbl =>
+                       {
+                           settingslbl.ControlStyle.CssClass = "label";
+                           settingslbl.Text = "Select Date for Attendance ";
+                       }
+                   ).GetHtml();
+
+
+                ViewContext.Writer.Write("</td><td style=\"  padding-right:10px;\">");
+                @Html.DevExpress().DateEdit(
+               settingsdate =>
+               {
+                   settingsdate =>
+                   {
+                       settingsdate =>
+       {
+                           settingsdate.Name = "AttendanceDateAll";
+                       settingsdate.ControlStyle.CssClass = "editor";
+                       settingsdate.Properties.NullText = "dd MMM yyyy";
+                       settingsdate.Properties.EditFormat = EditFormat.Custom;
+                       settingsdate.Properties.EditFormatString = "dd MMM yyyy";
+                       settingsdate.ShowModelErrors = true;
+                       settingsdate.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                   }).GetHtml();
+                ViewContext.Writer.Write("</td><td style=\"padding-right:10px; \">");
+                @Html.DevExpress().Button(
+                   settingsbtn =>
+                   {
+                       {
+                           settingsbtn.Name = "btnAttendanceList";
+                       settingsbtn.ControlStyle.CssClass = "button";
+                       settingsbtn.Text = "Attendance List";
+                       settingsbtn.Width = 150;
+                       settingsbtn.Images.Image.IconID = IconID.GridCustomizegrid32x32;
+                       // settings.ClientSideEvents.Click = "function(s, e) { CallbackPanel.PerformCallback(); }";
+                       settingsbtn.ClientSideEvents.Click = "attendanceClasswiseController.ClickAllAttendanceList";
+                   }).GetHtml();
+
+                ViewContext.Writer.Write("</td><td style=\"padding-right:10px; \">");
+                @Html.DevExpress().Button(
+                   settingsbtn =>
+                   {
+                       settingsbtn.Name = "btnAttendanceChart";
+                       settingsbtn.ControlStyle.CssClass = "button";
+                       settingsbtn.Text = "Attendance Chart";
+                       settingsbtn.Images.Image.IconID = IconID.ChartBar32x32;
+                       settingsbtn.Width = 150;
+
+                       // settings.ClientSideEvents.Click = "function(s, e) { CallbackPanel.PerformCallback(); }";
+                       settingsbtn.ClientSideEvents.Click = "attendanceClasswiseController.ClickAllAttendanceChart";
+                   }).GetHtml();
+
+
+
+
+
+
+
+
+                ViewContext.Writer.Write("</td><td padding-right:10px;>");
+                @Html.DevExpress().HyperLink(settingsHLink =>
+                {
+                    settingsHLink.Name = "hyperLinkName";
+
+                    settingsHLink.ControlStyle.CssClass = "button";
+
+                    settingsHLink.NavigateUrl = DevExpressHelper.GetUrl(new { Controller = "AttendanceManager", Action = "Index" });
+                    settingsHLink.Properties.Text = "Back to Attendance";
+                }).GetHtml();
+
+
+                ViewContext.Writer.Write("</td><td style=\"padding-right:10px; \">");
+
+                @Html.DevExpress().TextBox(
+                     settingstxt =>
+                     {
+                         settingstxt.Name = "txtclassSetup";
+                         settingstxt.ClientVisible = false;
+                     }).GetHtml();
+
+
+                ViewContext.Writer.Write("</td></tr></table>");
+
+
+
+
+
+
+
+
+
+
+                //Html.RenderPartial("TemplatePartial");
+            });
+        });
+
+    settings.Panes.Add(subpane =>
+    {
+    @Html.RenderPartial("ListAttendancePartial");
+    });
+    });
+
+
+    }).GetHtml()*@
+
+
+    @Html.DevExpress().LoadingPanel(settings =>
+    {
+        settings.Name = "LoadingPanelAttendanceClass";
+       // settings.ContainerElementID = "SMSReportSplitter";
+
+        settings.Modal = true;
+        settings.ContainerElementID = "";
+        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+
+    }).GetHtml()
+
+    

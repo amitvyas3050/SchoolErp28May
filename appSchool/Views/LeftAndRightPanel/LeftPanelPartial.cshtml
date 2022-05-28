@@ -1,0 +1,90 @@
+﻿@model List<appSchool.Repositories.vUserRoleModulePermission>
+
+@if (ViewData["ModuleName"] == null)
+{
+    ViewData["ModuleName"] = "";
+}
+
+<script src="@Url.Content("~/jsControllers/navController.js")" type="text/javascript"></script>
+
+
+<h3 class="leftpanel-section section-caption">@ViewData["ModuleName"].ToString()</h3>
+
+@Html.DevExpress().NavBar(navBarSettings =>
+{
+    navBarSettings.Name = "LeftPanelNavBar";
+
+    navBarSettings.AllowSelectItem = true;
+    navBarSettings.ShowGroupHeaders = false;
+    navBarSettings.Width = Unit.Percentage(100);
+    navBarSettings.ControlStyle.CssClass = "filters-navbar";
+    navBarSettings.Styles.Item.CssClass = "item";
+    //navBarSettings.Groups.Add(group =>
+    //{
+    //    group.Items.Add(item =>
+    //    {
+    //        item.Name = "Class";
+    //        item.Text = "Class";
+    //        item.Selected = true;
+    //    });
+    //    group.Items.Add(item =>
+    //    {
+    //        item.Name = "Class Setup";
+    //        item.Text = "Class Setup";
+    //        item.Image.Url = "~/Content/Images/Menuicon/academic2.png";
+    //        item.Image.Height = Unit.Pixel(25);
+    //        item.Image.Width = Unit.Pixel(18);
+    //    });
+    //    group.Items.Add(item =>
+    //    {
+    //        item.Name = "ClassSetup";
+    //        item.Text = "ClassSetup";
+    //        item.Image.Url = "~/Content/Images/Menuicon/academic2.png";
+    //        item.Image.Height = Unit.Pixel(18);
+    //        item.Image.Width = Unit.Pixel(18);
+    //    });
+    //    group.Items.Add(item =>
+    //    {
+    //        item.Name = "StudentSession";
+    //        item.Text = "Student Session";
+    //        item.Image.Url = "~/Content/Images/Menuicon/academic2.png";
+    //        item.Image.Height = Unit.Pixel(18);
+    //        item.Image.Width = Unit.Pixel(18);
+    //    });
+    //    group.Items.Add(item =>
+    //    {
+    //        item.Name = "Setups";
+    //        item.Text = "Setups";
+    //    });
+    //});
+
+    foreach (var menuitem in Model)
+    {
+        navBarSettings.Groups.Add(group =>
+        {
+
+              group.Items.Add(item =>
+               {
+                    item.Name = menuitem.FName;
+                    item.Text = menuitem.FMenuText;
+                    item.Image.Url = "~/Content/Images/Menuicon/" + menuitem.FMenuIcon;
+                    item.Image.Height = Unit.Pixel(18);
+                    item.Image.Width = Unit.Pixel(18);
+               });
+
+        });
+    }
+
+    //navBarSettings.ClientSideEvents.ItemClick = "ItemClickOnPage";
+    navBarSettings.ClientSideEvents.ItemClick = "lftNavMenuController.ItemClicked";
+}).GetHtml()
+
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "loadingPanelMenu";
+        settings.Modal = true;
+        settings.ContainerElementID = "";
+        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+    }).GetHtml()

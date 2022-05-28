@@ -1,0 +1,317 @@
+﻿@using appSchool.Repositories
+@using appSchool.Model
+@using appSchool.ViewModels
+
+@model modelEmployeeSendSms
+
+<div class="SMSTempForm">
+
+    <div class="row">
+        <div class="col-sm-2">
+            @Html.DevExpress().LabelFor(
+               model => model.SMSLanguage,
+               settings =>
+                    {
+                   settings.ControlStyle.CssClass = "col-form-label-sm";
+                   settings.Text = "SMS Language";
+                   settings.AssociatedControlName = "SMSLanguage";
+                }).GetHtml()
+
+
+            @Html.DevExpress().ComboBoxFor(
+            model => model.SMSLanguage,
+            settings =>
+                 {
+                settings.ControlStyle.CssClass = "form-control";
+                settings.ShowModelErrors = true;
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                settings.Name = "SMSLanguage";
+                settings.Properties.TextField = "Value";
+                settings.Properties.ValueField = "Key";
+                settings.SelectedIndex = 0;
+                settings.Properties.ClientSideEvents.SelectedIndexChanged = "sendSMSAbsenteesController.SelectedIdexChangeForLanguage";
+
+            }).BindList(cCommon.GetLanguageList()).GetHtml()
+
+        </div>
+
+        <div class="col-sm-2">
+            @Html.DevExpress().LabelFor(
+               model => model.OrderedBy,
+               settings =>
+                {
+                   settings.ControlStyle.CssClass = "col-form-label-sm";
+                   settings.Text = "Select Date";
+                   //settings.AssociatedControlName = "SMSLanguage";
+                }).GetHtml()
+
+            @Html.DevExpress().DateEdit(
+
+                 settingsdate =>
+                 {
+                     settingsdate.Name = "AttendanceDate";
+                     settingsdate.ControlStyle.CssClass = "editor";
+                     settingsdate.Properties.NullText = "dd MMM yyyy";
+                     settingsdate.Properties.EditFormat = EditFormat.Custom;
+                     settingsdate.Properties.EditFormatString = "dd MMM yyyy";
+                     settingsdate.Date = DateTime.Now;
+
+
+                 }
+             ).GetHtml()
+        </div>
+
+        <div class="col-sm-2">
+            @Html.DevExpress().Label(settingslbl =>
+    {
+        settingslbl.Name = "lbltemplate";
+        settingslbl.Width = Unit.Percentage(100);
+        settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+        settingslbl.Text = "Select Template Name";
+
+    }).GetHtml()
+
+            @Html.DevExpress().ComboBox(
+         settingscbo =>
+         {
+             settingscbo.Name = "TemplateID";
+             settingscbo.ControlStyle.CssClass = "form-control";
+             settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+             settingscbo.Properties.DropDownStyle = DropDownStyle.DropDownList;
+
+             settingscbo.Properties.TextField = "TemplateName";
+             settingscbo.Properties.ValueField = "TemplateID";
+             settingscbo.SelectedIndex = 0;
+             settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "sendSMSAbsenteesController.SelectedTemplate";
+         }).BindList(new UnitOfWork().smsTemplateService.GetSMSTemplateforSMSType(1,byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))).GetHtml()
+        </div>
+
+        <div class="col-sm-2">
+            @Html.DevExpress().Button(
+              settings =>
+                   {
+                 settings.ControlStyle.CssClass = "btnpaddingrow15px";
+                 settings.Name = "btnSendSms";
+                 settings.Text = "Get Employee Absent List";
+                 //settings.Images.Image.IconID = IconID.ActionsRefresh216x16;
+                 settings.UseSubmitBehavior = false;
+                 settings.ClientSideEvents.Click = "sendSMSAbsenteesController.ClickLoadGrid";
+             }).GetHtml()
+
+        </div>
+
+
+    </div>
+
+
+     <div class="row">
+         <div class="col-sm-3">
+             @Html.DevExpress().LabelFor(
+              model => model.PrefixHindi,
+      settings =>
+           {
+          settings.Text = "For Hindi";
+          settings.ControlStyle.CssClass = "editor";
+         // settings.AssociatedControlName = "";
+       }).GetHtml()
+             @Html.DevExpress().TextBoxFor(
+                        model => model.PrefixHindi,
+                        settings =>
+                         {
+                            settings.ShowModelErrors = true;
+                            settings.ControlStyle.CssClass = "editor";
+                            settings.ShowModelErrors = true;
+                            settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                            //settings.Name = "txtMessege";
+                            settings.Name = "PrefixHindi";
+                            settings.Width = 200;
+                            settings.ReadOnly = true;
+                        }).GetHtml()
+         </div>
+
+         <div class="col-sm-9">
+             @Html.DevExpress().MemoFor(
+                        model => model.smsTextHindi,
+                        settings =>
+                         {
+                            settings.ShowModelErrors = true;
+                            settings.ControlStyle.CssClass = "editor";
+                            settings.ShowModelErrors = true;
+                            settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                            //settings.Name = "txtMessege";
+                            settings.Name = "smsTextHindi";
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Properties.ClientSideEvents.KeyUp = "sendSMSAbsenteesController.keyPressForWordCountHindi";
+                        }).GetHtml()
+
+
+             @Html.DevExpress().TextBox(
+         settings =>
+              {
+             settings.Text = "0";
+             settings.ClientVisible = true;
+             settings.Name = "lblCharCountHindi";
+             //settings.AssociatedControlName = "OrderedBy";
+          }).GetHtml()
+
+         </div>
+      </div>
+
+     <div class="row">
+         <div class="col-sm-3">
+             @Html.DevExpress().LabelFor(
+           model => model.PrefixEnglish,
+       settings =>
+            {
+
+                settings.Text = "For English";
+           settings.ControlStyle.CssClass = "editor";
+          // settings.AssociatedControlName = "";
+        }).GetHtml()
+             @Html.DevExpress().TextBoxFor(
+                        model => model.PrefixEnglish,
+                        settings =>
+                         {
+                            settings.ShowModelErrors = true;
+                            settings.ControlStyle.CssClass = "editor";
+                            settings.ShowModelErrors = true;
+                            settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                            //settings.Name = "txtMessege";
+                            settings.Name = "PrefixEnglish";
+                            settings.Width = 200;
+                            settings.ReadOnly = true;
+                        }).GetHtml()
+
+         </div>
+
+         <div class="col-sm-9">
+             @Html.DevExpress().MemoFor(
+                     model => model.smsTextEnglish,
+                     settings =>
+                         {
+                             settings.ShowModelErrors = true;
+                         settings.ControlStyle.CssClass = "editor";
+                         settings.ShowModelErrors = true;
+                         settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                         //settings.Name = "txtMessege";
+                         settings.Name = "smsTextEnglish";
+                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                         settings.Properties.ClientSideEvents.KeyUp = "sendSMSAbsenteesController.keyPressForWordCountEnglish";
+                     }).GetHtml()
+             @Html.DevExpress().TextBox(
+      settings =>
+           {
+          settings.Text = "0";
+          settings.ClientVisible = true;
+          settings.Name = "lblCharCount";
+          //settings.AssociatedControlName = "OrderedBy";
+       }).GetHtml()
+
+
+      </div>
+         <div class="col-sm-12">
+             @Html.DevExpress().MemoFor(
+                  model => model.smsMobileNo,
+                 settings =>
+                 {
+                     settings.ShowModelErrors = true;
+                     settings.ControlStyle.CssClass = "editor";
+                     settings.ShowModelErrors = true;
+                     settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                     settings.Name = "smsMobileNo";
+                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                     settings.ClientVisible = false;
+                     settings.Properties.EnableClientSideAPI = true;
+
+                 }).GetHtml()
+
+             @Html.DevExpress().MemoFor(
+                      model => model.smsTeacherID,
+                     settings =>
+                         {
+                             settings.ShowModelErrors = true;
+                         settings.ControlStyle.CssClass = "editor";
+                         settings.ShowModelErrors = true;
+                         settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                         settings.Name = "smsTeacherID";
+                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                         settings.ClientVisible = false;
+                         settings.Properties.EnableClientSideAPI = true;
+                     }).GetHtml()
+
+
+             @Html.DevExpress().TextBoxFor(
+                    model => model.ScheduledDate,
+                    settings =>
+                         {
+                        settings.ShowModelErrors = true;
+                        settings.ControlStyle.CssClass = "editor";
+                        settings.ShowModelErrors = true;
+                        settings.Text = DateTime.Now.Date.ToShortDateString();
+                        settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                        //settings.Name = "txtMessege";
+                        settings.Name = "ScheduledDate";
+                        settings.Width = 200;
+                        settings.ReadOnly = true;
+                        settings.ClientVisible = false;
+                    }).GetHtml()
+
+
+         </div>
+      </div>
+
+      <div class="row">
+         <div class="col-sm-12">
+               
+                         @Html.DevExpress().CheckBoxFor(
+                         model => model.includeName,
+                         settings =>
+                              {
+                         settings.Name = "inCludeName";
+
+                         settings.Text = "Select to Include Name & EmpCode in Message / Use $Name$ , $EmpCode$ & $Date$";
+                         settings.ControlStyle.ForeColor = System.Drawing.Color.Maroon;
+                         settings.ControlStyle.Font.Size = 12;
+                         settings.Properties.ClientSideEvents.CheckedChanged = "sendSMSAbsenteesController.IncludeNameAndClass";
+                         if (SettingMasterStaticClass._IncludeNameInSMS == true)
+                         {
+                             settings.Checked = true;
+                             //settings.ReadOnly = true;
+                         }
+                         else
+                         {
+                             settings.Checked = false;
+                            // settings.ReadOnly = false;
+                         }
+                         }
+                         ).GetHtml()
+                   
+                 </div>
+         <div class="col-sm-12">
+                         @Html.DevExpress().Button(
+                          settings =>
+                          {
+                              settings.ControlStyle.CssClass = "btnpaddingrow15px";
+                              settings.Name = "btnGetemployeeabsentlist";
+                              settings.Text = "Send SMS";
+                              settings.Images.Image.IconID = IconID.MailMail16x16;
+                              settings.UseSubmitBehavior = true;
+                          }).GetHtml()
+               </div>
+       </div>
+  </div>
+
+
+
+     
+
+
+
+
+
+
+
+    

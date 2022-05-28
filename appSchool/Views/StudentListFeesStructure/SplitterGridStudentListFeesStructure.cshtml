@@ -1,0 +1,68 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Models
+@using appSchool.Repositories
+
+@{
+   // ViewBag.Title = "Send Messege";
+}
+
+<script src="@Url.Content("~/jsControllers/studentListfeesStructureController.js")" type="text/javascript"></script>
+
+
+ @Html.DevExpress().Splitter(settings => {
+    settings.Name = "SplitterStudentListFeesStructure";
+        settings.AllowResize = true;
+        settings.Orientation = System.Web.UI.WebControls.Orientation.Vertical;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SeparatorVisible = true;
+        settings.ClientSideEvents.PaneResized = "studentListfeesStructureController.splitterResized";
+
+       settings.Panes.Add(subpane =>
+        {
+            subpane.Name = "SplitterStudentListFeesStructureBody";
+            subpane.PaneStyle.CssClass = "contentPane";
+            subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+            subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+            subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+            subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(200);
+            subpane.Size = System.Web.UI.WebControls.Unit.Pixel(400);
+            
+            subpane.Separator.Visible = DefaultBoolean.False;
+            subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.SetContent(() =>
+            {
+                Html.RenderPartial("GridStudentList", new UnitOfWork().vstudentListFromStudFeesStructureService.GetStudentListFromFeesStructure(int.Parse(Session["SessionID"].ToString()),byte.Parse(Session["CompID"].ToString()),byte.Parse(Session["BranchID"].ToString())));
+            });
+        });
+        settings.Panes.Add(subpane =>
+        {
+            subpane.Name = "ListFeesStructureFooter";
+            subpane.PaneStyle.CssClass = "contentPane";
+            subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+            subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+            subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+            subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(100);
+            subpane.Size = System.Web.UI.WebControls.Unit.Percentage(40);
+            subpane.Separator.Visible = DefaultBoolean.True;
+            subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.SetContent(() =>
+            {
+
+
+                
+                Html.RenderPartial("GridFeesTermList");    
+               
+            });
+        });
+    
+    
+    
+    }).GetHtml()
+
+
+
+
+}

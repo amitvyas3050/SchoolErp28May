@@ -1,0 +1,149 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+
+<script src="@Url.Content("~/jsControllers/schedulerWishesController.js")" type="text/javascript"></script>
+
+ @Html.DevExpress().Splitter(settings => {
+    settings.Name = "SendMessegeSplitterBottom";
+        settings.AllowResize = true;
+        settings.Orientation = System.Web.UI.WebControls.Orientation.Horizontal;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SeparatorVisible = true;
+        settings.ClientSideEvents.PaneResized = "schedulerWishesController.splitterResized";
+
+       settings.Panes.Add(subpane =>
+        {
+            subpane.Name = "SendMessegeClass";
+            subpane.PaneStyle.CssClass = "contentPane";
+            subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+            subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+            subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+            subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(10);
+            subpane.Size = System.Web.UI.WebControls.Unit.Percentage(10);
+            subpane.Separator.Visible = DefaultBoolean.False;
+            subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.SetContent(() =>
+            {
+
+                Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lblFromDate";
+                    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settingslbl.Text = "From Date:";
+                }).GetHtml();
+
+                Html.DevExpress().DateEdit(
+               settingsdate =>
+               {
+                   settingsdate.Name = "FromDate";
+                   settingsdate.ControlStyle.CssClass = "editor";
+                   settingsdate.Properties.NullText = "dd MMM yyyy";
+                   settingsdate.Properties.EditFormat = EditFormat.Custom;
+                   settingsdate.Properties.EditFormatString = "dd MMM yyyy";
+                   settingsdate.Date = DateTime.Now;
+                 //  settingsdate.Properties.ClientSideEvents.DateChanged = "sendSMSAbsenteesController.OnDateChanged";
+                
+               }).GetHtml();
+
+                
+                
+                
+                
+                
+                Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lblToDate";
+                    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settingslbl.Text = "To Date:";
+                }).GetHtml();
+
+                Html.DevExpress().DateEdit(
+           settingsdate =>
+           {
+               settingsdate.Name = "ToDate";
+               settingsdate.ControlStyle.CssClass = "editor";
+               settingsdate.Properties.NullText = "dd MMM yyyy";
+               settingsdate.Properties.EditFormat = EditFormat.Custom;
+               settingsdate.Properties.EditFormatString = "dd MMM yyyy";
+               settingsdate.Date = DateTime.Now;
+               //  settingsdate.Properties.ClientSideEvents.DateChanged = "sendSMSAbsenteesController.OnDateChanged";
+
+           }).GetHtml();
+                
+                
+                
+                Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lb";
+                    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settingslbl.Text = "Select Wishes";
+                }).GetHtml();
+
+                @Html.DevExpress().ComboBox(
+                   settingscbo =>
+                   {
+                       settingscbo.Name = "WishesType";
+                       settingscbo.ControlStyle.CssClass = "editor";
+                       settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settingscbo.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+                       settingscbo.Properties.TextField = "value";
+                       settingscbo.Properties.ValueField = "Key";
+                       settingscbo.Properties.ValueType = typeof(int);
+                       //settingscbo.ShowModelErrors = true;
+                       //settingscbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                       settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "schedulerWishesController.SelectedWishType";
+                   }
+               ).BindList(cCommon.GetWishesTypeList()).GetHtml();
+
+                ViewContext.Writer.Write( "<br/>" );
+               
+                
+                Html.DevExpress().Button(
+                    settingsbtn =>
+                    {
+                        settingsbtn.Name = "btnLoad";
+                        //  settings.Width = 180;
+                        settingsbtn.Width = System.Web.UI.WebControls.Unit.Percentage(97);
+                        settingsbtn.Height = 30;
+                        settingsbtn.RenderMode = ButtonRenderMode.Button;
+                        settingsbtn.Text = "Get List";
+                        settingsbtn.ImagePosition = ImagePosition.Right;
+                        settingsbtn.Images.Image.IconID = "actions_refresh_16x16gray";
+                        settingsbtn.ClientSideEvents.Click = "schedulerWishesController.ClickLoadGrid";
+                    }).GetHtml();
+              //  Html.RenderPartial("ListClassSetupPartial", (new UnitOfWork().classSetupService.Get()));
+                
+                Html.DevExpress().TextBox(
+                  settingstxt =>
+                  {
+                      settingstxt.Name = "txtwishesType";
+                      settingstxt.ClientVisible = false;
+                  }).GetHtml();
+
+              
+                
+            });
+        });
+        settings.Panes.Add(subpane =>
+        {
+            subpane.Name = "SendMessegeText";
+            subpane.PaneStyle.CssClass = "contentPane";
+            subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+            subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+            subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+            subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(100);
+            subpane.Size = System.Web.UI.WebControls.Unit.Percentage(40);
+            subpane.Separator.Visible = DefaultBoolean.True;
+            subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.SetContent(() =>
+            {
+               // Html.RenderPartial("ListSendMessegeView", (new UnitOfWork().sendMessegeService.GetStudentSessionForGrid()));
+                Html.RenderPartial("ListSendMessegeWishesView");
+            });
+        });
+    }).GetHtml()

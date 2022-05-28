@@ -1,0 +1,134 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+@{
+    ViewBag.Title = "Send General Messege";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@section Head {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap.css")" />
+    <script type="text/javascript" src="@Url.Content("~/jsControllers/sendGeneralMessegeController.js")"></script>
+}
+
+
+<div class="row">
+
+    <div class="col-lg-4">
+
+        @{Html.RenderPartial("SendGeneralMessegeTemplateView", (new UnitOfWork().smsTemplateService.GetSMSTemplateListForGeneral(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))));}
+    </div>
+
+    <div class="col-lg-8">
+
+        @{Html.RenderPartial("SendGeneralMessegeTextView");}
+
+    </div>
+
+</div>
+<div class="row">
+
+    <div class="col-lg-4">
+
+        @Html.DevExpress().Button(
+        settingsbtn =>
+        {
+        settingsbtn.Name = "btnLoad";
+        //  settings.Width = 180;
+        settingsbtn.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+        settingsbtn.Height = 30;
+        settingsbtn.RenderMode = ButtonRenderMode.Button;
+        settingsbtn.Text = "Click to Get Student";
+        settingsbtn.ImagePosition = ImagePosition.Right;
+        settingsbtn.Images.Image.IconID = "actions_refresh_16x16gray";
+        settingsbtn.ClientSideEvents.Click = "sendGeneralMessegeController.ClickLoadGrid";
+        }).GetHtml()
+
+        @{Html.RenderPartial("ListClassSetupPartial", (new UnitOfWork().classSetupService.GetClassSetupList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))));}
+        
+        @Html.DevExpress().TextBox(
+        settingstxt =>
+        {
+        settingstxt.Name = "txtclassSetup";
+        settingstxt.ClientVisible = false;
+        }).GetHtml()
+    </div>
+
+    <div class="col-lg-8" id="divsmsstudent">
+
+        @{Html.RenderPartial("ListSendGeneralMessegeView");}
+
+    </div>
+
+</div>
+
+
+@*@Html.DevExpress().Panel(settings =>
+    {
+        settings.Name = "SendMessegeBody";
+        settings.Collapsible = true;
+        settings.ScrollBars = ScrollBars.Auto;
+
+        settings.Width = Unit.Pixel(272);
+        settings.SettingsAdaptivity.CollapseAtWindowInnerWidth = 960;
+        settings.ControlStyle.CssClass = "left-panel";
+        settings.Styles.Panel.Paddings.Padding = Unit.Pixel(0);
+        settings.Styles.ExpandBar.CssClass = "expand-bar";
+        settings.SettingsCollapsing.ExpandButton.Visible = false;
+        settings.SettingsCollapsing.ExpandEffect = PanelExpandEffect.PopupToRight;
+        settings.SettingsCollapsing.AnimationType = AnimationType.Slide;
+        settings.SettingsCollapsing.Modal = true;
+
+        settings.SetContent(() =>
+        {
+            Html.RenderPartial("SendGeneralMessegeHeadView");
+        });
+    }).GetHtml()*@
+
+@*@Html.DevExpress().Panel(settings =>
+    {
+        settings.Name = "SendMessegeFooter";
+        settings.Collapsible = true;
+        settings.ScrollBars = ScrollBars.Auto;
+        //settings.FixedPosition = PanelFixedPosition.WindowLeft;
+        settings.Width = Unit.Pixel(272);
+        //settings.SettingsAdaptivity.CollapseAtWindowInnerWidth = 960;
+        settings.ControlStyle.CssClass = "left-panel";
+        settings.Styles.Panel.Paddings.Padding = Unit.Pixel(0);
+        settings.Styles.ExpandBar.CssClass = "expand-bar";
+        settings.SettingsCollapsing.ExpandButton.Visible = false;
+        settings.SettingsCollapsing.ExpandEffect = PanelExpandEffect.PopupToLeft;
+        settings.SettingsCollapsing.AnimationType = AnimationType.Slide;
+        settings.SettingsCollapsing.Modal = true;
+
+        settings.SetContent(() =>
+        {
+            Html.RenderPartial("SendGeneralMessegeBottomView");
+        });
+    }).GetHtml()*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

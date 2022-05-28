@@ -1,0 +1,586 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+@model modelStudentFeesReceipt
+
+@Html.Hidden("StudentID")
+
+
+<div class="row">
+
+    <div class="col-sm-2">
+        @Html.DevExpress().LabelFor(
+        model => model.ReceiptNo,
+        settings =>
+                {
+            settings.ControlStyle.CssClass = "col-form-label-sm";
+            settings.Text = "ReceiptNo.";
+            settings.AssociatedControlName = "ReceiptNo";
+        }
+        ).GetHtml()
+        @Html.DevExpress().TextBoxFor(
+         model => model.ReceiptNo,
+         settings =>
+         {
+             settings.Name = "ReceiptNo";
+             settings.ControlStyle.CssClass = "form-control";
+             settings.ReadOnly = true;
+         }).GetHtml()
+    </div>
+
+    <div class="col-sm-2">
+        @Html.DevExpress().LabelFor(
+            model => model.ReceiptDate,
+            settings =>
+                 {
+                settings.ControlStyle.CssClass = "col-form-label-sm";
+                settings.Text = "Receipt Date";
+                settings.AssociatedControlName = "ReceiptDate";
+
+            }
+        ).GetHtml()
+        @Html.DevExpress().DateEditFor(
+                  model => model.ReceiptDate,
+                  settings =>
+                       {
+                      settings.Name = "ReceiptDate";
+                      settings.ControlStyle.CssClass = "form-control";
+                      settings.Properties.NullText = "dd MMM yyyy";
+                      settings.Properties.EditFormat = EditFormat.Custom;
+                      settings.Properties.MaxDate = DateTime.Now;
+                      settings.Properties.EditFormatString = "dd MMM yyyy";
+                      settings.Date = DateTime.Now;
+                      //settings.ShowModelErrors = true;
+                      //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                     // settings.ReadOnly = true;
+                      //settings.Enabled = false;
+
+            }
+              ).GetHtml()
+    </div>
+
+    <div class="col-sm-3">
+
+        @Html.DevExpress().Label(settingslbl =>
+          {
+              settingslbl.Name = "lblclas2";
+              settingslbl.Width = Unit.Percentage(100);
+              settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+              settingslbl.Text = "Select Student";
+
+          }).GetHtml()
+
+        @Html.Partial("ListStudentGridLookupPartial", new UnitOfWork().studentSessionService.GetAllStudentForSession(int.Parse(Session["SessionID"].ToString()), byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString())))
+
+        @Html.DevExpress().TextBox(
+        settingscls =>
+        {
+            settingscls.Name = "txtStudentID";
+            settingscls.ClientVisible = false;
+
+        }).GetHtml()
+
+        @Html.DevExpress().TextBoxFor(
+        model => model.StudentName,
+        settings =>
+        {
+
+            settings.Name = "txtstudentname";
+            settings.ControlStyle.CssClass = "form-control";
+            //settings.ShowModelErrors = true;
+            //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            settings.ReadOnly = true;
+            settings.ClientVisible = false;
+        }).GetHtml()
+
+    </div>
+
+    <div class="col-sm-2">
+        @Html.DevExpress().LabelFor(
+            model => model.EnrollmentNo,
+            settings =>
+                 {
+                settings.ControlStyle.CssClass = "col-form-label-sm";
+                settings.Text = "Enrollment No";
+                settings.AssociatedControlName = "EnrollmentNo";
+            }
+        ).GetHtml()
+        @Html.DevExpress().TextBoxFor(
+        model => model.EnrollmentNo,
+        settings =>
+        {
+            
+            settings.Name = "EnrollmentNo";
+            settings.ControlStyle.CssClass = "form-control";
+            //settings.Properties.MaskSettings.Mask = "(AAA)-000-0000";
+            // settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.None;
+            settings.ReadOnly = true;
+        }).GetHtml()
+
+    </div>
+
+    <div class="col-sm-3">
+        @Html.DevExpress().LabelFor(
+            model => model.FatherName,
+            settings =>
+                 {
+                settings.ControlStyle.CssClass = "col-form-label-sm";
+                settings.Text = "Father Name";
+                settings.AssociatedControlName = "FatherName";
+            }
+        ).GetHtml()
+        @Html.DevExpress().TextBoxFor(
+                model => model.FatherName,
+                settings =>
+                    {
+                        settings.ControlStyle.CssClass = "form-control";
+                    //settings.ShowModelErrors = true;
+                    //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                    settings.ReadOnly = true;
+
+                    }).GetHtml()
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-sm-2">
+        @Html.DevExpress().LabelFor(
+           model => model.MobileNo,
+           settings =>
+                {
+               settings.ControlStyle.CssClass = "col-form-label-sm";
+               settings.Text = "Mobile No.";
+               settings.AssociatedControlName = "MobileNo";
+           }
+       ).GetHtml()
+        @Html.DevExpress().TextBoxFor(
+                model => model.MobileNo,
+                settings =>
+                    {
+                        settings.ControlStyle.CssClass = "form-control";
+                    //settings.ShowModelErrors = true;
+                    //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                    settings.ReadOnly = true;
+
+                    }).GetHtml()
+    </div>
+
+
+    <div class="col-sm-2">
+        @Html.Hidden("ClassID")
+        @Html.DevExpress().LabelFor(
+                model => model.Class,
+                settings =>
+                    {
+                    settings.ControlStyle.CssClass = "col-form-label-sm";
+                    settings.Text = "Class";
+                    settings.AssociatedControlName = "Class";
+                }
+            ).GetHtml()
+        @Html.DevExpress().TextBoxFor(
+        model => model.Class,
+        settings =>
+            {
+                settings.ControlStyle.CssClass = "form-control";
+                settings.ReadOnly = true;
+            }).GetHtml()
+    </div>
+
+
+
+
+    <div class="col-sm-3">
+        @Html.Hidden("TermId")
+
+        @Html.DevExpress().LabelFor(
+                model => model.TermName,
+                settings =>
+                    {
+                    settings.ControlStyle.CssClass = "col-form-label-sm";
+                    settings.Text = "Term Name";
+                    settings.AssociatedControlName = "TermName";
+                }
+            ).GetHtml()
+        @Html.DevExpress().TextBoxFor(
+                model => model.TermName,
+                settings =>
+                    {
+                        settings.ControlStyle.CssClass = "form-control";
+                    //settings.ShowModelErrors = true;
+                    //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                    settings.ReadOnly = true;
+
+                    }).GetHtml()
+    </div>
+
+
+</div>
+
+<div class="row" style="margin-top:10px">
+    
+    
+    <div class="col-sm-5" >
+        <label class="gridlablecolor">Select Term</label>
+        <div  id="GridTermListForFeeID">
+            @Html.Partial("ListTermView", new UnitOfWork().feesReceiptService.GetTermListForFeesReceiptStudentWise(Model.StudentID, int.Parse(Session["SessionID"].ToString()), byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString())))
+        </div>
+      </div>
+
+        <div class="col-sm-7" id="GridHeadListForFeeID">
+            <label class="gridlablecolor">All Heads</label>
+            @Html.Partial("ListHeadView", new UnitOfWork().StudentFeesDetailService.GetStudentFeesDetailByTermIDandStudentID(Model.StudentID, Model.TermId, int.Parse(Session["SessionID"].ToString()), byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString())))
+        </div>
+
+    </div>
+
+<div class="row">
+
+    <div class="col-sm-2">
+        @Html.DevExpress().LabelFor(
+                            model => model.TermTotal,
+                            settings =>
+                                {
+                                settings.ControlStyle.CssClass = "col-form-label-sm";
+                                settings.Text = "Term Total";
+                                settings.AssociatedControlName = "TermTotal";
+                            }
+                        ).GetHtml()
+        @Html.DevExpress().TextBoxFor(
+                model => model.TermTotal,
+                settings =>
+                    {
+                        settings.ControlStyle.CssClass = "form-control";
+                    //settings.ShowModelErrors = true;
+                    //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                    settings.ReadOnly = true;
+
+                    }).GetHtml()
+    </div>
+
+    <div class="col-sm-1">
+        @Html.DevExpress().LabelFor(
+                           model => model.FineAmount,
+                           settings =>
+                               {
+                               settings.ControlStyle.CssClass = "col-form-label-sm";
+                               settings.Text = "Fine Amount";
+                               settings.AssociatedControlName = "FineAmount";
+                           }
+                       ).GetHtml()
+        @Html.DevExpress().TextBoxFor(
+                model => model.FineAmount,
+                settings =>
+                    {
+                        settings.ControlStyle.CssClass = "form-control";
+                    //settings.ShowModelErrors = true;
+                    //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                    settings.ReadOnly = false;
+                    settings.Properties.ClientSideEvents.ValueChanged = "feesTransactionController.Gettotal";
+
+                    }).GetHtml()
+    </div>
+    <div class="col-sm-2">
+        @Html.DevExpress().LabelFor(
+                           model => model.OtherAmount,
+                           settings =>
+                               {
+                               settings.ControlStyle.CssClass = "col-form-label-sm";
+                               settings.Text = "Other Amt.";
+                               settings.AssociatedControlName = "OtherAmount";
+                           }
+                       ).GetHtml()
+        @Html.DevExpress().TextBoxFor(
+                model => model.OtherAmount,
+                settings =>
+                    {
+                        settings.ControlStyle.CssClass = "form-control";
+                    settings.Properties.ClientSideEvents.ValueChanged = "feesTransactionController.Gettotal";
+                    //settings.ShowModelErrors = true;
+                    //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                    settings.ReadOnly = false;
+
+                    }).GetHtml()
+    </div>
+    <div class="col-sm-2">
+
+        @Html.DevExpress().LabelFor(
+                           model => model.SubTotal,
+                           settings =>
+                               {
+                               settings.ControlStyle.CssClass = "col-form-label-sm";
+                               settings.Text = "Sub Total";
+                               settings.AssociatedControlName = "SubTotal";
+                           }
+                       ).GetHtml()
+        @Html.DevExpress().TextBoxFor(
+                model => model.SubTotal,
+                settings =>
+                {
+
+
+                    settings.ControlStyle.CssClass = "form-control";
+                    //settings.ControlStyle.CssClass = "txtfooterset";
+                    settings.Properties.ClientSideEvents.ValueChanged = "feesTransactionController.Gettotal";
+                    //settings.ShowModelErrors = true;
+                    //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                    settings.ReadOnly = true;
+
+                }).GetHtml()
+    </div>
+
+    <div class="col-sm-1">
+        @Html.DevExpress().LabelFor(
+                            model => model.DiscountPercent,
+                            settings =>
+                                {
+                                settings.ControlStyle.CssClass = "col-form-label-sm";
+                                settings.Text = "Dis. Per.";
+                                settings.AssociatedControlName = "DiscountPercent";
+                            }
+                        ).GetHtml()
+        @Html.DevExpress().TextBoxFor(
+                model => model.DiscountPercent,
+                settings =>
+                    {
+                        settings.ControlStyle.CssClass = "form-control";
+                     settings.Properties.ClientSideEvents.ValueChanged = "feesTransactionController.GetDiscount";
+                    //settings.ShowModelErrors = true;
+                    //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                    settings.ReadOnly = false;
+
+                    }).GetHtml()
+
+    </div>
+    <div class="col-sm-1">
+
+        @Html.DevExpress().LabelFor(
+                model => model.DiscountAmount,
+                settings =>
+                    {
+                        settings.ControlStyle.CssClass = "col-form-label-sm";
+                         settings.Text = "Dis. Amt.";
+
+                        settings.AssociatedControlName = "DiscountAmount";
+                }
+            ).GetHtml()
+        @Html.DevExpress().TextBoxFor(
+                model => model.DiscountAmount,
+                settings =>
+                    {
+                        settings.ControlStyle.CssClass = "form-control txtfooterset";
+                    settings.Properties.ClientSideEvents.ValueChanged = "feesTransactionController.Gettotal";
+                    //settings.ShowModelErrors = true;
+                    //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                    settings.ReadOnly = false;
+
+                    }).GetHtml()
+    </div>
+
+    <div class="col-sm-2">
+        @Html.DevExpress().LabelFor(
+                            model => model.FinalAmount,
+                            settings =>
+                                {
+                                settings.ControlStyle.CssClass = "col-form-label-sm ";
+                                settings.Text = "FinalAmount";
+                                settings.AssociatedControlName = "FinalAmount";
+                            }
+                        ).GetHtml()
+        @Html.DevExpress().TextBoxFor(
+                model => model.FinalAmount,
+                settings =>
+                    {
+                        settings.ControlStyle.CssClass = "form-control txtfooterset ";
+                    //settings.ShowModelErrors = true;
+                    //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                    settings.ReadOnly = true;
+
+                    }).GetHtml()
+    </div>
+
+</div>
+
+<div class="row">
+
+   
+    
+    <div class="col-sm-3">
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-sm-2">
+        @Html.DevExpress().Label(
+   settings =>
+        {
+       settings.Text = "Mode";
+       settings.AssociatedControlName = "Pay Mode";
+     }).GetHtml()
+
+        @Html.DevExpress().ComboBoxFor(
+                  model => model.Mode,
+                          settings =>
+                            {
+                              settings.Name = "Mode";
+                             // settings.ControlStyle.CssClass = "form-control";
+                              settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                              settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                              settings.Properties.TextField = "Value";
+                              settings.Properties.ValueField = "Key";
+                              settings.SelectedIndex = 0;
+
+                    //settings.ShowModelErrors = true;
+                              //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                              settings.Properties.ClientSideEvents.SelectedIndexChanged = "feesTransactionController.SelectionChangePaymode";
+
+                            }
+                      ).BindList(cCommon.GetPayModeListForFee()).GetHtml()
+    </div>
+    <div class="col-sm-2">
+        @Html.DevExpress().Label(
+   settings =>
+        {
+       settings.Text = "Cheque No.";
+       settings.AssociatedControlName = "ChequeNo";
+     }).GetHtml()
+
+        @Html.DevExpress().TextBoxFor(
+                model => model.ChequeNo,
+               settings =>
+                    {
+                   settings.ShowModelErrors = true;
+                   settings.ControlStyle.CssClass = "form-control";
+                   //settings.ShowModelErrors = true;
+                   //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                   settings.Name = "ChequeNo";
+                   settings.ReadOnly = true;
+                   settings.Properties.EnableClientSideAPI = true;
+               }).GetHtml()
+    </div>
+
+    <div class="col-sm-2">
+        @Html.DevExpress().LabelFor(
+            model => model.ChequeDate,
+            settings =>
+                 {
+                settings.ControlStyle.CssClass = "col-form-label-sm";
+                settings.Text = "Cheque Date";
+                settings.AssociatedControlName = "ChequeDate";
+
+            }
+        ).GetHtml()
+        @Html.DevExpress().DateEditFor(
+                  model => model.ChequeDate,
+                  settings =>
+                       {
+                      settings.Name = "ChequeDate";
+                      settings.ControlStyle.CssClass = "form-control";
+                      settings.Properties.NullText = "dd MMM yyyy";
+                      settings.Properties.EditFormat = EditFormat.Custom;
+                      settings.Properties.MaxDate = DateTime.Now;
+                      settings.Properties.EditFormatString = "dd MMM yyyy";
+                      settings.ReadOnly = false;
+                      //settings.ShowModelErrors = true;
+                      //settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                     // settings.ReadOnly = true;
+                      //settings.Enabled = false;
+
+            }
+              ).GetHtml()
+    </div>
+    <div class="col-sm-2">
+        @Html.DevExpress().Label(
+  settings =>
+       {
+      settings.Text = "Bank";
+      settings.AssociatedControlName = "BankName";
+    }).GetHtml()
+
+        @Html.DevExpress().TextBoxFor(
+                model => model.BankName,
+               settings =>
+                    {
+                   settings.ShowModelErrors = true;
+                   settings.ControlStyle.CssClass = "form-control";
+                   settings.ShowModelErrors = true;
+                   settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                   settings.Name = "BankName";
+                   settings.ReadOnly = true;
+                   settings.Properties.EnableClientSideAPI = true;
+               }).GetHtml()
+    </div>
+
+
+</div>
+
+
+
+<div class="row">
+
+    <div class="col-sm-4">
+        @Html.DevExpress().Button(
+        settings =>
+             {
+            settings.Name = "btnSaveFeeReceipt";
+            settings.ControlStyle.CssClass = "button btnpaddingrow10px";
+            settings.Text = "Save Receipt";
+            settings.UseSubmitBehavior = true;
+        }).GetHtml()
+    </div>
+
+</div>
+
+<div style="clear:both"></div>
+
+<div class="divError">
+
+    @Html.ValidationMessageFor(model => model.StudentName)
+    @Html.ValidationMessageFor(model => model.FatherName)
+</div>
+
+
+<div class="row">
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

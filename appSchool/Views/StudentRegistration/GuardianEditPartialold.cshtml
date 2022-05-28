@@ -1,0 +1,522 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@model modelGuardianInfo
+
+@Html.Hidden("StudentID")
+
+
+<div id="form_edit_controls" style="width:100%;height:auto;">
+
+      <div class="lineFooter">
+        <span class="grpheader">Father's Information</span>
+    </div>
+<div class="line5" >
+
+
+    @Html.DevExpress().LabelFor(
+            model=> model.FatherName,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Name";
+                settings.AssociatedControlName = "FatherName";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model=> model.FatherName,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+   
+</div>
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.FatherDOB,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Date of Birth";
+                settings.AssociatedControlName = "FatherDOB";
+            }
+        ).GetHtml()
+    @Html.DevExpress().DateEditFor(
+            model => model.FatherDOB,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.Properties.EditFormatString = "dd MMM yyyy";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.FQualification,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Qualificaton";
+                settings.AssociatedControlName = "FatherQualifiation";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.FQualification,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.FOccupation,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Occupation";
+                settings.AssociatedControlName = "FatherOccupation";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.FOccupation,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.FIncome,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Income";
+                settings.AssociatedControlName = "FatherIncome";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.FIncome,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.FatherMobileNo,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Mobile No";
+                settings.AssociatedControlName = "FatherMobileNo";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.FatherMobileNo,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.FatherEmailID,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Email ID";
+                settings.AssociatedControlName = "FatherEmailID";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.FatherEmailID,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+   
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.FOfficeAddress,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Office Address";
+                settings.AssociatedControlName = "FOfficeAddress";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.FOfficeAddress,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.FOfficePhoneNo,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Phone No (Office)";
+                settings.AssociatedControlName = "FOfficePhoneNo";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.FOfficePhoneNo,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+   <div class="lineFooter">
+        <span class="grpheader">Mother's Information</span>
+    </div>
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.MotherName,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Name";
+                settings.AssociatedControlName = "MotherName";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.MotherName,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.MotherDOB,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Date of Birth";
+                settings.AssociatedControlName = "MotherDOB";
+            }
+        ).GetHtml()
+    @Html.DevExpress().DateEditFor(
+            model => model.MotherDOB,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.Properties.EditFormatString = "dd MMM yyyy";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.MQualification,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Qualificaton";
+                settings.AssociatedControlName = "MotherQualifiation";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.MQualification,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.MOccupation,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Occupation";
+                settings.AssociatedControlName = "MotherOccupation";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.MOccupation,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+ 
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.MIncome,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Income";
+                settings.AssociatedControlName = "MotherIncome";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.MIncome,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.MotherMobileNo,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Mobile No";
+                settings.AssociatedControlName = "MotherMobileNo";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.MotherMobileNo,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.MotherEmailID,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Email ID";
+                settings.AssociatedControlName = "MotherEmailID";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.MotherEmailID,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.MOfficeAddress,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Office Address";
+                settings.AssociatedControlName = "MOfficeAddress";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.MOfficeAddress,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.MOfficePhoneNo,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Phone No (Office)";
+                settings.AssociatedControlName = "MOfficePhoneNo";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.MOfficePhoneNo,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+    <div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.AnniversaryDate,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Anniversary Date";
+                settings.ControlStyle.ForeColor = System.Drawing.Color.Maroon ;
+                settings.AssociatedControlName = "AnniversaryDate";
+            }
+        ).GetHtml()
+    @Html.DevExpress().DateEditFor(
+            model => model.AnniversaryDate,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.EditFormatString = "dd MMM yyyy";
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+    <div class="lineFooter">
+        <span class="grpheader">Guardian's Information</span>
+    </div>
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.GuardianName,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Name";
+                settings.AssociatedControlName = "GuardianName";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.GuardianName,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.GOccupation,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Occupation";
+                settings.AssociatedControlName = "GOccupation";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.GOccupation,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.GMobileNo,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Mobile No";
+                settings.AssociatedControlName = "GMobileNo";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.GMobileNo,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+
+
+<div class="line5" >
+
+    @Html.DevExpress().LabelFor(
+            model=> model.GPhoneNo,
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Phone No";
+                settings.AssociatedControlName = "GPhoneNo";
+            }
+        ).GetHtml()
+    @Html.DevExpress().TextBoxFor(
+            model => model.GPhoneNo,
+            settings => {
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            }).GetHtml()
+</div>
+</div>
+
+<div style="clear:both"></div>
+<div class="lineFooter" style="height:300px">
+<div class="divSubmit">
+     @Html.DevExpress().Label(
+            settings => {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "";
+                //settings.AssociatedControlName = "LastName";
+            }
+        ).GetHtml()
+     @if(PermissionFlag._ModFlag==true)
+       {
+         
+
+    @Html.DevExpress().Button(
+        settings => {
+            settings.Name = "btnUpdateGuardian";
+            settings.ControlStyle.CssClass = "button";
+            settings.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+            settings.Text = "Update";
+            settings.UseSubmitBehavior = true;
+            settings.Images.Image.IconID = IconID.SaveSave16x16;
+            
+        }).GetHtml()
+     }
+</div>
+
+     <div class="divError" >
+
+        @Html.ValidationMessageFor(model=> model.FatherName) 
+        @Html.ValidationMessageFor(model=> model.MotherName)  
+    </div>
+   <br />
+    <br /><br /><br />
+    <br /><br />
+    </div>
+
+    

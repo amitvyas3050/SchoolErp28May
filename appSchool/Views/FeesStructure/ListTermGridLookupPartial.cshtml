@@ -1,0 +1,60 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Repositories
+
+@Html.DevExpress().GridLookup(settings =>
+{
+    settings.Name = "gridLookupterm";
+    settings.KeyFieldName = "FeeTermID";
+
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowSelectCheckbox = true;
+    settings.Width = Unit.Percentage(98);
+    //settings.Height = Unit.Percentage(92);
+
+
+    settings.Columns.Add("FeeTermName");
+    settings.Columns.Add("FeeTermID").Visible = false;
+    //settings.Columns.Add("Rank").Settings.AllowAutoFilter = DefaultBoolean.False;
+
+
+    settings.Properties.SelectionMode = GridLookupSelectionMode.Multiple;
+    //settings.Properties.SelectionMode = DevExpress.Web.ASPxGridLookup.GridLookupSelectionMode.Multiple;
+    settings.Properties.TextFormatString = "{0}";
+    settings.Properties.MultiTextSeparator = ", ";
+    settings.Properties.Width = Unit.Percentage(100);
+    settings.Properties.Height = Unit.Pixel(10);
+    settings.GridViewProperties.CallbackRouteValues = new { Controller = "FeesStructure", Action = "ListPartialTerm" };
+    settings.GridViewProperties.Settings.ShowFilterRow = true;
+    settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+    //settings.GridViewProperties.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+    //settings.GridViewProperties.SettingsPager.FirstPageButton.Visible = true;
+    //settings.GridViewProperties.SettingsPager.LastPageButton.Visible = true;
+    //settings.GridViewProperties.SettingsPager.PageSize = 10;
+
+    settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+
+
+    settings.GridViewProperties.SetStatusBarTemplateContent(c =>
+    {
+        ViewContext.Writer.Write("<div style=\"padding: 2px 8px 2px 0; float: right\">");
+        Html.DevExpress().Button(btnSettings =>
+        {
+            btnSettings.Name = "btnCloseterm";
+            btnSettings.UseSubmitBehavior = false;
+            btnSettings.Text = "Close";
+            btnSettings.ClientSideEvents.Click = "feesStructureController.ClosetermGridLookup";
+        }).Render();
+        ViewContext.Writer.Write("</div>");
+    });
+
+    settings.GridViewClientSideEvents.SelectionChanged = "feesStructureController.SelectionChangedForTerms";
+
+    settings.DataBound = (sender, e) =>
+    {
+        var gridLookup = (MVCxGridLookup)sender;
+        gridLookup.GridView.Width = 250;
+    };
+}).BindList(Model).GetHtml()
+
+
+

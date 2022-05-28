@@ -1,0 +1,162 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Repositories
+
+@if (ViewData["ClassID"] == null)
+{
+    ViewData["ClassID"] = 0;
+}
+
+@if (ViewData["SubjectLevel"] == null)
+{
+    ViewData["SubjectLevel"] = 0;
+}
+
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridSubjectAllotment";
+            settings.KeyFieldName = "ClassID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(99);
+            settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+
+
+
+            settings.CallbackRouteValues = new { Controller = "SubjectAllotment", Action = "PartialGridSubjectAllotment", PClassID = ViewData["ClassID"], PSubjectLevel = ViewData["SubjectLevel"] };
+
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ClassID";
+                column.Visible = false;
+            });
+
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "IDL3";
+                column.Caption = "Subject level Three";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.SubjectAllotmentRepository()).GetListSubjectlevelhree(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "SubjectNameL3";
+                comboBoxProperties.ValueField = "IdL3";
+                comboBoxProperties.ValueType = typeof(int);
+                if (int.Parse(ViewData["SubjectLevel"].ToString()) == 1)
+                {
+                    column.Visible = false;
+                }
+                if (int.Parse(ViewData["SubjectLevel"].ToString()) == 2)
+                {
+                    column.Visible = false;
+                }
+
+                if (int.Parse(ViewData["SubjectLevel"].ToString()) == 3)
+                {
+                    column.Visible = true;
+                }
+                
+                
+            });
+
+            
+          
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "IDL2";
+                column.Caption = "Subject Level Two";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.SubjectAllotmentRepository()).GetListSubjectlevelTwo(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "SubjectNameL2";
+                comboBoxProperties.ValueField = "IdL2";
+                comboBoxProperties.ValueType = typeof(int);
+
+                if (int.Parse(ViewData["SubjectLevel"].ToString()) == 1)
+                {
+                    column.Visible = false;
+                }
+                if (int.Parse(ViewData["SubjectLevel"].ToString()) == 2)
+                {
+                    column.Visible = true;
+                }
+
+                if (int.Parse(ViewData["SubjectLevel"].ToString()) == 3)
+                {
+                    column.Visible = true;
+                }
+                
+                
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "IDL1";
+                column.Caption = "Subject Level One";
+                column.ToolTip = "Click to Sort";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new appSchool.Repositories.SubjectAllotmentRepository()).GetSubjectlevelOneList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "SubjectNameL1";
+                comboBoxProperties.ValueField = "IDL1";
+                comboBoxProperties.ValueType = typeof(int);
+
+                if (int.Parse(ViewData["SubjectLevel"].ToString()) == 1)
+                {
+                    column.Visible = true;
+                }
+                if (int.Parse(ViewData["SubjectLevel"].ToString()) == 2)
+                {
+                    column.Visible = true;
+                }
+
+                if (int.Parse(ViewData["SubjectLevel"].ToString()) == 3)
+                {
+                    column.Visible = true;
+                }
+                
+            });
+
+           
+
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            //settings.CommandColumn.Visible = true;
+            //settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.(10);
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) =>
+            {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+
+
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+           // settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+
+            // settings.SettingsBehavior.AllowFocusedRow = true;
+            // settings.ClientSideEvents.FocusedRowChanged = "studentSessionController.RowSelectionChange";
+        });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+    
+    
+}
+@grid.Bind(Model).GetHtml()

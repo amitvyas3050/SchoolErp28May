@@ -1,0 +1,158 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+@{ ViewBag.Title = "TC Allotment Info.";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+@if (ViewData["ClassIDForTCAllotment"] == null)
+{
+    ViewData["ClassIDForTCAllotment"] = 0;
+}
+
+@section Head {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/GridView.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap.css")" />
+    <script type="text/javascript" src="@Url.Content("~/jsControllers/tCAllotmentController.js")"></script>
+}
+
+@section PageToolbar {
+
+
+
+
+
+}
+@section LeftPanelContent {
+    @{Html.RenderAction("ReturnLeftPanelView", "LeftAndRightPanel", new { moduleid = (int)appModule.appAcademicManager });}
+}
+
+@section RightPanelContent {
+    @{Html.RenderAction("ReturnRightPanelView", "LeftAndRightPanel");}
+
+}
+
+
+
+<div class="row">
+
+    <div class="col-sm-2">
+
+        @Html.DevExpress().Label(settingslbl =>
+                                 {
+                                     settingslbl.Name = "lb";
+                                     settingslbl.ControlStyle.CssClass = "col-form-label-sm";
+                                     settingslbl.Text = "Select Class for TCAllotment";
+                                 }).GetHtml()
+
+        @Html.DevExpress().ComboBox(
+
+                                 settingscbo =>
+                                 {
+                                     settingscbo.Name = "ClassID";
+                                     settingscbo.ControlStyle.CssClass = "form-control";
+                                     settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                     settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                     settingscbo.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+                                     settingscbo.Properties.TextField = "ClassName";
+                                     settingscbo.Properties.ValueField = "ClassID";
+                            //settingscbo.ShowModelErrors = true;
+                            //settingscbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                            // settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "tCAllotmentController.SelectedClass";
+                        }
+                                 ).BindList(new UnitOfWork().ClassService.GetClassList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))).GetHtml()
+
+    </div>
+    <div class="col-sm-2">
+        @Html.DevExpress().Button(
+                                 settingsbtn =>
+                                 {
+                                     settingsbtn.Name = "btnStudentList";
+                                     settingsbtn.ControlStyle.CssClass = "button";
+                                     settingsbtn.Text = "Student List";
+                                     settingsbtn.Width = 150;
+                                     settingsbtn.Images.Image.IconID = IconID.EditPaste32x32;
+                                     settingsbtn.ImagePosition = ImagePosition.Left;
+                            //settings.ClientSideEvents.Click = "function(s, e) { CallbackPanel.PerformCallback(); }";
+                            settingsbtn.ClientSideEvents.Click = "tCAllotmentController.GetStudentListWithTCFalse";
+                                 }).GetHtml()
+    </div>
+
+    <div class="col-sm-2">
+        @Html.DevExpress().RadioButtonList(
+                                 settingsrbtnSMS =>
+                                 {
+                                     settingsrbtnSMS.Name = "chkTCFlag";
+                                     settingsrbtnSMS.Properties.RepeatLayout = System.Web.UI.WebControls.RepeatLayout.Flow;
+                                     settingsrbtnSMS.Properties.RepeatDirection = System.Web.UI.WebControls.RepeatDirection.Horizontal;
+                            //settingsrbtn.Properties.RepeatColumns = options.RepeatColumns;
+                            //  settingsrbtn.Properties.TextField = "Value";
+                            //  settingsrbtn.Properties.ValueField = "Key";
+                            //settingsrbtn.Properties.ClientSideEvents.SelectedIndexChanged = "studentSessionController.SelectedIndexChangedForRbtnUpdate";
+                            settingsrbtnSMS.Properties.Items.Add("TC Allotment", 1).Selected = true;
+                                     settingsrbtnSMS.Properties.Items.Add("TC Not Allotment", 2).Selected = false;
+                                     settingsrbtnSMS.ClientVisible = true;
+
+                                 }).GetHtml()
+    </div>
+    <div class="col-sm-2">
+        @Html.DevExpress().Label(settingsLbl =>
+                                 {
+                                     settingsLbl.ControlStyle.CssClass = "label";
+                                     settingsLbl.Text = "TC Date";
+                                     settingsLbl.AssociatedControlName = "ToDate";
+                                 }
+                                 ).GetHtml()
+    </div>
+    <div class="col-sm-2">
+        @Html.DevExpress().DateEdit(settingsdate =>
+                                 {
+                                     settingsdate.Name = "TcDate";
+                                     settingsdate.ControlStyle.CssClass = "editor";
+                                     settingsdate.Properties.NullText = "dd/MM/yyyy";
+                                     settingsdate.Properties.EditFormat = EditFormat.Custom;
+                                     settingsdate.Properties.EditFormatString = "dd/MM/yyyy";
+
+                                 }
+                                 ).GetHtml()
+    </div>
+    <div class="col-sm-2">
+        @Html.DevExpress().Button(
+                                 settingsbtn =>
+                                 {
+                                     settingsbtn.Name = "btnStudSession";
+                                     settingsbtn.ControlStyle.CssClass = "button";
+                                     settingsbtn.Text = "Update";
+                                     settingsbtn.Width = 150;
+                                     settingsbtn.Images.Image.IconID = IconID.EditPaste32x32;
+                                     settingsbtn.ImagePosition = ImagePosition.Left;
+                            //settings.ClientSideEvents.Click = "function(s, e) { CallbackPanel.PerformCallback(); }";
+                            settingsbtn.ClientSideEvents.Click = "tCAllotmentController.UpdateTCAllotment";
+                                 }).GetHtml()
+    </div>
+</div>
+
+@Html.DevExpress().TextBox(
+            settingsStudentID =>
+            {
+                settingsStudentID.Name = "StudentIDs";
+                settingsStudentID.ControlStyle.CssClass = "editor";
+                settingsStudentID.ClientVisible = false;
+
+            }
+        ).GetHtml()
+@using (Html.BeginForm())
+{
+@Html.AntiForgeryToken() @*@Html.Partial("GridViewPartial")*@ViewContext.Writer.Write("<div id=\"divTCAllotment\">");
+
+Html.RenderPartial("ListTCAllotmentView");
+ViewContext.Writer.Write("</div>");
+}
+
+
+@Html.DevExpress().LoadingPanel(
+        settings =>
+        {
+            settings.Name = "loadingPanelStudentRegistration";
+            settings.Modal = true;
+            settings.ContainerElementID = "";
+            settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+        }).GetHtml()

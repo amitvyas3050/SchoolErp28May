@@ -1,0 +1,81 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Repositories
+
+@Html.DevExpress().GridLookup(settings =>
+{
+    settings.Name = "GridSMSTemplate";
+    settings.KeyFieldName = "TemplateID";
+
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowSelectCheckbox = true;
+    settings.Width = Unit.Percentage(98);
+    //settings.Height = Unit.Percentage(92);
+    settings.GridViewProperties.CallbackRouteValues = new { Controller = "SendSMSAbsentees", Action = "PartialSendSMSAbsenteesTemplateView" };
+    settings.GridViewProperties.Settings.ShowFilterRow = true;
+    settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+
+    settings.CommandColumn.Visible = false;
+    settings.CommandColumn.ShowSelectCheckbox = false;
+    settings.Columns.Add("TemplateID").Visible = false;
+    settings.CommandColumn.Caption = "Select";
+    settings.CommandColumn.Width = 50;
+    settings.Columns.Add(column =>
+    {
+
+        column.Caption = "SMSTypeName";
+        column.FieldName = "SMSTypeID";
+        column.Visible = false;
+        column.ColumnType = MVCxGridViewColumnType.ComboBox;
+        var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+        comboBoxProperties.DataSource = (new SMSTypeRepository()).GetSMSTypeList();
+        comboBoxProperties.TextField = "SMSTypeName";
+        comboBoxProperties.ValueField = "SMSTypeID";
+        comboBoxProperties.ValueType = typeof(int);
+    });
+
+    settings.Columns.Add("TemplateName").EditFormSettings.ColumnSpan = 3;
+
+
+    //settings.Columns.Add("SMSTypeName");
+    //settings.Columns.Add("SMSTypeID").Visible = false;
+    //settings.Columns.Add("Rank").Settings.AllowAutoFilter = DefaultBoolean.False;
+
+
+    settings.Properties.SelectionMode = GridLookupSelectionMode.Multiple;
+    //settings.Properties.SelectionMode = DevExpress.Web.ASPxGridLookup.GridLookupSelectionMode.Multiple;
+    settings.Properties.TextFormatString = "{0}";
+    settings.Properties.MultiTextSeparator = ", ";
+    settings.Properties.Width = Unit.Percentage(100);
+    settings.Properties.Height = Unit.Pixel(10);
+    //settings.GridViewProperties.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+    //settings.GridViewProperties.SettingsPager.FirstPageButton.Visible = true;
+    //settings.GridViewProperties.SettingsPager.LastPageButton.Visible = true;
+    //settings.GridViewProperties.SettingsPager.PageSize = 10;
+
+    settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+
+
+    settings.GridViewProperties.SetStatusBarTemplateContent(c =>
+    {
+        ViewContext.Writer.Write("<div style=\"padding: 2px 8px 2px 0; float: right\">");
+        Html.DevExpress().Button(btnSettings =>
+        {
+            btnSettings.Name = "btnClose";
+            btnSettings.UseSubmitBehavior = false;
+            btnSettings.Text = "Close";
+            btnSettings.ClientSideEvents.Click = "sendSMSAbsenteesController.CloseGridLookup";
+        }).Render();
+        ViewContext.Writer.Write("</div>");
+    });
+
+    settings.GridViewClientSideEvents.SelectionChanged = "sendSMSAbsenteesController.RowSelectionChange";
+
+    settings.DataBound = (sender, e) =>
+    {
+        var gridLookup = (MVCxGridLookup)sender;
+        gridLookup.GridView.Width = 250;
+    };
+}).BindList(Model).GetHtml()
+
+
+

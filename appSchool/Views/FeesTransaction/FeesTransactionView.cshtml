@@ -1,0 +1,226 @@
+﻿@using appSchool.Model
+@using appSchool.Repositories
+@model modelStudentFeesReceipt
+
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    Html.EnableClientValidation(true);
+}
+
+
+
+<div style="width:100%;float:left;position:relative">
+@using (Ajax.BeginForm("SaveFeesReceipt", "FeesTransaction",
+    new AjaxOptions {
+        HttpMethod = "POST",
+        UpdateTargetId = "contentPersonal",
+        InsertionMode = InsertionMode.Replace
+    },
+    new {
+        id = "validationForm1",
+        @class = "edit_form1",
+        style="height: 100%; position:relative; width: 100%; ",
+        enctype = "multipart/form-data" 
+    }
+    )) {
+    <div id="contentPersonal" class="edit_form1">
+        @Html.Partial("FeesTransactionEditView", Model)
+    </div>
+}
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div id="mainfeetransID">
+
+@using (Html.BeginForm("AddFee", "FeesTransaction"))
+ {
+    
+    
+     ViewContext.Writer.Write("<Table><TR><TD>");
+    @Html.DevExpress().Label(
+   settings =>{
+        settings.Text = "Receipt No.";
+        settings.AssociatedControlName = "ReceiptNo";
+     }).GetHtml()  
+     
+     @Html.DevExpress().TextBoxFor(
+             model=> model.ReceiptNo,
+            settings =>{
+                settings.ShowModelErrors = true;
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Name = "ReceiptNo";
+                settings.Width = 120;
+                settings.Properties.EnableClientSideAPI = true;
+            }).GetHtml()
+     ViewContext.Writer.Write("</TD><TD>");
+     @Html.DevExpress().Label(
+   settings =>{
+        settings.Text = "Receipt Date";
+        settings.AssociatedControlName = "ReceiptDate";
+     }).GetHtml() 
+     @Html.DevExpress().DateEditFor(
+     model=> model.ReceiptDate,
+                 settingsdate =>
+                 {
+                     settingsdate.Name = "ReceiptDate";
+                     settingsdate.ControlStyle.CssClass = "editor";
+                     settingsdate.Date  = DateTime.Now.Date;
+                     settingsdate.Properties.EditFormat = EditFormat.Custom;
+                     settingsdate.Properties.EditFormatString = "dd/MM/yyyy";
+                     settingsdate.Width = 100;
+                 }
+             ).GetHtml();
+          ViewContext.Writer.Write("</TD><TD>&nbsp;&nbsp;</TD><TD>");
+     
+    @Html.DevExpress().Label(
+   settings =>{
+       settings.Text = "Student Name";
+        settings.AssociatedControlName = "StudentName";
+     }).GetHtml()  
+     
+     @Html.DevExpress().TextBoxFor(
+             model=> model.StudentName,
+            settings =>{
+                settings.ShowModelErrors = true;
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Name = "StudentName";
+                settings.Width = 200;
+                settings.Properties.EnableClientSideAPI = true;
+            }).GetHtml()
+     ViewContext.Writer.Write("</TD><TD>");
+      @Html.DevExpress().RadioButtonFor(
+       model=> model.Mode,
+            settings =>
+            {
+                settings.Name = "ModeC";
+                settings.Text = "Cash";
+                settings.GroupName = "PayMode";
+                settings.Checked = true;
+            }).GetHtml()
+    ViewContext.Writer.Write("</TD><TD>");
+      @Html.DevExpress().RadioButtonFor(
+       model=> model.Mode,
+            settings =>
+            {
+                settings.Name = "ModeB";
+                settings.Text = "Cheque";
+                settings.GroupName = "PayMode";
+                settings.Checked = true;
+            }).GetHtml()
+     
+     ViewContext.Writer.Write("</TD></TR></Table>");
+
+     ViewContext.Writer.Write("<Div class='vertComponentContainer' style='width:640px'><Table><TR><TD>");
+      @Html.DevExpress().Label(
+   settings =>{
+       settings.Text = "Cheque No.";
+       settings.AssociatedControlName = "ChequeNo";
+     }).GetHtml()  
+     
+     @Html.DevExpress().TextBoxFor(
+             model=> model.ChequeNo ,
+            settings =>{
+                settings.ShowModelErrors = true;
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Name = "ChequeNo";
+                settings.Width = 200;
+                settings.Properties.EnableClientSideAPI = true;
+            }).GetHtml()
+     ViewContext.Writer.Write("</TD><TD>");
+     
+      @Html.DevExpress().Label(
+   settings =>{
+        settings.Text = "Cheque Date";
+        settings.AssociatedControlName = "ChequeDate";
+     }).GetHtml() 
+     @Html.DevExpress().DateEditFor(
+     model => model.ChequeDate ,
+                 settingsdate =>
+                 {
+                     settingsdate.Name = "ChequeDate";
+                     settingsdate.ControlStyle.CssClass = "editor";
+                     settingsdate.Properties.NullText   = DateTime.Now.Date.ToString("dd/MM/yyyy");
+                     settingsdate.Properties.EditFormat = EditFormat.Custom;
+                     settingsdate.Properties.EditFormatString = "dd/MM/yyyy";
+                     settingsdate.Width = 100;
+                 }
+             ).GetHtml();
+          ViewContext.Writer.Write("</TD><TD>&nbsp;&nbsp;</TD><TD>");
+     
+     @Html.DevExpress().Label(
+   settings =>{
+       settings.Text = "Bank";
+       settings.AssociatedControlName = "BankName";
+     }).GetHtml()  
+     
+     @Html.DevExpress().TextBoxFor(
+             model=> model.BankName ,
+            settings =>{
+                settings.ShowModelErrors = true;
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Name = "BankName";
+                settings.Width = 200;
+                settings.Properties.EnableClientSideAPI = true;
+            }).GetHtml()
+     ViewContext.Writer.Write("</TD><TD>");
+     
+      @Html.DevExpress().Label(
+   settings =>{
+       settings.Text = "Branch";
+       settings.AssociatedControlName = "BranchName";
+     }).GetHtml()  
+     
+     @Html.DevExpress().TextBoxFor(
+             model=> model.BranchName ,
+            settings =>{
+                settings.ShowModelErrors = true;
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Name = "BranchName";
+                settings.Width = 200;
+                settings.Properties.EnableClientSideAPI = true;
+            }).GetHtml()
+     ViewContext.Writer.Write("</TD><TD>");
+     ViewContext.Writer.Write("</TD></TR></Table></Div>");
+ }
+
+    </div>*@

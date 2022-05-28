@@ -1,0 +1,128 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+
+@{ ViewBag.Title = "Teacher";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+
+@section Head {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/GridView.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap.css")" />
+    <script type="text/javascript" src="@Url.Content("~/Content/GridView.js")"></script>
+
+}
+
+
+@section PageToolbar {
+    @Html.DevExpress().Menu(menuSettings =>
+            {
+                menuSettings.Name = "pageToolbar";
+
+                menuSettings.ItemAutoWidth = false;
+                menuSettings.AllowSelectItem = false;
+                menuSettings.ApplyItemStyleToTemplates = true;
+
+                menuSettings.SettingsAdaptivity.Enabled = true;
+                menuSettings.SettingsAdaptivity.EnableAutoHideRootItems = true;
+                menuSettings.SettingsAdaptivity.EnableCollapseRootItemsToIcons = true;
+                menuSettings.SettingsAdaptivity.CollapseRootItemsToIconsAtWindowInnerWidth = 600;
+
+                menuSettings.Width = Unit.Percentage(100);
+                menuSettings.ControlStyle.SeparatorWidth = Unit.Pixel(0);
+                menuSettings.ControlStyle.CssClass = "page-toolbar";
+
+                menuSettings.Styles.Item.CssClass = "item";
+                menuSettings.Styles.Item.VerticalAlign = VerticalAlign.Middle;
+
+                menuSettings.Images.Item.Width = Unit.Pixel(16);
+                menuSettings.Images.Item.Height = Unit.Pixel(16);
+
+                menuSettings.Items.Add(item =>
+    {
+        item.Enabled = false;
+        item.SetTemplateContent(template => ViewContext.Writer.Write("<h1>Teacher</h1>"));
+    });
+
+                menuSettings.Items.Add(item =>
+    {
+        item.Name = "ToggleFilterPanel";
+        item.Text = "";
+        item.GroupName = "Filter";
+        item.Alignment = MenuItemAlignment.Right;
+        item.AdaptivePriority = 1;
+        item.Image.Url = "~/Content/Images/search.svg";
+        item.Image.UrlChecked = "~/Content/Images/search-selected.svg";
+    });
+                menuSettings.ClientSideEvents.ItemClick = "onPageToolbarItemClick";
+            }).GetHtml()
+
+
+}
+
+
+@section LeftPanelContent {
+
+    @{Html.RenderAction("ReturnLeftPanelView", "LeftAndRightPanel", new { moduleid = (int)appModule.appDataManager });}
+
+
+}
+
+@section RightPanelContent {
+    @{Html.RenderAction("ReturnRightPanelView", "LeftAndRightPanel");}
+
+}
+
+
+<div class="row" style="margin-right:0">
+    <div class="col-sm-2"></div>
+
+    <div class="col-sm-10">
+        @Html.DevExpress().PopupControl(settings =>
+            {
+                settings.Name = "popupclass";
+                settings.PopupElementID = "popupArea";
+                settings.AllowDragging = true;
+                settings.ShowOnPageLoad = true;
+                settings.Width = 180;
+                settings.Height = 100;
+
+                settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+                settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                settings.CloseAction = CloseAction.CloseButton;
+                settings.HeaderText = "Under Construction";
+                settings.SetContent(() =>
+{
+                    ViewContext.Writer.Write(
+            " <p style=\"color:red;\"> This form is Under Construction </p>"
+        );
+                    ViewContext.Writer.Write(
+"<div style=\"text-align:center;\" > <img   src=\"" + Url.Content("~/Images/underconstruction.png") + "\" alt=\"Permission\" /> </div> ");
+                });
+            }).GetHtml()
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

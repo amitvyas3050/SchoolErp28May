@@ -1,0 +1,166 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridClassSetup";
+            settings.KeyFieldName = "ClassSetupID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+
+
+
+            settings.CallbackRouteValues = new { Controller = "ClassSetup", Action = "ListPartialClassSetup" };
+            settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ClassSetup", Action = "AddNewClassSetup" };
+            settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ClassSetup", Action = "UpdateClassSetup" };
+            settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ClassSetup", Action = "DeleteClassSetup" };
+            settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+
+            settings.SettingsBehavior.ConfirmDelete = true;
+
+            settings.ControlStyle.CssClass = "grid-view";
+            settings.Width = Unit.Percentage(100);
+
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+            settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+            settings.CommandColumn.Visible = false;
+            settings.CommandColumn.Caption = "Edit New ";
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Pixel(300); 
+            settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(5);
+            //settings.CommandColumn.ButtonType = GridViewCommandButtonType.Default;
+            settings.CommandColumn.ShowNewButton = false;
+            if (PermissionFlag._AddFlag == true)
+            {
+                settings.CommandColumn.ShowNewButtonInHeader = true;
+                //settings.CommandColumn.ToolTip = "Add New Class";
+            }
+            if (PermissionFlag._ModFlag == true)
+            {
+                settings.CommandColumn.ShowEditButton = true;
+                settings.SettingsCommandButton.EditButton.Image.ToolTip  = "hello";
+            }
+            if (PermissionFlag._DelFlag == true)
+            {
+                settings.CommandColumn.ShowDeleteButton = true;
+
+            }
+            // settings.Columns.Add("ClassDescription").EditFormSettings.Visible = DefaultBoolean.False;
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ClassDescription";
+                column.Caption = "Class Description";
+                column.ToolTip = "Click to Sort";
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ClassID";
+                column.Caption = "Class";
+                column.ToolTip = "Click to Sort";
+
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new ClassRepository()).GetClassList(byte.Parse(Session["CompID"].ToString()),byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "ClassName";
+                comboBoxProperties.ValueField = "ClassID";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "SectionID";
+                column.Caption = "Section";
+                column.ToolTip = "Click to Sort";
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = (new SectionRepository()).GetSectionList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "SectionName";
+                comboBoxProperties.ValueField = "SectionID";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ClassCategoryID";
+                column.Caption = "Category";
+                column.ToolTip = "Click to Sort";
+
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.NullDisplayText = "(None)";
+                comboBoxProperties.DataSource = (new ClassCategoryRepository()).GetClassCategoryList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()));
+                comboBoxProperties.TextField = "ClassCategoryName";
+                comboBoxProperties.ValueField = "ClassCategoryID";
+                comboBoxProperties.ValueType = typeof(int);
+                comboBoxProperties.DropDownStyle = DropDownStyle.DropDown;
+
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "DisplayOrder";
+                column.Caption = "Display Order";
+                column.ToolTip = "Click to Sort";
+
+            });
+
+            //settings.Columns.Add(column =>
+            //{
+            //    column.FieldName = "TeacherID";
+            //    column.Caption = "Teacher";
+
+            //    column.ColumnType = MVCxGridViewColumnType.ComboBox;
+            //    var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+            //    comboBoxProperties.NullDisplayText = "(None)";
+            //    comboBoxProperties.DataSource = (new TeacherRegistrationRepository()).GetTeacherRegistrationGridData();
+            //    comboBoxProperties.TextField = "FullName";
+            //    comboBoxProperties.ValueField = "TeacherID";
+            //    comboBoxProperties.ValueType = typeof(int);
+            //    comboBoxProperties.DropDownStyle = DropDownStyle.DropDown;
+            //});
+
+
+
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            //settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+            //settings.SettingsPager.PageSize = 12;
+
+
+            settings.Settings.ShowFilterRow = false;
+
+            settings.Settings.ShowFilterRowMenu = true;
+            settings.Settings.ShowHeaderFilterButton = true;
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            settings.CommandColumn.ShowClearFilterButton = true;
+
+            settings.PreRender = (sender, e) =>
+            {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.SettingsPager.PageSize = 200;
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            settings.Settings.VerticalScrollableHeight = 200;
+            //settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+            //settings.Settings.HorizontalScrollableHeight = 350;
+            settings.Settings.VerticalScrollBarStyle = GridViewVerticalScrollBarStyle.Virtual;
+
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            // settings.ClientSideEvents.FocusedRowChanged = "classSetupController.RowSelectionChange";
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

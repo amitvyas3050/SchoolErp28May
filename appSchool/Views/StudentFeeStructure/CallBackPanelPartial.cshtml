@@ -1,0 +1,13 @@
+﻿
+
+@Html.DevExpress().CallbackPanel(
+    settings => {
+        settings.Name = "CallbackPanel";
+        settings.CallbackRouteValues = new { Controller = "StudentFeeStructure", Action = "SaveStudentFeeStructure"};
+        //settings.ShowLoadingPanel = false;
+        settings.ClientSideEvents.BeginCallback = "function(s, e) {  e.customArgs['mClassesID'] = txtClassForSFS.GetValue(); LoadingPanel.Show(); }";
+        settings.ClientSideEvents.EndCallback = "function(s, e) { LoadingPanel.Hide(); }";
+        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+        
+    }
+).GetHtml()

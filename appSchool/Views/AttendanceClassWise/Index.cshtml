@@ -1,0 +1,89 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+@{ ViewBag.Title = "Attendance Classwise";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+@section Head {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap.css")" />
+    <script type="text/javascript" src="@Url.Content("~/jsControllers/attendanceClasswiseController.js")"></script>
+
+
+}
+
+@section PageToolbar {
+    @Html.DevExpress().Menu(menuSettings =>
+        {
+            menuSettings.Name = "pageToolbar";
+
+            menuSettings.ItemAutoWidth = false;
+            menuSettings.AllowSelectItem = false;
+            menuSettings.ApplyItemStyleToTemplates = true;
+
+            menuSettings.SettingsAdaptivity.Enabled = true;
+            menuSettings.SettingsAdaptivity.EnableAutoHideRootItems = true;
+            menuSettings.SettingsAdaptivity.EnableCollapseRootItemsToIcons = true;
+            menuSettings.SettingsAdaptivity.CollapseRootItemsToIconsAtWindowInnerWidth = 600;
+
+            menuSettings.Width = Unit.Percentage(100);
+            menuSettings.ControlStyle.SeparatorWidth = Unit.Pixel(0);
+            menuSettings.ControlStyle.CssClass = "page-toolbar";
+
+            menuSettings.Styles.Item.CssClass = "item";
+            menuSettings.Styles.Item.VerticalAlign = VerticalAlign.Middle;
+
+            menuSettings.Images.Item.Width = Unit.Pixel(16);
+            menuSettings.Images.Item.Height = Unit.Pixel(16);
+
+            menuSettings.Items.Add(item =>
+{
+                        item.Enabled = false;
+                        item.SetTemplateContent(template => ViewContext.Writer.Write("<h1>Attendance Classwise</h1>"));
+                    });
+        }).GetHtml()
+}
+
+@section LeftPanelContent {
+
+
+    @{Html.RenderAction("ReturnLeftPanelView", "LeftAndRightPanel", new { moduleid = (int)appModule.appSMSManager });}
+
+
+}
+
+
+@section RightPanelContent {
+    @{Html.RenderAction("ReturnRightPanelView", "LeftAndRightPanel");}
+
+}
+
+<div class="row" style="margin-right:0">
+
+
+
+    <div class="col-sm-12">
+
+        @{Html.RenderPartial("BodyPartial");}
+
+    </div>
+
+</div>
+<br />
+<div class="row" style=" margin-right: 0">
+
+    <div class="col-sm-12" id="AttendanceClasswiseBodySplitter_1_CC" style="border :1px solid #ff6a00 ">
+
+        @{Html.RenderPartial("ListAttendancePartial");}
+
+    </div>
+
+</div>
+
+@Html.DevExpress().LoadingPanel(
+settings =>
+{
+    settings.Name = "loadingPanelSmscomman";
+    settings.Modal = true;
+    settings.ContainerElementID = "";
+    settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+}).GetHtml()

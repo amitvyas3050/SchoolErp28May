@@ -1,0 +1,46 @@
+﻿@using appSchool.Repositories
+@model modelSubjectLevel3Grid
+
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    Html.EnableClientValidation(true);
+}
+
+ 
+            
+            
+            
+            
+         
+<div style="width:84%;float:left;position:relative">
+@using (Ajax.BeginForm("UpdateSubjectLevel3Info", "SubjectLevel3Master",
+    new AjaxOptions {
+        HttpMethod = "POST",
+        OnBegin = "loadingPanelSubjectLevel3Info.Show();",
+        OnComplete = "loadingPanelSubjectLevel3Info.Hide();",
+        UpdateTargetId = "contentPersonal",
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "alert('Updated Successfuly');"
+    },
+    new {
+        id = "validationForm1",
+        @class = "edit_form",
+        style="height: 60px; position:relative; width: 100%;",
+        enctype = "multipart/form-data" 
+    }
+    )) {
+    <div id="contentPersonal" class="edit_form">
+        @Html.Partial("SubjectLevel3MasterEditPartial", Model)
+    </div>
+}
+</div>
+
+
+ 
+@Html.DevExpress().LoadingPanel(
+    settings => {
+        settings.Name = "loadingPanelSubjectLevel3Info";
+        settings.Modal = true;
+        settings.ContainerElementID = "";
+        settings.Styles.LoadingDiv.BackColor =System.Drawing.Color.White;
+    }).GetHtml()

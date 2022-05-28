@@ -1,0 +1,201 @@
+﻿@using appSchool.ViewModels
+
+
+
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "GridHouses";
+            settings.KeyFieldName = "HouseID";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            //settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+
+            settings.CallbackRouteValues = new { Controller = "Houses", Action = "PartialGridHouses" };
+            settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Houses", Action = "AddNewHouse" };
+            settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Houses", Action = "UpdateHouse" };
+            settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Houses", Action = "DeleteHouse" };
+            settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+            settings.SettingsBehavior.ConfirmDelete = true;
+
+            settings.SettingsPopup.EditForm.ShowHeader = true;
+            settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+            settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+            settings.Styles.AlternatingRow.Enabled = DevExpress.Utils.DefaultBoolean.True;
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.Caption = "Houses";
+            settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(10);
+            settings.CommandColumn.ButtonType = GridViewCommandButtonType.Default;
+            if(PermissionFlag._AddFlag==true)
+            settings.CommandColumn.ShowNewButtonInHeader = true;
+            if(PermissionFlag._ModFlag==true)
+            settings.CommandColumn.ShowEditButton = true;
+            if(PermissionFlag._DelFlag==true)
+            settings.CommandColumn.ShowDeleteButton = true;
+            settings.Styles.CommandColumn.Spacing = System.Web.UI.WebControls.Unit.Pixel(10);
+            settings.Columns.Add("HouseName").EditFormSettings.ColumnSpan = 3;
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "HouseColor";
+                column.Caption = "HouseColor";
+                column.ColumnType = MVCxGridViewColumnType.ColorEdit;
+             
+                var comboBoxProperties = column.PropertiesEdit as ColorEditProperties;
+                 
+             
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(140);
+             //   settings.Color = Color.FromArgb(255, 153, 0);
+                column.ReadOnly = false;
+            });
+            
+            
+            settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            //settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+            //settings.SettingsPager.PageSize = 12;
+
+
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            settings.Settings.ShowHeaderFilterButton = true;
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.PreRender = (sender, e) => {
+                //((MVCxGridView)sender).StartEdit(1);
+            };
+
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.SettingsPager.PageSize = 30;
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+            settings.Settings.VerticalScrollableHeight = 350;
+            settings.Settings.VerticalScrollBarStyle = GridViewVerticalScrollBarStyle.Virtual;
+
+            settings.SettingsBehavior.AllowFocusedRow = true;
+            settings.ClientSideEvents.FocusedRowChanged = "housesController.RowSelectionChange";
+
+            
+
+            settings.HtmlDataCellPrepared = (sender, e) =>
+            {
+              //  int a = -1;
+                if (e.DataColumn.FieldName == "HouseColor")
+                {
+                 
+                    if (e.CellValue != null)
+                    {
+                       e.Cell.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(e.CellValue));
+                       e.Cell.ForeColor = System.Drawing.Color.Black;
+                       e.Cell.Text = System.Drawing.ColorTranslator.ToHtml(System.Drawing.Color.FromArgb(Convert.ToInt32(e.CellValue)));
+                     
+                    }
+                }
+             
+                 
+            };
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@model System.Collections.IEnumerable
+
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "GridView";
+        settings.CallbackRouteValues = new { Controller = "Masters", Action = "grdRegistredStudents" };
+        //settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.KeyFieldName = "RegistrationID";
+        //settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        //settings.Settings.VerticalScrollableHeight = 350;
+        settings.Settings.VerticalScrollBarStyle = GridViewVerticalScrollBarStyle.Standard;
+        settings.ControlStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(0);
+        settings.ControlStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+        settings.ControlStyle.BorderBottom.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(1);
+        
+        // DXCOMMENT: Configure grid's columns in accordance with data model fields
+        settings.Columns.Add("RegNo");
+        settings.Columns.Add("RegDate").PropertiesEdit.DisplayFormatString = "d";
+        settings.Columns.Add("FirstName");
+        settings.Columns.Add("LastName");
+        settings.Columns.Add("DOB").PropertiesEdit.DisplayFormatString = "d";
+        settings.Columns.Add("Gender");
+        //settings.Columns.Add("MobileNo");
+        //settings.Columns.Add("Address");
+        
+        //settings.Settings.ShowPreview = true;
+        //settings.PreviewFieldName = "Background";
+        
+        settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+        settings.SettingsPager.FirstPageButton.Visible = true;
+        settings.SettingsPager.LastPageButton.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30" };
+        settings.SettingsPager.Visible = true;
+        settings.SettingsPager.PageSize = 10;
+
+
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowFilterRowMenu = true;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.CommandColumn.ShowClearFilterButton = true;
+
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Masters", Action = "AddNewRegistration" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Masters", Action = "UpdateRegistration" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Masters", Action = "DeleteRegistration" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
+        settings.SettingsBehavior.ConfirmDelete = true;
+        settings.SettingsPopup.EditForm.Width = 600;
+        settings.SettingsPopup.EditForm.HorizontalAlign = PopupHorizontalAlign.Center;
+        settings.SettingsPopup.EditForm.VerticalAlign = PopupVerticalAlign.Middle;
+        settings.SettingsPopup.EditForm.VerticalOffset = 50;
+        settings.SettingsPopup.EditForm.Height = 350;
+        settings.SettingsPopup.EditForm.Modal = true;
+        
+        
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Pixel(50);
+        settings.CommandColumn.ShowClearFilterButton = true;
+
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SettingsPager.PageSize = 30;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        //settings.Settings.VerticalScrollableHeight = 350;
+        settings.Settings.VerticalScrollBarStyle = GridViewVerticalScrollBarStyle.Virtual;
+        
+    }).Bind(Model).GetHtml()*@

@@ -1,0 +1,173 @@
+﻿@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+
+@{
+    ViewBag.Title = "Faculty Allotment";
+}
+
+<script src="@Url.Content("~/jsControllers/facultyAllotmentController.js")" type="text/javascript"></script>
+
+@if (PermissionFlag._AddFlag == false && PermissionFlag._DelFlag == false && PermissionFlag._ModFlag == false)
+     {
+     
+              @Html.DevExpress().PopupControl(settings => {
+                settings.Name = "popupclass";
+                settings.PopupElementID = "popupArea";
+                settings.AllowDragging = true;
+                settings.ShowOnPageLoad = true;
+                settings.Width=180;
+                settings.Height = 100;
+            
+                settings.PopupHorizontalAlign =PopupHorizontalAlign.WindowCenter;
+                settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                settings.CloseAction = CloseAction.CloseButton;
+                settings.HeaderText = "User Permission";
+                settings.SetContent(() => {
+                    ViewContext.Writer.Write(
+                        " <p style=\"color:red;\"> Permission not granted </p>"
+                    );
+                    ViewContext.Writer.Write(
+            "<div style=\"text-align:center;\" > <img   src=\"" + Url.Content("~/Images/permission.png") + "\" alt=\"Permission\" /> </div> "
+        );
+               });
+}).GetHtml()
+     }
+else
+{
+
+ @Html.DevExpress().Splitter(settings => {
+    settings.Name = "FacultyAllotmentSplitter";
+        settings.AllowResize = true;
+        settings.Orientation = System.Web.UI.WebControls.Orientation.Vertical;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SeparatorVisible = true;
+        settings.ClientSideEvents.PaneResized = "facultyAllotmentController.splitterResized";
+
+       settings.Panes.Add(subpane =>
+        {
+            subpane.Name = "FacultyAllotmentBody";
+            subpane.PaneStyle.CssClass = "contentPane";
+            subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+            subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(40);
+            subpane.Size = System.Web.UI.WebControls.Unit.Pixel(60);
+            subpane.Separator.Visible = DefaultBoolean.False;
+            subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.SetContent(() =>
+            {
+
+                ViewContext.Writer.Write("<table><tr> <td style=\"padding-right:10px;  \"> ");
+
+                @Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lblClassName";
+                    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settingslbl.Text = "Class";
+                }).GetHtml();
+
+                @Html.DevExpress().ComboBox(
+                      settingscbo =>
+                      {
+                          settingscbo.Name = "ClassID";
+                          settingscbo.ControlStyle.CssClass = "editor";
+                          settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                          settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                          settingscbo.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+                          settingscbo.Properties.TextField = "ClassName";
+                          settingscbo.Properties.ValueField = "ClassID";
+                          //settingscbo.ShowModelErrors = true;
+                          //settingscbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                          settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "facultyAllotmentController.SelectedClass";
+                      }
+                  ).BindList(new UnitOfWork().ClassService.GetClassList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))).GetHtml();
+
+
+
+                ViewContext.Writer.Write("</td> <td style=\"padding-right:10px; \"> ");
+
+                @Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lblClassSetup";
+                    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settingslbl.Text = "Section";
+                }).GetHtml();
+
+                Html.RenderPartial("ClassSetupPartialView");
+
+                ViewContext.Writer.Write("</td><td style=\"padding-right:10px; \"> ");
+
+                @Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lblFaculty";
+                    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settingslbl.Text = "Faculty";
+                }).GetHtml();
+
+                Html.RenderPartial("FacultyPartialView");
+             
+
+                ViewContext.Writer.Write("</td><td style=\"padding-right:10px; \"> ");
+                @Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lblbutton";
+                    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settingslbl.Text = " ";
+                }).GetHtml();
+
+                @Html.DevExpress().Button
+                   (
+                   settingsbtn =>
+                   {
+                       settingsbtn.Name = "btnFaculty";
+                       settingsbtn.Text = "Create/Update";
+                       settingsbtn.UseSubmitBehavior = true;
+                       settingsbtn.Width = System.Web.UI.WebControls.Unit.Pixel(120);
+                       settingsbtn.Height = System.Web.UI.WebControls.Unit.Pixel(35);
+                       settingsbtn.Images.Image.IconID = IconID.SaveSave16x16;
+                       settingsbtn.ClientSideEvents.Click = "facultyAllotmentController.SendbuttonClick";
+
+
+                   }).GetHtml();
+
+
+                ViewContext.Writer.Write("</td></tr></table> ");
+
+                
+            });
+        });
+       settings.Panes.Add(subpane =>
+       {
+           subpane.Name = "FacultyAllotmentFooter";
+           subpane.PaneStyle.CssClass = "contentPane";
+           subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+           subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(100);
+           subpane.Size = System.Web.UI.WebControls.Unit.Percentage(40);
+           subpane.Separator.Visible = DefaultBoolean.True;
+           subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+           subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+           subpane.SetContent(() =>
+           {
+               Html.RenderPartial("ListFacultyAllotment");
+           });
+       });
+
+    
+    }).GetHtml()
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,36 @@
+﻿@using appSchool.Repositories
+@model StudentPreviousDetail
+
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    Html.EnableClientValidation(true);
+}
+
+@using (Ajax.BeginForm("StudentPriviousInfoSaveANDUpdate", "StudentRegistrationWithTC",
+    new AjaxOptions {
+        HttpMethod = "POST",
+        OnBegin = "loadingPanelPreviousDetail.Show();",
+        OnComplete = "loadingPanelPreviousDetail.Hide();",
+        UpdateTargetId = "contentPriviousDetails",
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "alert('Updated Successfuly');"
+    },
+    new {
+        id = "validationForm2",
+        @class = "edit_form",
+        style = "height: 200px; position:relative; width: 100%;"
+    })) {
+    <div id="contentPriviousDetails">
+        @Html.Partial("StudentPriviousEditPartial", Model)
+    </div>
+}
+
+
+
+@Html.DevExpress().LoadingPanel(
+    settings => {
+        settings.Name = "loadingPanelPreviousDetail";
+        settings.Modal = true;
+        settings.ContainerElementID = "";
+        settings.Styles.LoadingDiv.BackColor =System.Drawing.Color.White;
+    }).GetHtml()

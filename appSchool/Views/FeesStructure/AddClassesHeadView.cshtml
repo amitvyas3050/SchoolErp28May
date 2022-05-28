@@ -1,0 +1,90 @@
+﻿@using appSchool.Repositories
+@using appSchool.ViewModels
+
+
+
+ <div class="vertComponentContainer" style="width: 100%;">
+
+   @Html.DevExpress().Label(settings => {
+    settings.Name = "lb";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Text = "Select Class for Structure";
+}).GetHtml()
+
+     
+        @Html.DevExpress().CheckBoxList(
+            settings =>
+            {
+                settings.Name = "checkBoxList1";
+                settings.Properties.ValueField = "ClassID";
+                settings.Properties.TextField = "ClassName";
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+                
+                settings.Properties.RepeatLayout =System.Web.UI.WebControls.RepeatLayout.Table;
+                settings.Properties.RepeatDirection = System.Web.UI.WebControls.RepeatDirection.Horizontal;
+                settings.Properties.RepeatColumns =3;
+                settings.Properties.ClientSideEvents.SelectedIndexChanged = "feesStructureController.SelectionChanged";
+            }).BindList(new ClassRepository().GetClassList(byte.Parse(Session["CompID"].ToString()),byte.Parse(Session["BranchID"].ToString()))).GetHtml()
+
+     <br />
+      @Html.DevExpress().Label(settings => {
+    settings.Name = "lbTerm";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100); ;
+    settings.Text = "Select Term for Structure";
+}).GetHtml()
+
+   @Html.Partial("TermMultiSelectPartial", new UnitOfWork().feeTermService.GetFeeTermList(byte.Parse(Session["CompID"].ToString()),byte.Parse(Session["BranchID"].ToString()),byte.Parse(Session["SessionID"].ToString())))
+
+     <br />
+
+     @if(PermissionFlag._AddFlag==true)
+     {
+      @Html.DevExpress().Button(
+            settings => {
+                settings.Name = "btnLoad";
+              //  settings.Width = 180;
+               settings.Width=System.Web.UI.WebControls.Unit.Percentage(100); 
+                settings.Height = 30;
+                settings.RenderMode = ButtonRenderMode.Button;
+                settings.Text = "Load Structure";
+                settings.ImagePosition = ImagePosition.Right;
+                settings.Images.Image.IconID = "actions_refresh_16x16gray";
+                settings.ClientSideEvents.Click = "feesStructureController.ClickLoadGrid";
+        }).GetHtml()
+     }
+      <br />
+    @*  @Html.DevExpress().Button(
+            settings => {
+                settings.Name = "btnRefresh";
+                settings.Width = 150;
+                settings.Height = 25;
+                settings.RenderMode = ButtonRenderMode.Button;
+                settings.Text = "Refresh";
+                settings.ImagePosition = ImagePosition.Right;
+                settings.Images.Image.IconID = "actions_refresh_16x16gray";
+                settings.ClientSideEvents.Click = "feesStructureController.RefreshClasses";
+        }).GetHtml()*@
+
+      @Html.DevExpress().TextBox(
+   
+        settings =>
+        {
+         settings.Name = "txtclasses";
+         settings.ClientVisible = false;
+            
+        }).GetHtml()
+
+       @Html.DevExpress().TextBox(
+   
+        settings =>
+        {
+         settings.Name = "txtTerm";
+         settings.ClientVisible = false;
+            
+        }).GetHtml()
+
+
+    </div>
+
+   

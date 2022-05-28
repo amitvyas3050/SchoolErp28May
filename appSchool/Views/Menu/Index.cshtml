@@ -1,0 +1,104 @@
+﻿@model List<appSchool.Repositories.vUserRoleModulePermission>
+
+@{
+    string imagepath = "/Content/Images/Menuicon/";
+    string iconpath = ".";
+}
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section Head {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("https://use.fontawesome.com/releases/v5.7.2/css/all.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/cardvieworange.css")" />
+    <script type="text/javascript" src="@Url.Content("~/jsControllers/menuController.js")"></script>
+}
+
+
+
+
+
+
+
+<main id="menudiv">
+    <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative; height: 50px">
+
+        <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-lg-12 g-3">
+            
+            @Html.DevExpress().TextBox(
+                  settingstxt =>
+                  {
+                      settingstxt.Name = "txtfiltermenu";
+                      settingstxt.Width = Unit.Percentage(50);
+                      //settingstxt.ControlStyle.CssClass = "form-control btnpaddingrow20px";
+                      //settingstxt.Properties.ClientSideEvents.KeyUp = "menuController.keyPressmenufiler";
+                  }
+              ).GetHtml()
+            @Html.DevExpress().Button(
+                settingsBttn =>
+                {
+                    settingsBttn.Name = "btnfiltermenu";
+                    settingsBttn.Width = 70;
+                    settingsBttn.Text = "Filter";
+                    //settingsBttn.ControlStyle.CssClass = "btnpaddingrow20px";
+                    settingsBttn.ClientSideEvents.Click = "menuController.menufilterbyclick";
+                }).GetHtml()
+            
+
+
+        </div>
+           <br />
+
+            <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-6 g-3" style="height:30px">
+
+
+                @foreach (var menuitem in Model)
+                {
+                    if (iconpath != "")
+                    {
+                        iconpath = "";
+                        iconpath = imagepath + @menuitem.FMenuIcon;
+
+                    }
+                    <div class="col">
+
+                        <div class="card h-100 shadow-sm">
+                            <a href=@menuitem.FNavUrl><img src=@iconpath class="card-img-top" alt="..."> </a>
+                            <div class="card-body">
+
+                                <div class="clearfix mb-3" style="  text-align:center ">
+
+                                    <a href=@menuitem.FNavUrl style="text-decoration:none; color:#000000; ">
+                                        <span style="text-align: center; font-size: 0.8em; word-wrap: break-word; ">
+                                            @menuitem.FMenuText
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                }
+            </div>
+        </div>
+</main>
+@Html.DevExpress().LoadingPanel(
+settings =>
+{
+    settings.Name = "loadingPanelmenu";
+    settings.Modal = true;
+    settings.ContainerElementID = "";
+    settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+}).GetHtml()
+
+
+
+
+
+
+

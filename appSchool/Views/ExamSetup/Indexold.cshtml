@@ -1,0 +1,230 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_rootLayout.cshtml";
+}
+
+
+
+@using appSchool.ViewModels
+@using appSchool.Model
+@using appSchool.Repositories
+
+
+
+<script src="@Url.Content("~/jsControllers/examSetupController.js")" type="text/javascript"></script>
+
+@if (PermissionFlag._AddFlag == false && PermissionFlag._DelFlag == false && PermissionFlag._ModFlag == false)
+     {
+     
+              @Html.DevExpress().PopupControl(settings => {
+                settings.Name = "popupclass";
+                settings.PopupElementID = "popupArea";
+                settings.AllowDragging = true;
+                settings.ShowOnPageLoad = true;
+                settings.Width=180;
+                settings.Height = 100;
+            
+                settings.PopupHorizontalAlign =PopupHorizontalAlign.WindowCenter;
+                settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                settings.CloseAction = CloseAction.CloseButton;
+                settings.HeaderText = "User Permission";
+                settings.SetContent(() => {
+                    ViewContext.Writer.Write(
+                        " <p style=\"color:red;\"> Permission not granted </p>"
+                    );
+                    ViewContext.Writer.Write(
+            "<div style=\"text-align:center;\" > <img   src=\"" + Url.Content("~/Images/permission.png") + "\" alt=\"Permission\" /> </div> "
+        );
+               });
+}).GetHtml()
+     }
+else
+{
+
+ @Html.DevExpress().Splitter(settings => {
+    settings.Name = "ExamSetupSplitter";
+        settings.AllowResize = true;
+        settings.Orientation = System.Web.UI.WebControls.Orientation.Vertical;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SeparatorVisible = true;
+        settings.ClientSideEvents.PaneResized = "examSetupController.splitterResized";
+
+       settings.Panes.Add(subpane =>
+        {
+            subpane.Name = "ExamSetupBody";
+            subpane.PaneStyle.CssClass = "contentPane";
+            subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+            subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(100);
+            subpane.Size = System.Web.UI.WebControls.Unit.Pixel(120);
+            subpane.Separator.Visible = DefaultBoolean.False;
+            subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+            subpane.SetContent(() =>
+            {
+
+                ViewContext.Writer.Write("<Div style=\"  float:Left;  Height:60px;  border:0px solid #000; padding:10px;  \"> ");
+
+                @Html.DevExpress().Button
+              (
+              settingsbtn =>
+              {
+                  settingsbtn.Name = "btnBack";
+                  settingsbtn.Text = "Back";
+                  settingsbtn.UseSubmitBehavior = true;
+                  settingsbtn.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+                  settingsbtn.Height = System.Web.UI.WebControls.Unit.Pixel(70);
+                  settingsbtn.RouteValues = new { Controller = "ExamsManager", Action = "index" };
+                  settingsbtn.Images.Image.IconID = IconID.HistoryUndo32x32;
+                  //    settingsbtn.ClientSideEvents.Click = "examSetupController.SendbuttonClick";
+
+
+              }).GetHtml();
+
+
+                ViewContext.Writer.Write("</div><Div style=\"padding-right:10px; padding-top:10px; Height:80px;  border:1px solid #000;  \"> ");
+                
+                ViewContext.Writer.Write("<table><tr> <td style=\"padding-right:10px;  \"> ");
+
+                @Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lblClassName";
+                    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settingslbl.Text = "Class";
+                }).GetHtml();
+
+                @Html.DevExpress().ComboBox(
+                      settingscbo =>
+                      {
+                          settingscbo.Name = "ClassID";
+                          settingscbo.ControlStyle.CssClass = "editor";
+                          settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                          settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                          settingscbo.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+                          settingscbo.Properties.TextField = "ClassName";
+                          settingscbo.Properties.ValueField = "ClassID";
+                          //settingscbo.ShowModelErrors = true;
+                          //settingscbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                         // settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "examSetupController.SelectedClass";
+                      }
+                  ).BindList(new UnitOfWork().ClassService.GetClassList(byte.Parse(Session["CompID"].ToString()),byte.Parse(Session["BranchID"].ToString()))).GetHtml();
+
+
+
+                ViewContext.Writer.Write("</td> <td style=\"padding-right:10px; \"> ");
+
+                @Html.DevExpress().Label(settingslbl =>
+                {
+                    settingslbl.Name = "lblExam";
+                    settingslbl.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settingslbl.Text = "Exam";
+                   
+                    
+                }).GetHtml();
+
+              //  Html.RenderPartial("ClassSetupPartialView");
+
+                @Html.DevExpress().ComboBox(
+                  settingscbo =>
+                  {
+                      settingscbo.Name = "ExamID";
+                      settingscbo.ControlStyle.CssClass = "editor";
+                      settingscbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                      settingscbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                      settingscbo.Width = System.Web.UI.WebControls.Unit.Pixel(350);
+                      settingscbo.Properties.TextField = "ExamName";
+                      settingscbo.Properties.ValueField = "ExamID";
+                      //settingscbo.ShowModelErrors = true;
+                      //settingscbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                      settingscbo.Properties.ClientSideEvents.SelectedIndexChanged = "examSetupController.SelectedExam";
+                  }
+              ).BindList(new UnitOfWork().examCategoryService.GetExamCategoryList(byte.Parse(Session["CompID"].ToString()), byte.Parse(Session["BranchID"].ToString()))).GetHtml();
+
+                ViewContext.Writer.Write("</td> <td style=\"padding-right:10px;  \"> ");
+
+                Html.RenderPartial("DateOrderPartialView");
+                
+                ViewContext.Writer.Write("</td></tr></table>");
+
+                ViewContext.Writer.Write("<table style=\"padding-Top:10px; margin-Top:10px;  \"><tr> <td  \"> ");
+              
+              
+
+                ViewContext.Writer.Write("</td><td style=\"padding-right:10px; \">");
+                
+                @Html.DevExpress().Button
+                   (
+                   settingsbtn =>
+                   {
+                       settingsbtn.Name = "btnCreate";
+                       settingsbtn.Text = "Create";
+                       settingsbtn.UseSubmitBehavior = true;
+                       settingsbtn.Width = System.Web.UI.WebControls.Unit.Pixel(120);
+                       //  settingsbtn.Height = System.Web.UI.WebControls.Unit.Pixel(30);
+                       settingsbtn.Images.Image.IconID = IconID.DataDatabase16x16;
+                       settingsbtn.ClientSideEvents.Click = "examSetupController.SendbuttonClick";
+
+
+                   }).GetHtml();
+
+                ViewContext.Writer.Write("</td><td style=\"padding-right:10px; \">");
+
+                @Html.DevExpress().Button
+                    (
+                    settingsbtnupdate =>
+                    {
+                        settingsbtnupdate.Name = "btnUpdate";
+                        settingsbtnupdate.Text = "Update";
+                        settingsbtnupdate.UseSubmitBehavior = true;
+                        settingsbtnupdate.Width = System.Web.UI.WebControls.Unit.Pixel(120);
+                        settingsbtnupdate.Images.Image.IconID = IconID.DataDatabase16x16;
+                        settingsbtnupdate.ClientSideEvents.Click = "examSetupController.UpdateButtonClick";
+                    }).GetHtml();
+                ViewContext.Writer.Write("</td></tr></table> ");
+
+                ViewContext.Writer.Write("</div>");
+                
+            });
+        });
+       settings.Panes.Add(subpane =>
+       {
+           subpane.Name = "ExamSetupFooter";
+           subpane.PaneStyle.CssClass = "contentPane";
+           subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+           subpane.MinSize = System.Web.UI.WebControls.Unit.Pixel(100);
+           subpane.Size = System.Web.UI.WebControls.Unit.Percentage(40);
+           subpane.Separator.Visible = DefaultBoolean.True;
+           subpane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+           subpane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+           subpane.SetContent(() =>
+           {
+               Html.RenderPartial("ListExamSetup");
+           });
+       });
+
+    
+    }).GetHtml()
+
+
+
+}
+
+
+
+
+
+@Html.DevExpress().LoadingPanel(settings => {
+    settings.Name = "LoadingPanelExamSetup";
+   // settings.ContainerElementID = "SMSReportSplitter";
+
+    settings.Modal = true;
+    settings.ContainerElementID = "";
+    settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+    
+}).GetHtml()
+
+
+
+
+
+
